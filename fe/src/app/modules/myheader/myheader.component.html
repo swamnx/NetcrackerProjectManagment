@@ -1,0 +1,19 @@
+<nav class="navbar navbar-expand-lg navbar-ligh bg-light">
+      <span class="navbar-brand mb-0 h1">SwamnxPrj</span>
+  <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+        <div class="collapse navbar-collapse" id="navbarNav">
+                   <a class="nav-item nav-link" routerLink="/">About</a>
+              
+        </div>
+        <span class="navbar-text">
+              <div *ngIf=" auth.authenticated == false ; else logouttemplate ">
+                    <a class="nav-item nav-link" routerLink="/login">Login </a>
+                    <a class="nav-item nav-link" routerLink="/registration">Registration </a>
+              </div>
+              <ng-template #logouttemplate>
+                    <a class="nav-item nav-link" routerLink="/user"> {{auth.login}}</a>
+                    <button (click)="auth.authenticateNot()" class ="nav-item btn btn-dark">Logout</button>
+              </ng-template>
+        </span>
+  </div>
+</nav>
