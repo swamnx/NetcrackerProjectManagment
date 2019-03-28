@@ -1,4 +1,4 @@
-package com.fapi.testprj;
+package com.fapi;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;

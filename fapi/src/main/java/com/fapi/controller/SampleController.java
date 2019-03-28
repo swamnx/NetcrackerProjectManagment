@@ -1,4 +1,4 @@
-package com.fapi.testprj.controllers;
+package com.fapi.controller;
 
 import org.springframework.web.bind.annotation.RestController;
 
