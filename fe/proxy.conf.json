@@ -1,11 +1,9 @@
 {
     "/api/*": {
-      "target": {
-        "host": "localhost",
-        "protocol": "http:",
-        "port": "8080"
-      },
+      "target":"http://localhost:8080",
       "secure": false,
-      "logLevel": "info"
+      "logLevel": "debug",
+      "changeOrigin":true,
+      "pathRewrite": {"^/api" : ""}
     }
   }

@@ -14,6 +14,7 @@ export class AuthService {
   authenticated = false;
   role ='';
   email ='';
+  problem = '';
   constructor(private http: HttpClient, private router: Router) {
 
   }
@@ -22,19 +23,23 @@ export class AuthService {
     if(test.good==true){
       this.login=test.login;
       this.authenticated=true;
+      this.problem='';
       return('ok');
     }
     else{
-      return('problem with server validation');
+      this.problem='Problem with server validation';
+      return('Problem with server validation');
     }
   }
   register(emailp,passwordp){
     let test ={good:true, login:'swamnx'};
     if(test.good==true){
+      this.problem='';
       return('ok');
     }
     else{
-      return('problem with server validation');
+      this.problem='Problem with server validation';
+      return('Problem with server validation');
     }
 
   }
@@ -45,7 +50,18 @@ export class AuthService {
     this.status = '';
     this.authenticated = false;
     this.role ='';
+    this.problem='';
     this.router.navigateByUrl('/');
-}
+  }
+  authenticateNotProblem(problem:string) {
+    this.login = '';
+    this.id = -1;
+    this.token = '';
+    this.status = '';
+    this.authenticated = false;
+    this.role ='';
+    this.problem=problem;
+    this.router.navigateByUrl('/');
+  }
 
 }

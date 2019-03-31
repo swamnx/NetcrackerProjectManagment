@@ -3,6 +3,7 @@ import {Project} from 'src/app/models/project';
 export class Task{
 
     idTask:number;
+    idCreatedBy:number;
     code:string;
     priority:string;
     status:string;
@@ -11,12 +12,12 @@ export class Task{
     updateDate:Date;
     dueDate:Date;
     estimationDate:Date;
-    reporter:User;
     taskUser:User;
     taskProject:Project;
     static cloneBase(task:Task):Task {
         const clonedTask:Task = new Task();
         clonedTask.idTask = task.idTask;
+        clonedTask.idCreatedBy = task.idCreatedBy;
         clonedTask.code = task.code;
         clonedTask.priority = task.priority;
         clonedTask.status = task.status;
@@ -25,7 +26,6 @@ export class Task{
         clonedTask.updateDate = task.updateDate;
         clonedTask.dueDate = task.dueDate;
         clonedTask.estimationDate = task.estimationDate;
-        clonedTask.reporter = task.reporter;
         clonedTask.taskUser = task.taskUser;
         clonedTask.taskProject = task.taskProject;
         return clonedTask;

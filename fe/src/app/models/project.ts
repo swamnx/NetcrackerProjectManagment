@@ -4,8 +4,8 @@ import {Task} from 'src/app/models/task'
 export class Project{
 
     idProject:number;
-    codeProject:string;
-    descriptionProject:string;
+    code:string;
+    description:string;
     projectUsers:Array<User>;
     projectTasks:Array<Task>;
 
@@ -14,8 +14,8 @@ export class Project{
         const clonedProject: Project = new Project();
 
         clonedProject.idProject = project.idProject;
-        clonedProject.codeProject = project.codeProject;
-        clonedProject.descriptionProject = project.descriptionProject;
+        clonedProject.code = project.code;
+        clonedProject.description = project.description;
 
         for(let i of project.projectUsers){
           clonedProject.projectUsers.push(i);

@@ -1,5 +1,7 @@
 package com.be.entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.Objects;
@@ -9,9 +11,13 @@ import java.util.Objects;
 public class Task {
 
     @Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     @Column(name = "idTask")
     private int idTask;
+
+    @Basic
+    @Column(name ="idCreatedBy")
+    private int idCreatedBy;
 
     @Basic
     @Column(name = "code")
@@ -45,14 +51,12 @@ public class Task {
     @Column(name = "estimationDate")
     private LocalDate estimationDate;
 
-    @ManyToOne
-    @JoinColumn(name= "idUser",nullable = false, insertable = false, updatable = false)
-    private User reporter;
-
+    @JsonManagedReference
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "idUser")
     private User taskUser;
 
+    @JsonManagedReference
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "idProject")
     private Project taskProject;
@@ -62,6 +66,13 @@ public class Task {
     }
     public void setIdTask(int idTask) {
         this.idTask = idTask;
+    }
+
+    public int getIdCreatedBy() {
+        return idCreatedBy;
+    }
+    public void setIdCreatedBy(int idCreatedBy) {
+        this.idCreatedBy = idCreatedBy;
     }
 
     public String getCode() {
@@ -90,13 +101,6 @@ public class Task {
     }
     public void setDescription(String description) {
         this.description = description;
-    }
-
-    public User getReporter() {
-        return reporter;
-    }
-    public void setReporter(User reporter) {
-        this.reporter = reporter;
     }
 
     public LocalDate getCreateDate() {

@@ -1,39 +1,35 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from 'src/app/services/auth-service.service';
+import { HttpClient } from '@angular/common/http';
+import { Router } from '@angular/router';
+import { Task } from 'src/app/models/task';
 import { UserServiceService } from 'src/app/services/user-service.service';
 import { ProjectServiceService } from 'src/app/services/project-service.service';
 import { TaskServiceService } from 'src/app/services/task-service.service';
-import { HttpClient } from '@angular/common/http';
-import { Router } from '@angular/router';
-import { User } from 'src/app/models/user';
 
 @Component({
-  selector: 'app-test',
-  templateUrl: './test.component.html',
-  styleUrls: ['./test.component.css']
+  selector: 'app-table-tasks',
+  templateUrl: './table-tasks.component.html',
+  styleUrls: ['./table-tasks.component.css']
 })
-export class TestComponent implements OnInit {
-
-  users: User[];
+export class TableTasksComponent implements OnInit {
   error:string;
-  constructor(private http: HttpClient, private router: Router, private auth:AuthService,
+  tasks:Task[];
+  constructor(private auth:AuthService, private http: HttpClient, private router: Router,
     private userService:UserServiceService,private projectService:ProjectServiceService,
     private taskService:TaskServiceService) {
-      this.error='nothing';
-    }
-
+    this.error='';
+  }
   ngOnInit() {
-    this.userService.getUsers().subscribe(
+    this.taskService.getTasks().subscribe(
       (value) =>{
-      this.users=value; 
-      this.error='f';
+      this.tasks=value; 
+      this.error='';
       },
       (error) =>{
       this.error='Server Problem';
       }
     )
-  }
-  buttonFunc(){
   }
 
 }

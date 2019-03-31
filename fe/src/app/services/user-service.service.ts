@@ -14,15 +14,18 @@ export class UserServiceService {
   constructor(private http:HttpClient, private auth:AuthService) { }
 
   getUsers():Observable<User[]>{
-    return this.http.get<User[]>('/api/users/kek');
+    return this.http.get<User[]>('http://localhost:8083/api/users');
   }
-  saveUser(user:User):Observable<User>{
-    return this.http.post<User>('/api/users',user);
+  createUser(user:User):Observable<User>{
+    return this.http.post<User>('http://localhost:8083/api/users',user);
+  }
+  updateUser(user:User):Observable<User>{
+    return this.http.patch<User>('http://localhost:8083/users',user);
   }
   deleteUserById(idUser:number):Observable<void>{
-    return this.http.delete<void>('/api/users/'+idUser);
+    return this.http.delete<void>('http://localhost:8083/api/users/'+idUser);
   }
   getUserById(idUser:number):Observable<User>{
-    return this.http.get<User>('/api/users/'+idUser);
+    return this.http.get<User>('http://localhost:8083/api/users/'+idUser);
   }
 }

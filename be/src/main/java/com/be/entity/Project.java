@@ -1,5 +1,7 @@
 package com.be.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import javax.persistence.*;
 import java.util.Objects;
 import java.util.Set;
@@ -9,22 +11,24 @@ import java.util.Set;
 public class Project {
 
     @Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     @Column(name = "idProject")
     private int idProject;
 
     @Basic
-    @Column(name ="codeProject")
-    private String codeProject;
+    @Column(name ="code")
+    private String code;
 
     @Basic
-    @Column(name = "descriptionProject")
-    private String descriptionProject;
+    @Column(name = "description")
+    private String description;
 
     @ManyToMany(mappedBy = "userProjects")
+    @JsonBackReference
     private Set<User> projectUsers;
 
     @OneToMany(mappedBy = "taskProject",cascade = CascadeType.ALL)
+    @JsonBackReference
     private Set<Task> projectTasks;
 
     public int getIdProject() {
@@ -34,18 +38,18 @@ public class Project {
         this.idProject = idProject;
     }
 
-    public String getCodeProject() {
-        return codeProject;
+    public String getCode() {
+        return code;
     }
-    public void setCodeProject(String code) {
-        this.codeProject = code;
+    public void setCode(String code) {
+        this.code = code;
     }
 
-    public String getDescriptionProject() {
-        return descriptionProject;
+    public String getDescription() {
+        return description;
     }
-    public void setDescriptionProject(String descriptionProject) {
-        this.descriptionProject = descriptionProject;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public Set<User> getProjectUsers() {
@@ -68,13 +72,13 @@ public class Project {
         if (o == null || getClass() != o.getClass()) return false;
         Project project = (Project) o;
         return idProject == project.idProject &&
-                Objects.equals(codeProject, project.codeProject) &&
-                Objects.equals(descriptionProject, project.descriptionProject);
+                Objects.equals(code, project.code) &&
+                Objects.equals(description, project.description);
     }
 
     @Override
     public int hashCode() {
 
-        return Objects.hash(idProject, codeProject, descriptionProject);
+        return Objects.hash(idProject, code, description);
     }
 }

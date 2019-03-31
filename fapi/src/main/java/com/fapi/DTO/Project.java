@@ -8,8 +8,8 @@ import java.util.Set;
 public class Project {
 
     private int idProject;
-    private String codeProject;
-    private String descriptionProject;
+    private String code;
+    private String description;
     private Set<User> projectUsers;
     private Set<Task> projectTasks;
 
@@ -20,18 +20,18 @@ public class Project {
         this.idProject = idProject;
     }
 
-    public String getCodeProject() {
-        return codeProject;
+    public String getCode() {
+        return code;
     }
-    public void setCodeProject(String code) {
-        this.codeProject = code;
+    public void setCode(String code) {
+        this.code = code;
     }
 
-    public String getDescriptionProject() {
-        return descriptionProject;
+    public String getDescription() {
+        return description;
     }
-    public void setDescriptionProject(String descriptionProject) {
-        this.descriptionProject = descriptionProject;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public Set<User> getProjectUsers() {

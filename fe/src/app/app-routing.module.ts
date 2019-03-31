@@ -5,9 +5,11 @@ import { NotFoundComponent } from 'src/app/modules/not-found/not-found.component
 import { LoginComponent } from './modules/login/login.component';
 import { RegistrationComponent } from './modules/registration/registration.component';
 import { TestComponent } from './modules/test/test.component';
+import { TableTasksComponent } from './modules/table-tasks/table-tasks.component';
 
 const routes: Routes = [
   {path:'', component: HomeComponent},
+  {path:'table',component:TableTasksComponent},
   {path:'test',component:TestComponent},
   {path:'login', component: LoginComponent},
   {path:'registration', component: RegistrationComponent},

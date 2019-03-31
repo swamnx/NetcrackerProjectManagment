@@ -3,12 +3,12 @@ package com.fapi.DTO;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import java.time.LocalDate;
-import java.util.Set;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Task {
 
     private int idTask;
+    private int idCreatedBy;
     private String code;
     private String priority;
     private String status;
@@ -17,7 +17,6 @@ public class Task {
     private LocalDate updateDate;
     private LocalDate dueDate;
     private LocalDate estimationDate;
-    private User reporter;
     private User taskUser;
     private Project taskProject;
 
@@ -26,6 +25,14 @@ public class Task {
     }
     public void setIdTask(int idTask) {
         this.idTask = idTask;
+    }
+
+    public int getIdCreatedBy() {
+        return idCreatedBy;
+    }
+
+    public void setIdCreatedBy(int idCreatedBy) {
+        this.idCreatedBy = idCreatedBy;
     }
 
     public String getCode() {
@@ -54,13 +61,6 @@ public class Task {
     }
     public void setDescription(String description) {
         this.description = description;
-    }
-
-    public User getReporter() {
-        return reporter;
-    }
-    public void setReporter(User reporter) {
-        this.reporter = reporter;
     }
 
     public LocalDate getCreateDate() {

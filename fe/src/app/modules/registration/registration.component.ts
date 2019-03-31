@@ -9,7 +9,6 @@ import { routerNgProbeToken } from '@angular/router/src/router_module';
   templateUrl: './registration.component.html',
 })
 export class RegistrationComponent implements OnInit {
-  problem='';
   email='';
   passwordp='';
   constructor(private auth:AuthService, private http: HttpClient, private router: Router) { }
@@ -20,9 +19,6 @@ export class RegistrationComponent implements OnInit {
     let validator ={good: true,problem:'ffffuc'};
     if(validator.good == true){
       this.router.navigateByUrl('login');
-    }
-    else{
-      this.problem=validator.problem;
     }
   }
 

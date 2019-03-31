@@ -14,6 +14,7 @@ import { HomeComponent } from 'src/app/modules/home/home.component';
 import { LoginComponent } from './modules/login/login.component';
 import { RegistrationComponent } from './modules/registration/registration.component';
 import { TestComponent } from './modules/test/test.component';
+import { TableTasksComponent } from './modules/table-tasks/table-tasks.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,8 @@ import { TestComponent } from './modules/test/test.component';
     HomeComponent,
     LoginComponent,
     RegistrationComponent,
-    TestComponent
+    TestComponent,
+    TableTasksComponent
   ],
   imports: [
     BrowserModule,

@@ -1,5 +1,8 @@
 package com.be.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import javax.persistence.*;
 import java.util.Objects;
 import java.util.Set;
@@ -9,7 +12,7 @@ import java.util.Set;
 public class User {
 
     @Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     @Column(name = "idUser")
     private int idUser;
 
@@ -29,14 +32,16 @@ public class User {
     @Column(name = "role")
     private String role;
 
+    @JsonManagedReference
     @ManyToMany
     @JoinTable(name = "user_and_project",
     joinColumns = @JoinColumn(name = "idUser"),
     inverseJoinColumns = @JoinColumn(name = "idProject"))
-    Set<Project> userProjects;
+    private Set<Project> userProjects;
 
+    @JsonBackReference
     @OneToMany(mappedBy = "taskUser",cascade = CascadeType.ALL)
-    Set<Task> userTasks;
+    private Set<Task> userTasks;
 
     public int getIdUser() {
         return idUser;

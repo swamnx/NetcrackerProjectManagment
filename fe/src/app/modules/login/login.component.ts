@@ -8,7 +8,6 @@ import { Router } from '@angular/router';
   templateUrl: './login.component.html',
 })
 export class LoginComponent implements OnInit {
-  problem='';
   email='';
   password='';
   constructor(private auth:AuthService, private http: HttpClient, private router: Router) { }
@@ -20,10 +19,9 @@ export class LoginComponent implements OnInit {
     if(validate.good==true){
       let resp = this.auth.authenticate(this.email,this.password);
       if(resp=='ok') this.router.navigateByUrl('');
-      else this.problem=resp;
     }
     else{
-      this.problem=validate.problem;
+      this.auth.problem=validate.problem;
     }
   }
 }
