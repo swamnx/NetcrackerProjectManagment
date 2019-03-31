@@ -13,6 +13,7 @@ import { NotFoundComponent } from 'src/app/modules/not-found/not-found.component
 import { HomeComponent } from 'src/app/modules/home/home.component';
 import { LoginComponent } from './modules/login/login.component';
 import { RegistrationComponent } from './modules/registration/registration.component';
+import { TestComponent } from './modules/test/test.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { RegistrationComponent } from './modules/registration/registration.compo
     NotFoundComponent,
     HomeComponent,
     LoginComponent,
-    RegistrationComponent
+    RegistrationComponent,
+    TestComponent
   ],
   imports: [
     BrowserModule,

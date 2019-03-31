@@ -14,7 +14,7 @@ export class UserServiceService {
   constructor(private http:HttpClient, private auth:AuthService) { }
 
   getUsers():Observable<User[]>{
-    return this.http.get<User[]>('/api/users');
+    return this.http.get<User[]>('/api/users/kek');
   }
   saveUser(user:User):Observable<User>{
     return this.http.post<User>('/api/users',user);

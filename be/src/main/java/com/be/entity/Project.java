@@ -9,6 +9,7 @@ import java.util.Set;
 public class Project {
 
     @Id
+    @GeneratedValue(strategy=GenerationType.AUTO)
     @Column(name = "idProject")
     private int idProject;
 

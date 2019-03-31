@@ -9,6 +9,7 @@ import java.util.Objects;
 public class Task {
 
     @Id
+    @GeneratedValue(strategy=GenerationType.AUTO)
     @Column(name = "idTask")
     private int idTask;
 

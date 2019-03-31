@@ -10,7 +10,4 @@ export class ProjectServiceService {
 
   constructor(private http:HttpClient, private auth:AuthService) { }
 
-  getUsers():Observable<User[]>{
-    return this.http.get<User[]>('/api/ba');
-  }
 }
