@@ -15,7 +15,8 @@ import { LoginComponent } from './modules/login/login.component';
 import { RegistrationComponent } from './modules/registration/registration.component';
 import { TestComponent } from './modules/test/test.component';
 import { TableTasksComponent } from './modules/table-tasks/table-tasks.component';
-
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import {MatRadioModule} from '@angular/material';
 @NgModule({
   declarations: [
     AppComponent,
@@ -26,13 +27,15 @@ import { TableTasksComponent } from './modules/table-tasks/table-tasks.component
     LoginComponent,
     RegistrationComponent,
     TestComponent,
-    TableTasksComponent
+    TableTasksComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    FormsModule
+    FormsModule,
+    BrowserAnimationsModule,
+    MatRadioModule
   ],
   providers: [],
   bootstrap: [AppComponent]

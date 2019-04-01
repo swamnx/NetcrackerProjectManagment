@@ -32,14 +32,14 @@ public class User {
     @Column(name = "role")
     private String role;
 
-    @JsonManagedReference
     @ManyToMany
     @JoinTable(name = "user_and_project",
     joinColumns = @JoinColumn(name = "idUser"),
     inverseJoinColumns = @JoinColumn(name = "idProject"))
+    @JsonManagedReference(value = "user-Projects")
     private Set<Project> userProjects;
 
-    @JsonBackReference
+    @JsonBackReference(value = "user-Tasks")
     @OneToMany(mappedBy = "taskUser",cascade = CascadeType.ALL)
     private Set<Task> userTasks;
 

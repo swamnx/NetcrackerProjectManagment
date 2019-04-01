@@ -6,6 +6,7 @@ export class User {
     idUser: number;
     email: string;
     name:string;
+    password:string;
     role:string;
     userProjects:Array<Project>;
     userTasks:Array<Task> 
@@ -17,6 +18,7 @@ export class User {
       clonedUser.idUser = user.idUser;
       clonedUser.email = user.email;
       clonedUser.name = user.name;
+      clonedUser.password = user.password;
       
       for(let i of user.userProjects){
         clonedUser.userProjects.push(i);

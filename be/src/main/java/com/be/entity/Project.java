@@ -24,11 +24,11 @@ public class Project {
     private String description;
 
     @ManyToMany(mappedBy = "userProjects")
-    @JsonBackReference
+    @JsonBackReference(value = "project-Users")
     private Set<User> projectUsers;
 
     @OneToMany(mappedBy = "taskProject",cascade = CascadeType.ALL)
-    @JsonBackReference
+    @JsonBackReference(value = "project-Tasks")
     private Set<Task> projectTasks;
 
     public int getIdProject() {

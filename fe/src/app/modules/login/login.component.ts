@@ -15,13 +15,6 @@ export class LoginComponent implements OnInit {
   ngOnInit() {
   }
   login(){
-    let validate = {good:true,problem:'fffuc'};
-    if(validate.good==true){
-      let resp = this.auth.authenticate(this.email,this.password);
-      if(resp=='ok') this.router.navigateByUrl('');
-    }
-    else{
-      this.auth.problem=validate.problem;
-    }
+       this.auth.authenticate(this.email,this.password);
   }
 }

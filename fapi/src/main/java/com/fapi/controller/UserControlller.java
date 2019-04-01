@@ -32,7 +32,8 @@ public class UserControlller {
     @PostMapping("")
     public User createUser(@RequestBody User user) {
         RestTemplate restTemplate = new RestTemplate();
-        return restTemplate.postForEntity(backendServerUrl + "/api/users", user, User.class).getBody();
+        User respuser =restTemplate.postForEntity(backendServerUrl + "/api/users", user, User.class).getBody();
+        return  respuser;
     }
 
     @DeleteMapping("/{idUser}")

@@ -1,27 +1,15 @@
-<ul class="list-group">
-
-    <li class="list-group-item">
-      <h3>Registration Page</h3>
-    </li>
-  
-    <li class="list-group-item">
-  
-        <form role="form" (submit)="register()">
-  
-        <div class="form-group">
-          <label for="naming">Email:</label> <input type="text"
-            class="form-control" id="email" name="email" [(ngModel)]="email"/>
-        </div>
-  
-        <div class="form-group">
-          <label for="password">Password:</label> <input type="password"
-            class="form-control" id="password" name="password" [(ngModel)]="password"/>
-        </div>
-        
-        <button type="submit" class="btn btn-primary">Register!</button>
-      </form>
-    </li>
-  </ul>
-  <div class="alert alert-danger" [hidden]="(auth.problem === '') ">
-    {{problem}}
-  </div>
+<div class="alert alert-danger" [hidden]="(auth.problem === '') ">
+  {{problem}}
+  <br>
+</div>
+<form #f="ngForm" (ngSubmit)="register(f)">
+<input class="form form-control"   [(ngModel)]="email" name="email"/>
+<input class="form form-control" type ="password" [(ngModel)]="password" name="password"/>
+<mat-radio-group aria-label="Select Role" [(ngModel)]="role" name="role">
+  <mat-radio-button value="admin">Admin</mat-radio-button>
+  <mat-radio-button value="pm">Project Manager</mat-radio-button>
+  <mat-radio-button value="developer">Developer</mat-radio-button>
+  <mat-radio-button value="tester">Tester</mat-radio-button>
+</mat-radio-group>
+<button class="btn btn-primary">Register!</button>
+</form>

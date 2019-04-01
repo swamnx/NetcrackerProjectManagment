@@ -1,67 +1,70 @@
 import { Injectable } from '@angular/core';
-import {HttpClient} from "@angular/common/http";
+import {HttpClient, HttpParams} from "@angular/common/http";
 import {Observable} from "rxjs";
 import { Router } from '@angular/router';
+import { UserServiceService } from './user-service.service';
+import { ProjectServiceService } from './project-service.service';
+import { TaskServiceService } from './task-service.service';
+import { User } from '../models/user';
 
 @Injectable(
   {providedIn: 'root'}
 )
 export class AuthService {
-  login = '';
-  id = -1;
-  token = '';
-  status = '';
   authenticated = false;
-  role ='';
-  email ='';
   problem = '';
+  user:User=null;
   constructor(private http: HttpClient, private router: Router) {
 
   }
-  authenticate(email, passwordp){
-    let test ={good:true,login:'swamnx'};
-    if(test.good==true){
-      this.login=test.login;
-      this.authenticated=true;
-      this.problem='';
-      return('ok');
-    }
-    else{
-      this.problem='Problem with server validation';
-      return('Problem with server validation');
-    }
+  private sign(email:string,password:string):Observable<User>{
+    let params = new HttpParams();
+    params.set("email",email);
+    params.set("password",password);
+    return this.http.get<User>('http://localhost:8083/api/users/sign',{params:params});
   }
-  register(emailp,passwordp){
-    let test ={good:true, login:'swamnx'};
-    if(test.good==true){
-      this.problem='';
-      return('ok');
-    }
-    else{
-      this.problem='Problem with server validation';
-      return('Problem with server validation');
-    }
-
+  private createUser(user:User):Observable<User>{
+    return this.http.post<User>('http://localhost:8083/api/users',user);
+  }
+  authenticate(email, password){
+    this.sign(email,password).subscribe(
+      (value)=>{
+        this.user=value;
+        this.authenticated =true;
+        this.problem='';
+      },
+      (error)=>{
+        this.problem=error;
+      }
+    )
+  }
+  register(emailp,passwordp,rolep){
+    let user = new User();
+    user.email=emailp;
+    user.password=passwordp;
+    user.role=rolep;
+    this.createUser(user).subscribe(
+      (value)=>{
+        this.user=value;
+        this.authenticated = true;
+        this.problem='';
+      },
+      (error)=>{
+        this.problem=error;
+      }
+    )
   }
   authenticateNot() {
-    this.login = '';
-    this.id = -1;
-    this.token = '';
-    this.status = '';
     this.authenticated = false;
-    this.role ='';
     this.problem='';
-    this.router.navigateByUrl('/');
+    this.user=null;
+    this.router.navigateByUrl('/login');
   }
   authenticateNotProblem(problem:string) {
-    this.login = '';
-    this.id = -1;
-    this.token = '';
-    this.status = '';
     this.authenticated = false;
-    this.role ='';
     this.problem=problem;
-    this.router.navigateByUrl('/');
+    this.user=null;
+    this.router.navigateByUrl('/login');
   }
 
 }

@@ -51,12 +51,12 @@ public class Task {
     @Column(name = "estimationDate")
     private LocalDate estimationDate;
 
-    @JsonManagedReference
+    @JsonManagedReference(value = "task-User")
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "idUser")
     private User taskUser;
 
-    @JsonManagedReference
+    @JsonManagedReference(value = "task-Project")
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "idProject")
     private Project taskProject;
