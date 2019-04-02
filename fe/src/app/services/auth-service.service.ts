@@ -24,7 +24,7 @@ export class AuthService {
     return this.http.get<User>('http://localhost:8083/api/users/sign',{params:params});
   }
   private createUser(user:User):Observable<User>{
-    return this.http.post<User>('http://localhost:8083/api/users',user);
+    return this.http.post<User>('api/users',user);
   }
   authenticate(email, password){
     this.sign(email,password).subscribe(
@@ -48,6 +48,7 @@ export class AuthService {
         this.user=value;
         this.authenticated = true;
         this.problem='';
+        console.log(this.user);
       },
       (error)=>{
         this.problem=error;

@@ -1,6 +1,8 @@
 package com.be.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import javax.persistence.*;
 import java.util.Objects;
@@ -8,6 +10,7 @@ import java.util.Set;
 
 @Table(name = "Projects")
 @Entity
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "idProject")
 public class Project {
 
     @Id
@@ -24,11 +27,11 @@ public class Project {
     private String description;
 
     @ManyToMany(mappedBy = "userProjects")
-    @JsonBackReference(value = "project-Users")
+   //@JsonBackReference(value = "project-Users")
     private Set<User> projectUsers;
 
     @OneToMany(mappedBy = "taskProject",cascade = CascadeType.ALL)
-    @JsonBackReference(value = "project-Tasks")
+    //@JsonBackReference(value = "project-Tasks")
     private Set<Task> projectTasks;
 
     public int getIdProject() {

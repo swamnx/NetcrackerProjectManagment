@@ -4,10 +4,12 @@ import com.fapi.DTO.User;
 import com.fapi.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.util.UriComponentsBuilder;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -48,9 +50,12 @@ public class UserControlller {
         return restTemplate.patchForObject(backendServerUrl + "/api/users", user, User.class);
     }
 
-    @GetMapping("/sign?email={email}&password={password}")
-    public User signUser(@PathVariable String email, @PathVariable String password) {
+    @GetMapping("/sign")
+    public User signUser(@RequestParam String email, @RequestParam String password) {
         RestTemplate restTemplate = new RestTemplate();
-        return restTemplate.getForEntity(backendServerUrl + "/api/users/sign?email=" + email + "&password=" + password, User.class).getBody();
+        UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(backendServerUrl+"/api/users/sign");
+        builder.queryParam("email",email);
+        builder.queryParam("password",password);
+        return restTemplate.getForEntity(builder.toUriString(),User.class).getBody();
     }
 }

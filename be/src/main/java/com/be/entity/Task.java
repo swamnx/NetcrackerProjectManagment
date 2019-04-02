@@ -1,6 +1,8 @@
 package com.be.entity;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -8,6 +10,7 @@ import java.util.Objects;
 
 @Table(name ="Tasks")
 @Entity
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "idTask")
 public class Task {
 
     @Id
@@ -51,12 +54,12 @@ public class Task {
     @Column(name = "estimationDate")
     private LocalDate estimationDate;
 
-    @JsonManagedReference(value = "task-User")
+    //@JsonManagedReference(value = "task-User")
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "idUser")
     private User taskUser;
 
-    @JsonManagedReference(value = "task-Project")
+    //@JsonManagedReference(value = "task-Project")
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "idProject")
     private Project taskProject;

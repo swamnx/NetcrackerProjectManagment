@@ -1,7 +1,9 @@
 package com.be.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import javax.persistence.*;
 import java.util.Objects;
@@ -9,6 +11,7 @@ import java.util.Set;
 
 @Table(name = "Users")
 @Entity
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "idUser")
 public class User {
 
     @Id
@@ -36,10 +39,10 @@ public class User {
     @JoinTable(name = "user_and_project",
     joinColumns = @JoinColumn(name = "idUser"),
     inverseJoinColumns = @JoinColumn(name = "idProject"))
-    @JsonManagedReference(value = "user-Projects")
+   //@JsonManagedReference(value = "user-Projects")
     private Set<Project> userProjects;
 
-    @JsonBackReference(value = "user-Tasks")
+    //@JsonBackReference(value = "user-Tasks")
     @OneToMany(mappedBy = "taskUser",cascade = CascadeType.ALL)
     private Set<Task> userTasks;
 

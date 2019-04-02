@@ -8,13 +8,11 @@ import { Router } from '@angular/router';
   templateUrl: './login.component.html',
 })
 export class LoginComponent implements OnInit {
-  email='';
-  password='';
   constructor(private auth:AuthService, private http: HttpClient, private router: Router) { }
 
   ngOnInit() {
   }
-  login(){
-       this.auth.authenticate(this.email,this.password);
+  login(data){
+       this.auth.authenticate(data.value.email,data.value.password);
   }
 }
