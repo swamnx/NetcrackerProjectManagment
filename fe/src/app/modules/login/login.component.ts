@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AuthService } from 'src/app/services/auth-service.service';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
+import {MatFormField} from '@angular/material';
 
 @Component({
   selector: 'app-login',

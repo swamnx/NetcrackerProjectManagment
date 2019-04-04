@@ -10,6 +10,7 @@ import java.util.Optional;
 @Repository
 public interface UserRepository extends JpaRepository<User,Integer> {
     List<User> findAll();
+    User findUserByEmail(String email);
     User findUserByIdUser(Integer id);
     User save(User user);
     void delete(User user);

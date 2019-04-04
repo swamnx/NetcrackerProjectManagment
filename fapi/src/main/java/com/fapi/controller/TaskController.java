@@ -4,6 +4,7 @@ import com.fapi.DTO.Task;
 import com.fapi.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 
@@ -35,6 +36,11 @@ public class TaskController {
     public void deleteTask(@PathVariable int idTask) {
         RestTemplate restTemplate = new RestTemplate();
         restTemplate.delete(backendServerUrl + "/api/tasks/" + idTask);
+    }
+    @GetMapping("/{idTask}")
+    public ResponseEntity<Task> getTask(@PathVariable int idTask) {
+        RestTemplate restTemplate = new RestTemplate();
+        return  restTemplate.getForEntity(backendServerUrl + "/api/tasks/" + idTask,Task.class);
     }
 
     @PatchMapping("")

@@ -6,6 +6,7 @@ import { UserServiceService } from './user-service.service';
 import { ProjectServiceService } from './project-service.service';
 import { TaskServiceService } from './task-service.service';
 import { User } from '../models/user';
+import { UserForAuth } from '../DTOs/user';
 
 @Injectable(
   {providedIn: 'root'}
@@ -14,33 +15,37 @@ export class AuthService {
   authenticated = false;
   problem = '';
   user:User=null;
+  token = '';
+
   constructor(private http: HttpClient, private router: Router) {
 
   }
-  private sign(email:string,password:string):Observable<User>{
-    let params = new HttpParams();
-    params.set("email",email);
-    params.set("password",password);
-    return this.http.get<User>('http://localhost:8083/api/users/sign',{params:params});
+  private sign(user:UserForAuth):Observable<User>{
+    return this.http.post<User>('api/users/sign',user);
   }
-  private createUser(user:User):Observable<User>{
+  private createUser(user:UserForAuth):Observable<User>{
     return this.http.post<User>('api/users',user);
   }
-  authenticate(email, password){
-    this.sign(email,password).subscribe(
+  public authenticate(emailp, passwordp):void{
+    let user = new UserForAuth();
+    user.email=emailp;
+    user.password=passwordp;
+    this.sign(user).subscribe(
       (value)=>{
         this.user=value;
-        this.authenticated =true;
+        this.authenticated = true;
         this.problem='';
+        this.router.navigateByUrl('/');
       },
       (error)=>{
-        this.problem=error;
+        this.problem=error.status;
       }
     )
   }
-  register(emailp,passwordp,rolep){
-    let user = new User();
+  public register(emailp,namep,passwordp,rolep):void{
+    let user = new UserForAuth();
     user.email=emailp;
+    user.name=namep;
     user.password=passwordp;
     user.role=rolep;
     this.createUser(user).subscribe(
@@ -48,20 +53,20 @@ export class AuthService {
         this.user=value;
         this.authenticated = true;
         this.problem='';
-        console.log(this.user);
+        this.router.navigateByUrl('/');
       },
       (error)=>{
-        this.problem=error;
+        this.problem=error.status;
       }
     )
   }
-  authenticateNot() {
+  public authenticateNot():void {
     this.authenticated = false;
     this.problem='';
     this.user=null;
     this.router.navigateByUrl('/login');
   }
-  authenticateNotProblem(problem:string) {
+  public authenticateNotProblem(problem:string):void {
     this.authenticated = false;
     this.problem=problem;
     this.user=null;

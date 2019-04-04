@@ -5,6 +5,8 @@ import com.be.repository.ProjectRepository;
 import com.be.repository.TaskRepository;
 import com.be.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -26,6 +28,8 @@ public class UserController {
 
     @PostMapping("")
     public User createUser(@RequestBody User user) {
+        User userFound = userRepository.findUserByEmail(user.getEmail());
+        if(userFound!=null) return null;
         User userResult = userRepository.save(user);
         return userResult;
     }
@@ -42,9 +46,14 @@ public class UserController {
         return userResult;
     }
 
-    @GetMapping("/sign")
-    public User signUser(@RequestParam String email, @RequestParam String password) {
-        User userResult=userRepository.findUserByEmailAndPassword(email,password);
+    @PostMapping("/sign")
+    public User signUser(@RequestBody User user) {
+        User userResult=userRepository.findUserByEmailAndPassword(user.getEmail(),user.getPassword());
+        return userResult;
+    }
+    @GetMapping("/{idUser}")
+    public User getUserById(@PathVariable int idUser){
+        User userResult = userRepository.findUserByIdUser(idUser);
         return userResult;
     }
 

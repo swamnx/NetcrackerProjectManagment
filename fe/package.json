@@ -2,8 +2,8 @@
   "name": "fe",
   "version": "0.0.0",
   "scripts": {
-    "ng": "ng",
     "start": "ng serve --proxy-config proxy.conf.json",
+    "ng": "ng",
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",

@@ -1,0 +1,40 @@
+<div class="card">
+  <div class="card-body">
+
+    <h4 class="card-title">User Info</h4>
+
+    <h6 class="card-subtitle mb-2 text-muted">Here you can see all info about this user</h6>
+</div>
+<div class="card">
+    <div class="card-body">
+
+      <div *ngIf="ready == true">
+        <mat-card-content>
+          <h5 class="card-title">Email</h5>
+          <h6 class="card-subtitle mb-2 text-muted">{{user.email}}</h6>
+          <h5 class="card-title">Name</h5>
+          <h6 class="card-subtitle mb-2 text-muted">{{user.name}}</h6>
+          <h5 class="card-title">Role</h5>
+          <h6 class="card-subtitle mb-2 text-muted">{{user.role}}</h6>
+        </mat-card-content>
+      </div>
+    </div>
+</div>
+<div class="card">
+    <div class="card-body">
+  
+      <h4 class="card-title">Projects Info</h4>
+      <h6 class="card-subtitle mb-2 text-muted">Info about user's projects</h6>
+      <div *ngIf="ready == true">
+          <app-project-basic *ngFor="let project of user.userProjects" [project]="project"></app-project-basic>
+      </div>
+</div>
+<div class="card">
+    <div class="card-body">
+  
+      <h4 class="card-title">Tasks Info</h4>
+      <h6 class="card-subtitle mb-2 text-muted">Info about user's tasks</h6>
+      <div *ngIf="ready == true">
+          <app-task-basic *ngFor="let idTask of user.userTasks" [idTask]="idTask"></app-task-basic>
+      </div>
+</div>

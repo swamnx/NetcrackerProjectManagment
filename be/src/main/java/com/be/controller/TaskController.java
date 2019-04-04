@@ -36,6 +36,11 @@ public class TaskController {
         Task taskResult = taskRepository.findTaskByIdTask(idTask);
         taskRepository.delete(taskResult);
     }
+    @GetMapping("/{idTask}")
+    public Task getTaskById(@PathVariable int idTask) {
+        Task taskResult = taskRepository.findTaskByIdTask(idTask);
+        return taskResult;
+    }
 
     @PatchMapping("")
     public Task updateTask(@RequestBody Task task) {

@@ -11,7 +11,7 @@
                     <a class="nav-item nav-link" routerLink="/registration">Registration </a>
               </div>
               <ng-template #logouttemplate>
-                    <a class="nav-item nav-link" routerLink="/user"> {{auth.login}}</a>
+                    <a class="nav-item nav-link" routerLink="/users/{{auth.user.idUser}}"> {{auth.user.name}}</a>
                     <button (click)="auth.authenticateNot()" class ="nav-item btn btn-dark">Logout</button>
               </ng-template>
         </span>

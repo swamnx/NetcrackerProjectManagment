@@ -4,10 +4,9 @@ import com.fapi.DTO.User;
 import com.fapi.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
@@ -32,14 +31,21 @@ public class UserControlller {
     }
 
     @PostMapping("")
-    public User createUser(@RequestBody User user) {
+    public ResponseEntity<User> createUser(@RequestBody User user) {
         RestTemplate restTemplate = new RestTemplate();
-        User respuser =restTemplate.postForEntity(backendServerUrl + "/api/users", user, User.class).getBody();
-        return  respuser;
+        User responseUser =restTemplate.postForEntity(backendServerUrl + "/api/users", user, User.class).getBody();
+        if(responseUser == null) return ResponseEntity.badRequest().build();
+        return  ResponseEntity.ok(responseUser);
     }
 
+
+    @GetMapping("/{idUser}")
+    public ResponseEntity<User> getUserById(@PathVariable int idUser) {
+        RestTemplate restTemplate = new RestTemplate();
+        return restTemplate.getForEntity(backendServerUrl + "/api/users/" + idUser,User.class);
+    }
     @DeleteMapping("/{idUser}")
-    public void deleteUser(@PathVariable int idUser) {
+    public void deleteUserById(@PathVariable int idUser) {
         RestTemplate restTemplate = new RestTemplate();
         restTemplate.delete(backendServerUrl + "/api/users/" + idUser);
     }
@@ -50,12 +56,11 @@ public class UserControlller {
         return restTemplate.patchForObject(backendServerUrl + "/api/users", user, User.class);
     }
 
-    @GetMapping("/sign")
-    public User signUser(@RequestParam String email, @RequestParam String password) {
+    @PostMapping("/sign")
+    public ResponseEntity<User> signUser(@RequestBody User user) {
         RestTemplate restTemplate = new RestTemplate();
-        UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(backendServerUrl+"/api/users/sign");
-        builder.queryParam("email",email);
-        builder.queryParam("password",password);
-        return restTemplate.getForEntity(builder.toUriString(),User.class).getBody();
+        User responseUser = restTemplate.postForEntity(backendServerUrl + "/api/users/sign", user, User.class).getBody();
+        if(responseUser == null) return ResponseEntity.notFound().build();
+        return  ResponseEntity.ok(responseUser);
     }
 }

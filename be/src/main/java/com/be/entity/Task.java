@@ -10,7 +10,7 @@ import java.util.Objects;
 
 @Table(name ="Tasks")
 @Entity
-@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "idTask")
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "idTask",scope = Task.class)
 public class Task {
 
     @Id
