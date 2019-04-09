@@ -7,6 +7,7 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.Objects;
+import java.util.Set;
 
 @Table(name ="Tasks")
 @Entity
@@ -59,10 +60,21 @@ public class Task {
     @JoinColumn(name = "idUser")
     private User taskUser;
 
+    @OneToMany(mappedBy = "commentTask",cascade = CascadeType.ALL)
+    private Set<Comment> taskComments;
+
     //@JsonManagedReference(value = "task-Project")
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "idProject")
     private Project taskProject;
+
+    public Set<Comment> getTaskComments() {
+        return taskComments;
+    }
+
+    public void setTaskComments(Set<Comment> taskComments) {
+        this.taskComments = taskComments;
+    }
 
     public int getIdTask() {
         return idTask;

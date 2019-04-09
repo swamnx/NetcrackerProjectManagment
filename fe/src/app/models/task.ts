@@ -14,6 +14,8 @@ export class Task{
     estimationDate:Date;
     taskUser:User;
     taskProject:Project;
+    taskComments:Array<Comment>;
+
     static cloneBase(task:Task):Task {
         const clonedTask:Task = new Task();
         clonedTask.idTask = task.idTask;
@@ -28,6 +30,7 @@ export class Task{
         clonedTask.estimationDate = task.estimationDate;
         clonedTask.taskUser = task.taskUser;
         clonedTask.taskProject = task.taskProject;
+        clonedTask.taskComments = task.taskComments;
         return clonedTask;
     }
 }

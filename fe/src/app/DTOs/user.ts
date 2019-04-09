@@ -1,4 +1,5 @@
 import { Project } from '../models/project';
+import { ProjectBasic } from './project';
 
 export class UserForAuth{
 
@@ -15,4 +16,10 @@ export class UserForAuth{
         clonedUser.role=user.role;
         return clonedUser;
       }
+}
+export class UserBasic{
+  email:string;
+  role:string;
+  name:string;
+  userProjects:Array<ProjectBasic>;
 }

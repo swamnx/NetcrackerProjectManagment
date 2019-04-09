@@ -53,6 +53,8 @@ import { ProjectBasicComponent } from './modules/project/project-basic/project-b
 import { ProjectFullComponent } from './modules/project/project-full/project-full.component';
 import { TaskBasicComponent } from './modules/task/task-basic/task-basic.component';
 import { TaskFullComponent } from './modules/task/task-full/task-full.component';
+import { CommentBasicComponent } from './modules/comment/comment-basic/comment-basic.component';
+import { CommentFullComponent } from './modules/comment/comment-full/comment-full.component';
 
 @NgModule({
   declarations: [
@@ -72,6 +74,8 @@ import { TaskFullComponent } from './modules/task/task-full/task-full.component'
     ProjectFullComponent,
     TaskBasicComponent,
     TaskFullComponent,
+    CommentBasicComponent,
+    CommentFullComponent,
   ],
   imports: [
     BrowserModule,

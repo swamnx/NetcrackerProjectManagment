@@ -3,16 +3,18 @@
   <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
         <div class="collapse navbar-collapse" id="navbarNav">
                    <a class="nav-item nav-link" routerLink="/">About</a>
-                   <a class="nav-item nav-link" routerLink="/test">test</a>
+                   <a *ngIf=" auth.authenticated == true" class="nav-item nav-link" routerLink="/table">All Tasks</a>
         </div>
         <span class="navbar-text">
-              <div *ngIf=" auth.authenticated == false ; else logouttemplate ">
+              <div class="collapse navbar-collapse" id="navbarNav" *ngIf=" auth.authenticated == false ; else logouttemplate ">
                     <a class="nav-item nav-link" routerLink="/login">Login </a>
                     <a class="nav-item nav-link" routerLink="/registration">Registration </a>
               </div>
               <ng-template #logouttemplate>
+                    <div class="collapse navbar-collapse" id="navbarNav">
                     <a class="nav-item nav-link" routerLink="/users/{{auth.user.idUser}}"> {{auth.user.name}}</a>
                     <button (click)="auth.authenticateNot()" class ="nav-item btn btn-dark">Logout</button>
+                  </div>
               </ng-template>
         </span>
   </div>

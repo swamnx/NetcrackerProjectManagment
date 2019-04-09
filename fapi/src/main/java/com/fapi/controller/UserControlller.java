@@ -57,7 +57,7 @@ public class UserControlller {
     }
 
     @PostMapping("/sign")
-    public ResponseEntity<User> signUser(@RequestBody User user) {
+    public ResponseEntity<User  > signUser(@RequestBody User user) {
         RestTemplate restTemplate = new RestTemplate();
         User responseUser = restTemplate.postForEntity(backendServerUrl + "/api/users/sign", user, User.class).getBody();
         if(responseUser == null) return ResponseEntity.notFound().build();

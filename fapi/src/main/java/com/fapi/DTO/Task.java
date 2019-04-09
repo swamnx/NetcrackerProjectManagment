@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import java.time.LocalDate;
+import java.util.Set;
 
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "idTask",scope = Task.class)
 public class Task {
@@ -21,6 +22,7 @@ public class Task {
     private LocalDate estimationDate;
     private User taskUser;
     private Project taskProject;
+    private Set<Comment> taskComments;
 
     public int getIdTask() {
         return idTask;
@@ -105,5 +107,12 @@ public class Task {
     }
     public void setTaskProject(Project taskProject) {
         this.taskProject = taskProject;
+    }
+
+    public Set<Comment> getTaskComments() {
+        return taskComments;
+    }
+    public void setTaskComments(Set<Comment> taskComments) {
+        this.taskComments = taskComments;
     }
 }
