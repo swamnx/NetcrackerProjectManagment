@@ -5,7 +5,6 @@ import { ProjectServiceService } from 'src/app/services/project-service.service'
 import { TaskServiceService } from 'src/app/services/task-service.service';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
-import { User } from 'src/app/models/user';
 
 @Component({
   selector: 'app-test',
@@ -14,26 +13,13 @@ import { User } from 'src/app/models/user';
 })
 export class TestComponent implements OnInit {
 
-  users: User[];
-  error:string;
   constructor(private http: HttpClient, private router: Router, private auth:AuthService,
     private userService:UserServiceService,private projectService:ProjectServiceService,
     private taskService:TaskServiceService) {
-      this.error='nothing';
     }
 
   ngOnInit() {
-    this.userService.getUsers().subscribe(
-      (value) =>{
-      this.users=value; 
-      this.error='f';
-      },
-      (error) =>{
-      this.error='Server Problem';
-      }
-    )
-  }
-  buttonFunc(){
+
   }
 
 }

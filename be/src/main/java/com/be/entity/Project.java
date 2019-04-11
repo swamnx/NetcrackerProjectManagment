@@ -1,15 +1,23 @@
 package com.be.entity;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.Objects;
 import java.util.Set;
 
+
 @Table(name = "Projects")
 @Entity
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "idProject",scope = Project.class)
 public class Project {
 
@@ -27,47 +35,10 @@ public class Project {
     private String description;
 
     @ManyToMany(mappedBy = "userProjects")
-   //@JsonBackReference(value = "project-Users")
     private Set<User> projectUsers;
 
     @OneToMany(mappedBy = "taskProject",cascade = CascadeType.ALL)
-    //@JsonBackReference(value = "project-Tasks")
     private Set<Task> projectTasks;
-
-    public int getIdProject() {
-        return idProject;
-    }
-    public void setIdProject(int idProject) {
-        this.idProject = idProject;
-    }
-
-    public String getCode() {
-        return code;
-    }
-    public void setCode(String code) {
-        this.code = code;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public Set<User> getProjectUsers() {
-        return projectUsers;
-    }
-    public void setProjectUsers(Set<User> projectUsers) {
-        this.projectUsers = projectUsers;
-    }
-
-    public Set<Task> getProjectTasks() {
-        return projectTasks;
-    }
-    public void setProjectTasks(Set<Task> projectTasks) {
-        this.projectTasks = projectTasks;
-    }
 
     @Override
     public boolean equals(Object o) {

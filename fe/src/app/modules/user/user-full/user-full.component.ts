@@ -22,19 +22,8 @@ export class UserFullComponent implements OnInit {
 
     }
   ready:boolean=false;
-  user:User = new User();
+  user:User;
   ngOnInit() {
-    const idUser = this.activatedRoute.snapshot.params['idUser'];
-    this.userService.getUserById(idUser).subscribe(
-      (value)=>{
-        this.user=value;
-        this.ready=true;
-      },
-      (error)=>{
-        if(error.status==403) this.router.navigateByUrl('/error/Forbidden');
-        else this.router.navigateByUrl('error/NotFound');
-      }
-    )
   }
   
 

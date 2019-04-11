@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { Task } from 'src/app/models/task';
+import { Task } from 'src/app/DTOs/TaskMain/TaskMain';
 import { MatTableDataSource, MatSort } from '@angular/material';
 import { DataSource } from '@angular/cdk/table';
 import { HttpClient } from '@angular/common/http';

@@ -8,10 +8,13 @@ import { TestComponent } from './modules/test/test.component';
 import { TableTasksComponent } from './modules/table-tasks/table-tasks.component';
 import { ErrorComponent } from './modules/error/error.component';
 import { UserFullComponent } from './modules/user/user-full/user-full.component';
+import { TaskFullComponent } from './modules/task/task-full/task-full.component';
+import { UserBasicComponent } from './modules/user/user-basic/user-basic.component';
 
 const routes: Routes = [
   {path:'', component: HomeComponent},
-  {path:'users/:idUser', component:UserFullComponent},
+  {path:'users/:idUser', component:UserBasicComponent},
+  {path:'tasks/:idTask', component:TaskFullComponent},
   {path:'table',component:TableTasksComponent},
   {path:'test',component:TestComponent},
   {path:'login', component: LoginComponent},

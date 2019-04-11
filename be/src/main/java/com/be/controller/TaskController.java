@@ -1,15 +1,15 @@
 package com.be.controller;
 
-import com.be.entity.Task;
-import com.be.repository.ProjectRepository;
-import com.be.repository.TaskRepository;
-import com.be.repository.UserRepository;
+import com.be.DTO.TaskMain.TaskMainMapper;
+import com.be.entity.*;
+import com.be.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.*;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@CrossOrigin(origins = "http://localhost:8083")
+@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/api/tasks")
 public class TaskController {
@@ -21,30 +21,13 @@ public class TaskController {
     private UserRepository userRepository;
 
     @GetMapping("")
-    public List<Task> getAllTasks() {
-        return taskRepository.findAll();
+    public Page<com.be.DTO.TaskMain.Task> getAllAvailableTasks(@RequestParam int page,@RequestParam int idUser) {
+        User user = userRepository.findUserByIdUser(idUser);
+        Page<Task> entityPage=taskRepository.findAllByTaskProjectIn(new PageRequest(page,10),user.getUserProjects());
+        List<Task> tasks = entityPage.getContent();
+        List<com.be.DTO.TaskMain.Task> tasksDTO = TaskMainMapper.INSTANCE.tasksToTasksDTO(tasks);
+
+        return new PageImpl<>(tasksDTO,new PageRequest(page,10),entityPage.getTotalElements());
     }
 
-    @PostMapping("")
-    public Task createTask(@RequestBody Task task) {
-        Task taskResult = taskRepository.save(task);
-        return taskResult;
-    }
-
-    @DeleteMapping("/{idTask}")
-    public void deleteTaskById(@PathVariable int idTask) {
-        Task taskResult = taskRepository.findTaskByIdTask(idTask);
-        taskRepository.delete(taskResult);
-    }
-    @GetMapping("/{idTask}")
-    public Task getTaskById(@PathVariable int idTask) {
-        Task taskResult = taskRepository.findTaskByIdTask(idTask);
-        return taskResult;
-    }
-
-    @PatchMapping("")
-    public Task updateTask(@RequestBody Task task) {
-        Task taskResult=taskRepository.save(task);
-        return taskResult;
-    }
 }

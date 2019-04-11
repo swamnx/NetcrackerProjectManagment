@@ -20,16 +20,14 @@ export class TableTasksComponent implements OnInit {
     private taskService:TaskServiceService) {
     this.error='';
   }
+  ready:boolean=false;
   ngOnInit() {
-    this.taskService.getTasks().subscribe(
-      (value) =>{
-      this.tasks=value; 
-      this.error='';
-      },
-      (error) =>{
-      this.error='Server Problem';
+    this.taskService.getTasks(0).subscribe(
+      (value)=>{
+        console.log(value);
+        this.ready=true;
       }
-    )
+    );
   }
 
 }

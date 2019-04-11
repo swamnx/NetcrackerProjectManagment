@@ -1,14 +1,14 @@
 package com.fapi.controller;
 
-import com.fapi.DTO.User;
+import com.fapi.DTO.Default.User;
 import com.fapi.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.HttpClientErrorException;
+import org.springframework.web.client.HttpServerErrorException;
 import org.springframework.web.client.RestTemplate;
-import org.springframework.web.util.UriComponentsBuilder;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -23,44 +23,47 @@ public class UserControlller {
     @Value("${backend.server.url}")
     private String backendServerUrl;
 
-    @GetMapping("")
-    public List<User> getAllUsers() {
+    @PostMapping("/sign")
+    public ResponseEntity<com.fapi.DTO.UserMain.User> signUser(@RequestBody User user) {
         RestTemplate restTemplate = new RestTemplate();
-        User[] usersResponse = restTemplate.getForObject(backendServerUrl + "/api/users", User[].class);
-        return usersResponse == null ? Collections.emptyList() : Arrays.asList(usersResponse);
+        try {
+            ResponseEntity<com.fapi.DTO.UserMain.User> responseUser = restTemplate.postForEntity(backendServerUrl + "/api/users/sign",user,com.fapi.DTO.UserMain.User.class);
+            return responseUser;
+        }
+        catch (HttpClientErrorException e){
+            return new ResponseEntity<>(e.getStatusCode());
+        }
+        catch (HttpServerErrorException e){
+            return new ResponseEntity<>(e.getStatusCode());
+        }
     }
-
     @PostMapping("")
-    public ResponseEntity<User> createUser(@RequestBody User user) {
+    public ResponseEntity<com.fapi.DTO.UserMain.User> createUser(@RequestBody User user) {
         RestTemplate restTemplate = new RestTemplate();
-        User responseUser =restTemplate.postForEntity(backendServerUrl + "/api/users", user, User.class).getBody();
-        if(responseUser == null) return ResponseEntity.badRequest().build();
-        return  ResponseEntity.ok(responseUser);
+        try {
+            ResponseEntity<com.fapi.DTO.UserMain.User> responseUser = restTemplate.postForEntity(backendServerUrl + "/api/users",user,com.fapi.DTO.UserMain.User.class);
+            return responseUser;
+        }
+        catch (HttpClientErrorException e){
+            return new ResponseEntity<>(e.getStatusCode());
+        }
+        catch (HttpServerErrorException e){
+            return new ResponseEntity<>(e.getStatusCode());
+        }
     }
-
 
     @GetMapping("/{idUser}")
-    public ResponseEntity<User> getUserById(@PathVariable int idUser) {
+    public ResponseEntity<com.fapi.DTO.UserMain.User> getUserById(@PathVariable int idUser) {
         RestTemplate restTemplate = new RestTemplate();
-        return restTemplate.getForEntity(backendServerUrl + "/api/users/" + idUser,User.class);
-    }
-    @DeleteMapping("/{idUser}")
-    public void deleteUserById(@PathVariable int idUser) {
-        RestTemplate restTemplate = new RestTemplate();
-        restTemplate.delete(backendServerUrl + "/api/users/" + idUser);
-    }
-
-    @PatchMapping("")
-    public User updateUser(@RequestBody User user) {
-        RestTemplate restTemplate = new RestTemplate();
-        return restTemplate.patchForObject(backendServerUrl + "/api/users", user, User.class);
-    }
-
-    @PostMapping("/sign")
-    public ResponseEntity<User  > signUser(@RequestBody User user) {
-        RestTemplate restTemplate = new RestTemplate();
-        User responseUser = restTemplate.postForEntity(backendServerUrl + "/api/users/sign", user, User.class).getBody();
-        if(responseUser == null) return ResponseEntity.notFound().build();
-        return  ResponseEntity.ok(responseUser);
+        try {
+            ResponseEntity<com.fapi.DTO.UserMain.User> responseUser = restTemplate.getForEntity(backendServerUrl + "/api/users/" + idUser,com.fapi.DTO.UserMain.User.class);
+            return responseUser;
+        }
+        catch (HttpClientErrorException e){
+            return new ResponseEntity<>(e.getStatusCode());
+        }
+        catch (HttpServerErrorException e){
+            return new ResponseEntity<>(e.getStatusCode());
+        }
     }
 }

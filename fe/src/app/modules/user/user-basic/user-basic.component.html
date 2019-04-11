@@ -1,3 +1,32 @@
-<p>
-  user-basic works!
-</p>
+<div class="card">
+  <div class="card-body">
+    <h4 class="card-title">User Info</h4>
+    <h6 class="card-subtitle mb-2 text-muted">Here you can see basic info about this user</h6>
+  </div>
+</div>
+<div class="card">
+  <div class="card" *ngIf="ready==true">
+    <div class="card-body">
+      <mat-card-content>
+        <h5 class="card-title">Email</h5>
+        <h6 class="card-subtitle mb-2 text-muted">{{user.email}}</h6>
+        <h5 class="card-title">Name</h5>
+        <h6 class="card-subtitle mb-2 text-muted">{{user.name}}</h6>
+        <h5 class="card-title">Role</h5>
+        <h6 class="card-subtitle mb-2 text-muted">{{user.role}}</h6>
+      </mat-card-content>
+    </div>
+  </div>
+</div>
+<div class="card" *ngIf="ready==true">
+  <div class="card-body">
+    <h5 class="card-title">Projects Info</h5>
+    <h6 class="card-subtitle mb-2 text-muted">Info about user's projects</h6>
+    <div class="card" *ngFor="let project of user.userProjects">
+      <div class="card-body">
+        <h5 class="card-title">Project code:{{project.code}}</h5>
+        <h6 class="card-subtitle mb-2 text-muted">{{project.description}}</h6>
+      </div>
+    </div>
+  </div>
+</div>

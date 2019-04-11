@@ -6,7 +6,6 @@ import { UserServiceService } from 'src/app/services/user-service.service';
 import { ProjectServiceService } from 'src/app/services/project-service.service';
 import { AuthService } from 'src/app/services/auth-service.service';
 import { TaskServiceService } from 'src/app/services/task-service.service';
-import { Comment } from 'src/app/models/comment';
 import { CommentBasicWithIds } from 'src/app/DTOs/comment';
 @Component({
   selector: 'app-comment-basic',
@@ -20,15 +19,7 @@ export class CommentBasicComponent implements OnInit {
     private taskService:TaskServiceService, private activatedRoute:ActivatedRoute) { }
 
     ready:boolean=false;
-    user:User;
   ngOnInit() {
-    this.userService.getUserById(this.comment.commentUser).subscribe(
-      (value)=>{
-        console.log(this.comment);
-        this.user=value;
-        this.ready=true;
-      }
-    )
   }
   @Input() comment:CommentBasicWithIds;
 }

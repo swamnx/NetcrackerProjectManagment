@@ -1,7 +1,6 @@
 package com.be.entity;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import javax.persistence.*;
@@ -9,8 +8,14 @@ import java.time.LocalDate;
 import java.util.Objects;
 import java.util.Set;
 
+import lombok.*;
+
 @Table(name ="Tasks")
 @Entity
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "idTask",scope = Task.class)
 public class Task {
 
@@ -55,110 +60,16 @@ public class Task {
     @Column(name = "estimationDate")
     private LocalDate estimationDate;
 
-    //@JsonManagedReference(value = "task-User")
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne
     @JoinColumn(name = "idUser")
     private User taskUser;
 
     @OneToMany(mappedBy = "commentTask",cascade = CascadeType.ALL)
     private Set<Comment> taskComments;
 
-    //@JsonManagedReference(value = "task-Project")
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne
     @JoinColumn(name = "idProject")
     private Project taskProject;
-
-    public Set<Comment> getTaskComments() {
-        return taskComments;
-    }
-
-    public void setTaskComments(Set<Comment> taskComments) {
-        this.taskComments = taskComments;
-    }
-
-    public int getIdTask() {
-        return idTask;
-    }
-    public void setIdTask(int idTask) {
-        this.idTask = idTask;
-    }
-
-    public int getIdCreatedBy() {
-        return idCreatedBy;
-    }
-    public void setIdCreatedBy(int idCreatedBy) {
-        this.idCreatedBy = idCreatedBy;
-    }
-
-    public String getCode() {
-        return code;
-    }
-    public void setCode(String code) {
-        this.code = code;
-    }
-
-    public String getPriority() {
-        return priority;
-    }
-    public void setPriority(String priority) {
-        this.priority = priority;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-    public void setStatus(String status) {
-        this.status = status;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public LocalDate getCreateDate() {
-        return createDate;
-    }
-    public void setCreateDate(LocalDate createDate) {
-        this.createDate = createDate;
-    }
-
-    public LocalDate getUpdateDate() {
-        return updateDate;
-    }
-    public void setUpdateDate(LocalDate updateDate) {
-        this.updateDate = updateDate;
-    }
-
-    public LocalDate getDueDate() {
-        return dueDate;
-    }
-    public void setDueDate(LocalDate dueDate) {
-        this.dueDate = dueDate;
-    }
-
-    public LocalDate getEstimationDate() {
-        return estimationDate;
-    }
-    public void setEstimationDate(LocalDate estimationDate) {
-        this.estimationDate = estimationDate;
-    }
-
-    public User getTaskUser() {
-        return taskUser;
-    }
-    public void setTaskUser(User taskUser) {
-        this.taskUser = taskUser;
-    }
-
-    public Project getTaskProject() {
-        return taskProject;
-    }
-    public void setTaskProject(Project taskProject) {
-        this.taskProject = taskProject;
-    }
 
     @Override
     public boolean equals(Object o) {

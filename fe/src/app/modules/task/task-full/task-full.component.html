@@ -1,3 +1,61 @@
-<p>
-  task-full works!
-</p>
+<div *ngIf="ready == true">
+
+  <div class="card">
+    <div class="card-body">
+        <h4 class="card-title">Project code:{{task.taskProject.code}}</h4>
+        <h5 class="card-title">Description:</h5>
+        <h6 class="card-subtitle mb-2 text-muted">{{task.taskProject.description}}</h6>
+    </div>
+  </div>
+  
+  <div class="card">
+      <div class="card-body">
+          <h4 class="card-title">Task code:{{task.code}}</h4>
+          <h5 class="card-title">Description:</h5>
+          <h6 class="card-subtitle mb-2 text-muted">{{task.description}}</h6>
+      </div>
+  </div>
+
+  <div class="card">
+      <div class="card-body">
+          <h4 class="card-title">Task details:</h4>
+            <div class="card-body">
+              <h5 class="card-title">Priority:</h5>
+                <h6 class="card-subtitle mb-2 text-muted">{{task.priority}}</h6>
+              <h5 class="card-title">Status:</h5>
+                <h6 class="card-subtitle mb-2 text-muted">{{task.status}}</h6>
+              <h5 class="card-title">Asigned to:</h5>
+                <h6 class="card-subtitle mb-2 text-muted">{{task.taskUser.name}}</h6>
+             </div>
+      </div>
+  </div>
+
+  <div class="card">
+      <div class="card-body">
+          <h4 class="card-title">Time details:</h4>
+            <div class="card-body">
+              <h5 class="card-title">Create date:</h5>
+                <h6 class="card-subtitle mb-2 text-muted">{{task.createDate}}</h6>
+              <h5 class="card-title">Update date:</h5>
+                <h6 class="card-subtitle mb-2 text-muted">{{task.updateDate}}</h6>
+              <h5 class="card-title">Due date:</h5>
+                <h6 class="card-subtitle mb-2 text-muted">{{task.dueDate}}</h6>
+              <h5 class="card-title">Estimation date:</h5>
+                <h6 class="card-subtitle mb-2 text-muted">{{task.estimationDate}}</h6>  
+             </div>
+      </div>
+  </div>
+
+  <div class="card" *ngIf="task.taskComments.length>0">
+      <div class="card-body">
+          <h4 class="card-title">Comments:</h4>
+          <div class="card" *ngFor="let comment of task.taskComments">
+            <div class="card-body">
+              <h5 class="card-title">{{comment.commentUser.name}}:</h5>
+                <h6 class="card-subtitle mb-2 text-muted">{{comment.comment}}</h6>
+            </div>
+          </div>
+      </div>
+  </div>
+
+</div>

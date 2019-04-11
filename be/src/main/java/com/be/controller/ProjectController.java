@@ -1,15 +1,14 @@
 package com.be.controller;
 
-import com.be.entity.Project;
-import com.be.repository.ProjectRepository;
-import com.be.repository.TaskRepository;
-import com.be.repository.UserRepository;
+import com.be.DTO.ProjectMain.ProjectMainMapper;
+import com.be.entity.*;
+import com.be.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
-@CrossOrigin(origins = "http://localhost:8083")
+@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/api/projects")
 public class ProjectController {
@@ -20,26 +19,12 @@ public class ProjectController {
     @Autowired
     private UserRepository userRepository;
 
-    @GetMapping("")
-    public List<Project> getAllProjects() {
-        return projectRepository.findAll();
-    }
-
-    @PostMapping("")
-    public Project createProject(@RequestBody Project project) {
-        Project projectResult = projectRepository.save(project);
-        return projectResult;
-    }
-
-    @DeleteMapping("/{idProject}")
-    public void deleteProjectById(@PathVariable int idProject) {
+    @GetMapping("/{idProject}")
+    public ResponseEntity<com.be.DTO.ProjectMain.Project> getProjectById(@PathVariable int idProject){
         Project projectResult = projectRepository.findProjectByIdProject(idProject);
-        projectRepository.delete(projectResult);
-    }
-
-    @PatchMapping("")
-    public Project updateProject(@RequestBody Project project) {
-        Project projectResult=projectRepository.save(project);
-        return projectResult;
+        if(projectResult==null)
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        else
+            return new ResponseEntity<>(ProjectMainMapper.INSTANCE.projectToProjectDTO(projectResult),HttpStatus.OK);
     }
 }

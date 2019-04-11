@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { AuthService } from './auth-service.service';
-import { Task } from '../models/task';
+import { Task,Project,Comment,User,Page } from 'src/app/DTOs/TaskMain/TaskMain';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -11,19 +11,26 @@ export class TaskServiceService {
 
   constructor(private http:HttpClient, private auth:AuthService) { }
 
-  getTasks():Observable<Task[]>{
-    return this.http.get<Task[]>('http://localhost:8083/api/tasks');
+  getTasks(page:number):Observable<Page>{
+    let options = {
+      params: new HttpParams()
+      .set('page',page.toString(10))
+      .set('size','5')
+      .set('idUser',this.auth.user.idUser.toString(10))
+    }
+    return this.http.get<Page>('api/tasks',options);
   }
   createTask(task:Task):Observable<Task>{
-    return this.http.post<Task>('http://localhost:8083/api/tasks',task);
+    return this.http.post<Task>('api/tasks',task);
   }
   updateTask(task:Task):Observable<Task>{
-    return this.http.patch<Task>('http://localhost:8083/api/tasks',task);
+    return this.http.patch<Task>('api/tasks',task);
   }
   deleteTaskById(idTask:number):Observable<void>{
-    return this.http.delete<void>('http://localhost:8083/api/tasks/'+idTask);
+    return this.http.delete<void>('api/tasks/'+idTask);
   }
   getTaskById(idTask:number):Observable<Task>{
-    return this.http.get<Task>('http://localhost:8083/api/tasks/'+idTask);
+    let options ={params: new HttpParams().set('idUser','1')}
+    return this.http.get<Task>('api/tasks/'+idTask,options);
   }
 }
