@@ -15,6 +15,7 @@ export class User{
     idUser:number;
     name:string;
     role:string;
+    email:string;
     userProjects:Array<Project>
     userTasks:Array<Task>
 }

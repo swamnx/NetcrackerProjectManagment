@@ -15,7 +15,7 @@ export class TaskServiceService {
     let options = {
       params: new HttpParams()
       .set('page',page.toString(10))
-      .set('size','5')
+      .set('size','3')
       .set('idUser',this.auth.user.idUser.toString(10))
     }
     return this.http.get<Page>('api/tasks',options);
@@ -30,7 +30,7 @@ export class TaskServiceService {
     return this.http.delete<void>('api/tasks/'+idTask);
   }
   getTaskById(idTask:number):Observable<Task>{
-    let options ={params: new HttpParams().set('idUser','1')}
+    let options ={params: new HttpParams().set('idUser',this.auth.user.idUser.toString(10))};
     return this.http.get<Task>('api/tasks/'+idTask,options);
   }
 }

@@ -27,4 +27,13 @@ public class ProjectController {
         else
             return new ResponseEntity<>(ProjectMainMapper.INSTANCE.projectToProjectDTO(projectResult),HttpStatus.OK);
     }
+    @PostMapping("")
+    public ResponseEntity<com.be.DTO.ProjectMain.Project> createProject(@RequestBody Project project){
+        Project projectFound = projectRepository.findProjectByCode(project.getCode());
+        if(projectFound!=null)
+            return new ResponseEntity<>(HttpStatus.CONFLICT);
+
+        Project projectResult = projectRepository.save(project);
+        return new ResponseEntity<>(ProjectMainMapper.INSTANCE.projectToProjectDTO(projectResult),HttpStatus.OK);
+    }
 }

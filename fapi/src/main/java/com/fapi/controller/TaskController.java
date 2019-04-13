@@ -32,10 +32,10 @@ public class TaskController {
         }
     }
     @GetMapping("")
-    public ResponseEntity<Page<com.fapi.DTO.TaskMain.Task>> getAllAvailableTasks(@RequestParam Integer page, @RequestParam Integer idUser){
+    public ResponseEntity<Page<com.fapi.DTO.TaskMain.Task>> getAllAvailableTasks(@RequestParam Integer page,@RequestParam Integer size,@RequestParam Integer idUser){
         RestTemplate restTemplate = new RestTemplate();
         try {
-            Page<com.fapi.DTO.TaskMain.Task> responsePage = restTemplate.getForObject(backendServerUrl + "/api/tasks?page="+page+"&idUser="+idUser,CustomPageImpl.class);
+            Page<com.fapi.DTO.TaskMain.Task> responsePage = restTemplate.getForObject(backendServerUrl + "/api/tasks?page="+page+"&idUser="+idUser+"&size="+size,CustomPageImpl.class);
             return new ResponseEntity<>(responsePage,HttpStatus.OK);
         }
         catch (HttpClientErrorException e){

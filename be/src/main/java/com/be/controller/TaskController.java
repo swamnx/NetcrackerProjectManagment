@@ -5,6 +5,8 @@ import com.be.entity.*;
 import com.be.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.*;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -21,13 +23,19 @@ public class TaskController {
     private UserRepository userRepository;
 
     @GetMapping("")
-    public Page<com.be.DTO.TaskMain.Task> getAllAvailableTasks(@RequestParam int page,@RequestParam int idUser) {
+    public Page<com.be.DTO.TaskMain.Task> getAllAvailableTasks(@RequestParam int page,@RequestParam int size,@RequestParam int idUser) {
         User user = userRepository.findUserByIdUser(idUser);
-        Page<Task> entityPage=taskRepository.findAllByTaskProjectIn(new PageRequest(page,10),user.getUserProjects());
+        Page<Task> entityPage=taskRepository.findAllByTaskProjectIn(new PageRequest(page,size),user.getUserProjects());
         List<Task> tasks = entityPage.getContent();
         List<com.be.DTO.TaskMain.Task> tasksDTO = TaskMainMapper.INSTANCE.tasksToTasksDTO(tasks);
 
-        return new PageImpl<>(tasksDTO,new PageRequest(page,10),entityPage.getTotalElements());
+        return new PageImpl<>(tasksDTO,new PageRequest(page,size),entityPage.getTotalElements());
+    }
+    @GetMapping("/{idTask}")
+    public ResponseEntity<com.be.DTO.TaskMain.Task> getTaskById(@PathVariable int idTask){
+        Task taskResult = taskRepository.findTaskByIdTask(idTask);
+        if(taskResult==null) return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(TaskMainMapper.INSTANCE.taskToTaskDTO(taskResult),HttpStatus.OK);
     }
 
 }

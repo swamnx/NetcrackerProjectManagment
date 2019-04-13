@@ -14,7 +14,6 @@ import { HomeComponent } from 'src/app/modules/home/home.component';
 import { LoginComponent } from './modules/login/login.component';
 import { RegistrationComponent } from './modules/registration/registration.component';
 import { TestComponent } from './modules/test/test.component';
-import { TableTasksComponent } from './modules/table-tasks/table-tasks.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {MatCheckboxModule} from '@angular/material';
 import {MatButtonModule} from '@angular/material';
@@ -55,6 +54,9 @@ import { TaskBasicComponent } from './modules/task/task-basic/task-basic.compone
 import { TaskFullComponent } from './modules/task/task-full/task-full.component';
 import { CommentBasicComponent } from './modules/comment/comment-basic/comment-basic.component';
 import { CommentFullComponent } from './modules/comment/comment-full/comment-full.component';
+import { TableTasksRealComponent } from './modules/table-tasks-real/table-tasks-real.component';
+import { TableTasksAvailableComponent } from './modules/table-tasks-available/table-tasks-available.component';
+import { CreateProjectComponent } from './modules/create-project/create-project.component';
 
 @NgModule({
   declarations: [
@@ -66,7 +68,6 @@ import { CommentFullComponent } from './modules/comment/comment-full/comment-ful
     LoginComponent,
     RegistrationComponent,
     TestComponent,
-    TableTasksComponent,
     UserBasicComponent,
     UserFullComponent,
     ErrorComponent,
@@ -76,6 +77,9 @@ import { CommentFullComponent } from './modules/comment/comment-full/comment-ful
     TaskFullComponent,
     CommentBasicComponent,
     CommentFullComponent,
+    TableTasksRealComponent,
+    TableTasksAvailableComponent,
+    CreateProjectComponent,
   ],
   imports: [
     BrowserModule,

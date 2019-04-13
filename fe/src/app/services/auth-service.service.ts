@@ -14,7 +14,7 @@ import { UserForAuth } from '../DTOs/user';
 export class AuthService {
   authenticated = false;
   problem = '';
-  user:User=null;
+  user:User;
   token = '';
 
   constructor(private http: HttpClient, private router: Router) {

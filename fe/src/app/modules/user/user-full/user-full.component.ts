@@ -5,9 +5,7 @@ import { AuthService } from 'src/app/services/auth-service.service';
 import { UserServiceService } from 'src/app/services/user-service.service';
 import { ProjectServiceService } from 'src/app/services/project-service.service';
 import { TaskServiceService } from 'src/app/services/task-service.service';
-import { User} from 'src/app/models/user';
-import { Task} from 'src/app/models/task';
-import { Project} from 'src/app/models/project';
+import { User,Project,Task,Comment} from 'src/app/DTOs/UserMain/UserMain';
 
 @Component({
   selector: 'app-user-full',

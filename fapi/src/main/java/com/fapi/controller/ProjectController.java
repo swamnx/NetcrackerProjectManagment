@@ -27,9 +27,17 @@ public class ProjectController {
             return responseProjectDTO;
         }
         catch (HttpClientErrorException e){
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(e.getStatusCode());
         }
-        catch (HttpServerErrorException e){
+    }
+    @PostMapping("")
+    public ResponseEntity<com.fapi.DTO.ProjectMain.Project> createProject(@RequestBody Project project){
+        RestTemplate restTemplate = new RestTemplate();
+        try {
+            ResponseEntity<com.fapi.DTO.ProjectMain.Project> responseProjectDTO = restTemplate.postForEntity(backendServerUrl + "/api/projects",project,com.fapi.DTO.ProjectMain.Project.class);
+            return responseProjectDTO;
+        }
+        catch (HttpClientErrorException e){
             return new ResponseEntity<>(e.getStatusCode());
         }
     }
