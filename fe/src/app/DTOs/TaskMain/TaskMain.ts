@@ -1,7 +1,7 @@
 export class Task{
     idTask:number;
     idCreatedBy:number;
-    code:string;
+    code:number;
     priority:string;
     status:string;
     description:string;

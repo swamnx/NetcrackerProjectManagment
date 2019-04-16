@@ -3,10 +3,10 @@
   <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
         <div class="collapse navbar-collapse" id="navbarNav">
                    <a class="nav-item nav-link" routerLink="/">About</a>
-                   <div *ngIf=" auth.authenticated == true">
-                         <a class="nav-item nav-link" routerLink="/availableTasks">Available tasks</a>
-                         <a  *ngIf=" auth.authenticated.user.role === 'pm' " class="nav-item nav-link" routerLink="/createProject">Create Project</a>
-                   </div>
+                         <a *ngIf=" auth.authenticated == true" class="nav-item nav-link" routerLink="/availableTasks">Available tasks</a>
+                         <a *ngIf=" auth.authenticated == true" class="nav-item nav-link" routerLink="/createTask">Create taskg</a>
+                         <a *ngIf=" auth.authenticated == true && auth.user.role === 'pm' " class="nav-item nav-link" routerLink="/createProject">Create Project</a>
+                         
         </div>
         <span class="navbar-text">
               <div class="collapse navbar-collapse" id="navbarNav" *ngIf=" auth.authenticated == false ; else logouttemplate ">

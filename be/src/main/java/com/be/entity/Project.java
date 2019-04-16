@@ -37,7 +37,7 @@ public class Project {
     @ManyToMany(mappedBy = "userProjects")
     private Set<User> projectUsers;
 
-    @OneToMany(mappedBy = "taskProject",cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "taskProject")
     private Set<Task> projectTasks;
 
     @Override

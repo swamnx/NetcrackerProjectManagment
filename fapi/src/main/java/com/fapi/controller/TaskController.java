@@ -1,6 +1,7 @@
 package com.fapi.controller;
 
 import com.fapi.DTO.CustomPageImpl;
+import com.fapi.DTO.TaskMain.Task;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
@@ -44,6 +45,18 @@ public class TaskController {
         catch (HttpServerErrorException e){
             return new ResponseEntity<>(e.getStatusCode());
         }
+    }
+    @PostMapping("")
+    public ResponseEntity<com.fapi.DTO.TaskMain.Task> createTask(@RequestBody com.fapi.DTO.TaskMain.Task task){
+        RestTemplate restTemplate = new RestTemplate();
+        try {
+            ResponseEntity<com.fapi.DTO.TaskMain.Task> responseEntity = restTemplate.postForEntity(backendServerUrl+"/api/tasks",task,com.fapi.DTO.TaskMain.Task.class);
+            return responseEntity;
+    }
+        catch (HttpClientErrorException e){
+            return new ResponseEntity<>(e.getStatusCode());
+        }
+
     }
 
 }

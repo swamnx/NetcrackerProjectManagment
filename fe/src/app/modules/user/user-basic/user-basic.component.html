@@ -24,7 +24,7 @@
     <h6 class="card-subtitle mb-2 text-muted">Info about user's projects</h6>
     <div class="card" *ngFor="let project of user.userProjects">
       <div class="card-body">
-        <h5 class="card-title">Project code:{{project.code}}</h5>
+        <h5 class="card-title">Project code:<a routerLink="/projects/{{project.idProject}}">{{project.code}}</a></h5>
         <h6 class="card-subtitle mb-2 text-muted">{{project.description}}</h6>
       </div>
     </div>

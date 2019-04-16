@@ -10,8 +10,8 @@ export class UserServiceService {
 
   constructor(private http:HttpClient, private auth:AuthService) { }
 
-  getUsers():Observable<User[]>{
-    return this.http.get<User[]>('api/users');
+  getUsers():Observable<any[]>{
+    return this.http.get<any[]>('api/users');
   }
   createUser(user:User):Observable<User>{
     return this.http.post<User>('api/users',user);

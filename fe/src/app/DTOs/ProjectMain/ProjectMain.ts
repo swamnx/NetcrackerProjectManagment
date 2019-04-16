@@ -9,6 +9,7 @@ export class Task{
     updateDate:Date;
     dueDate:Date;
     estimationDate:Date;
+    taskUser:User;
     taskComments:Array<Comment>;
 }
 export class User{
@@ -16,13 +17,13 @@ export class User{
     name:string;
     role:string;
     email:string;
-    userProjects:Array<Project>
-    userTasks:Array<Task>
 }
 export class Project{
     idProject:number;
     code:number;
     description:string;
+    projectUsers:Array<User>
+    projectTasks:Array<Task>
 }
 export class Comment{
     idComment:number;

@@ -20,7 +20,7 @@ public class ProjectController {
     private String backendServerUrl;
 
     @GetMapping("/{idProject}")
-    public ResponseEntity<com.fapi.DTO.ProjectMain.Project> getProjectById(@PathVariable int idProject) {
+    public ResponseEntity<com.fapi.DTO.ProjectMain.Project> getFullProjectById(@PathVariable int idProject) {
         RestTemplate restTemplate = new RestTemplate();
         try {
             ResponseEntity<com.fapi.DTO.ProjectMain.Project> responseProjectDTO = restTemplate.getForEntity(backendServerUrl + "/api/projects/" + idProject,com.fapi.DTO.ProjectMain.Project.class);
@@ -30,12 +30,23 @@ public class ProjectController {
             return new ResponseEntity<>(e.getStatusCode());
         }
     }
-    @PostMapping("")
-    public ResponseEntity<com.fapi.DTO.ProjectMain.Project> createProject(@RequestBody Project project){
+    @PostMapping("/{idUser}")
+    public ResponseEntity<com.fapi.DTO.ProjectMain.Project> createProject(@RequestBody Project project,@PathVariable int idUser){
         RestTemplate restTemplate = new RestTemplate();
         try {
-            ResponseEntity<com.fapi.DTO.ProjectMain.Project> responseProjectDTO = restTemplate.postForEntity(backendServerUrl + "/api/projects",project,com.fapi.DTO.ProjectMain.Project.class);
+            ResponseEntity<com.fapi.DTO.ProjectMain.Project> responseProjectDTO = restTemplate.postForEntity(backendServerUrl + "/api/projects/"+idUser,project,com.fapi.DTO.ProjectMain.Project.class);
             return responseProjectDTO;
+        }
+        catch (HttpClientErrorException e){
+            return new ResponseEntity<>(e.getStatusCode());
+        }
+    }
+    @GetMapping("/users/{idUser}")
+    public ResponseEntity<com.fapi.DTO.ProjectMain.Project[]> getAllProjects(@PathVariable int idUser){
+        RestTemplate restTemplate = new RestTemplate();
+        try {
+            ResponseEntity<com.fapi.DTO.ProjectMain.Project[]> responseProjectDTOs = restTemplate.getForEntity(backendServerUrl + "/api/projects/users/ "+idUser,com.fapi.DTO.ProjectMain.Project[].class);
+            return responseProjectDTOs;
         }
         catch (HttpClientErrorException e){
             return new ResponseEntity<>(e.getStatusCode());

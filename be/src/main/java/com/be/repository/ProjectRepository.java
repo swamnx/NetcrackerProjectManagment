@@ -8,7 +8,6 @@ import java.util.List;
 
 @Repository
 public interface ProjectRepository extends JpaRepository<Project,Long> {
-    List<Project> findAll();
     Project findProjectByCode(String code);
     Project findProjectByIdProject(Integer id);
     Project save(Project project);

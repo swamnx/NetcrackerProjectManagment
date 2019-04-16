@@ -15,7 +15,7 @@ import { LoginComponent } from './modules/login/login.component';
 import { RegistrationComponent } from './modules/registration/registration.component';
 import { TestComponent } from './modules/test/test.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import {MatCheckboxModule} from '@angular/material';
+import {MatCheckboxModule, MatNativeDateModule} from '@angular/material';
 import {MatButtonModule} from '@angular/material';
 import {MatInputModule} from '@angular/material/input';
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
@@ -57,6 +57,9 @@ import { CommentFullComponent } from './modules/comment/comment-full/comment-ful
 import { TableTasksRealComponent } from './modules/table-tasks-real/table-tasks-real.component';
 import { TableTasksAvailableComponent } from './modules/table-tasks-available/table-tasks-available.component';
 import { CreateProjectComponent } from './modules/create-project/create-project.component';
+import { AddUserOnProjectComponent } from './modules/add-user-on-project/add-user-on-project.component';
+import { CreateTaskComponent } from './modules/create-task/create-task.component';
+import { CreateTaskOnProjectComponent } from './modules/create-task-on-project/create-task-on-project.component';
 
 @NgModule({
   declarations: [
@@ -80,6 +83,9 @@ import { CreateProjectComponent } from './modules/create-project/create-project.
     TableTasksRealComponent,
     TableTasksAvailableComponent,
     CreateProjectComponent,
+    AddUserOnProjectComponent,
+    CreateTaskComponent,
+    CreateTaskOnProjectComponent,
   ],
   imports: [
     BrowserModule,
@@ -92,6 +98,7 @@ import { CreateProjectComponent } from './modules/create-project/create-project.
     MatCheckboxModule,
     MatButtonModule,
     MatInputModule,
+    MatNativeDateModule,
     MatAutocompleteModule,
     MatDatepickerModule,
     MatFormFieldModule,

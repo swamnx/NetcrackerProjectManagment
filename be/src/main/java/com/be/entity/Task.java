@@ -30,7 +30,7 @@ public class Task {
 
     @Basic
     @Column(name = "code")
-    private String code;
+    private int code;
 
     @Basic
     @Column(name = "priority")

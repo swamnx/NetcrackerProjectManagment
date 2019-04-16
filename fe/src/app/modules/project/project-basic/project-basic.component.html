@@ -1,4 +1,4 @@
-<div class="card">
+<div *ngIf="ready==true" class="card">
     <div class="card-body">
         <mat-card-content>
           <h6 class="card-title">Project Code</h6>
@@ -8,3 +8,11 @@
         </mat-card-content>
     </div>
   </div>
+  <div *ngIf="auth.user.role =='pm' ">
+    <a routerLink="addUser">Add User</a>
+  </div>
+  <mat-list *ngIf="ready==true">
+    <mat-list-item *ngFor="let user of project.projectUsers">
+      <a routerLink="/users/{{user.idUser}}">{{user.name}}</a>
+    </mat-list-item>
+  </mat-list>

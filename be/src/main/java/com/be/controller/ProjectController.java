@@ -8,6 +8,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+import java.util.Set;
+
 @CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/api/projects")
@@ -27,13 +30,24 @@ public class ProjectController {
         else
             return new ResponseEntity<>(ProjectMainMapper.INSTANCE.projectToProjectDTO(projectResult),HttpStatus.OK);
     }
-    @PostMapping("")
-    public ResponseEntity<com.be.DTO.ProjectMain.Project> createProject(@RequestBody Project project){
+    @PostMapping("/{idUser}")
+    public ResponseEntity<com.be.DTO.ProjectMain.Project> createProject(@RequestBody Project project,@PathVariable Integer idUser){
         Project projectFound = projectRepository.findProjectByCode(project.getCode());
         if(projectFound!=null)
             return new ResponseEntity<>(HttpStatus.CONFLICT);
-
+        User user = userRepository.findUserByIdUser(idUser);
         Project projectResult = projectRepository.save(project);
-        return new ResponseEntity<>(ProjectMainMapper.INSTANCE.projectToProjectDTO(projectResult),HttpStatus.OK);
+        Set<Project> userProjects = user.getUserProjects();
+        userProjects.add(projectResult);
+        user.setUserProjects(userProjects);
+        userRepository.save(user);
+        return new ResponseEntity<>(ProjectMainMapper.INSTANCE.projectToProjectDTO(projectRepository.findProjectByIdProject(projectResult.getIdProject())),HttpStatus.OK);
+    }
+    @GetMapping("/users/{idUser}")
+    public ResponseEntity<Set<com.be.DTO.ProjectMain.Project>> getAllProjectsForUser(@PathVariable int idUser) {
+        User userFound = userRepository.findUserByIdUser(idUser);
+        if(userFound==null || userFound.getUserProjects().size()==0)
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(ProjectMainMapper.INSTANCE.projectsToProjectsDTO(userFound.getUserProjects()),HttpStatus.OK);
     }
 }

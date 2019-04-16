@@ -1,6 +1,7 @@
 package com.be.controller;
 
 import com.be.DTO.UserMain.UserMainMapper;
+import com.be.entity.Project;
 import com.be.entity.User;
 import com.be.repository.ProjectRepository;
 import com.be.repository.TaskRepository;
@@ -15,12 +16,15 @@ import org.springframework.web.bind.annotation.*;
 
 
 import java.util.List;
+import java.util.Set;
+
 @Slf4j
 @RequiredArgsConstructor
 @CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/api/users")
 public class UserController {
+    @Autowired
     private ProjectRepository projectRepository;
     @Autowired
     private TaskRepository taskRepository;
@@ -53,6 +57,25 @@ public class UserController {
         User userResult = userRepository.findUserByIdUser(idUser);
         if(userResult==null) return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         return new ResponseEntity<>(UserMainMapper.INSTANCE.userToUserDTO(userResult),HttpStatus.OK);
+    }
+    @GetMapping("")
+    public ResponseEntity<List<com.be.DTO.UserMain.User>> getAllUser(){
+        List<User> usersResult = userRepository.findAll();
+        return new ResponseEntity<>(UserMainMapper.INSTANCE.usersToUserDTOs(usersResult),HttpStatus.OK);
+    }
+    @PatchMapping("/addUserOnProject/{idProject}")
+    public ResponseEntity<com.be.DTO.UserMain.User> addUserOnProject(@RequestBody User user, @PathVariable int idProject) {
+        User userResult = userRepository.findUserByIdUser(user.getIdUser());
+        Project projectResult = projectRepository.findProjectByIdProject(idProject);
+        if(userResult==null || projectResult==null)
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        Set<Project> projectSet = userResult.getUserProjects();
+        if(!projectSet.add(projectResult)){
+            return new ResponseEntity<>(HttpStatus.CONFLICT);
+        }
+        userResult.setUserProjects(projectSet);
+        User userResponse = userRepository.save(userResult);
+        return new ResponseEntity<>(UserMainMapper.INSTANCE.userToUserDTO(userResponse),HttpStatus.OK);
     }
 
 }
