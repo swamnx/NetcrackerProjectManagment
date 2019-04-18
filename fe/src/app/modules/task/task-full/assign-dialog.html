@@ -1,0 +1,13 @@
+<h1 mat-dialog-title>Hi, choose next person</h1>
+<mat-form-field>
+    <mat-label>User email</mat-label>
+    <mat-select [(ngModel)]="user111" name="user111">
+      <mat-option *ngFor="let user of data.users" [value]="user">
+        {{user.email}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+<div mat-dialog-actions>
+  <button mat-button [mat-dialog-close]="null">No Thanks</button>
+  <button mat-button [mat-dialog-close]="user111" cdkFocusInitial>Ok</button>
+</div>

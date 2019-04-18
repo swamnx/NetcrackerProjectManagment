@@ -17,11 +17,13 @@ export class User{
     idUser:number;
     name:string;
     role:string;
+    email:string;
 }
 export class Project{
     idProject:number;
     code:number;
     description:string;
+    projectUsers:Array<User>;
 }
 export class Comment{
     idComment:number;

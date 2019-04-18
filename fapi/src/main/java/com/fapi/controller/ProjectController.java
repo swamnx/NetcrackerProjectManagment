@@ -3,6 +3,7 @@ package com.fapi.controller;
 import com.fapi.DTO.Default.Project;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.*;
+import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.HttpServerErrorException;
@@ -43,7 +44,10 @@ public class ProjectController {
     }
     @GetMapping("/users/{idUser}")
     public ResponseEntity<com.fapi.DTO.ProjectMain.Project[]> getAllProjects(@PathVariable int idUser){
-        RestTemplate restTemplate = new RestTemplate();
+        HttpComponentsClientHttpRequestFactory httpRequestFactory = new HttpComponentsClientHttpRequestFactory();
+        httpRequestFactory.setConnectTimeout(10000);
+        httpRequestFactory.setReadTimeout(10000);
+        RestTemplate restTemplate = new RestTemplate(httpRequestFactory);
         try {
             ResponseEntity<com.fapi.DTO.ProjectMain.Project[]> responseProjectDTOs = restTemplate.getForEntity(backendServerUrl + "/api/projects/users/ "+idUser,com.fapi.DTO.ProjectMain.Project[].class);
             return responseProjectDTOs;

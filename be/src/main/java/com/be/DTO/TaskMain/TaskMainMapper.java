@@ -11,5 +11,6 @@ public interface TaskMainMapper {
     TaskMainMapper INSTANCE = Mappers.getMapper(TaskMainMapper.class);
     Task taskToTaskDTO(com.be.entity.Task task);
     List<Task> tasksToTasksDTO(List<com.be.entity.Task> tasks);
+    com.be.entity.Task taskDTOToTask(Task task);
 
 }

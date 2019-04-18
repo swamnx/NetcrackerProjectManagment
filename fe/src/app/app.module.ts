@@ -51,7 +51,7 @@ import { ErrorComponent } from './modules/error/error.component';
 import { ProjectBasicComponent } from './modules/project/project-basic/project-basic.component';
 import { ProjectFullComponent } from './modules/project/project-full/project-full.component';
 import { TaskBasicComponent } from './modules/task/task-basic/task-basic.component';
-import { TaskFullComponent } from './modules/task/task-full/task-full.component';
+import { TaskFullComponent, AssignDialog } from './modules/task/task-full/task-full.component';
 import { CommentBasicComponent } from './modules/comment/comment-basic/comment-basic.component';
 import { CommentFullComponent } from './modules/comment/comment-full/comment-full.component';
 import { TableTasksRealComponent } from './modules/table-tasks-real/table-tasks-real.component';
@@ -60,9 +60,10 @@ import { CreateProjectComponent } from './modules/create-project/create-project.
 import { AddUserOnProjectComponent } from './modules/add-user-on-project/add-user-on-project.component';
 import { CreateTaskComponent } from './modules/create-task/create-task.component';
 import { CreateTaskOnProjectComponent } from './modules/create-task-on-project/create-task-on-project.component';
-
+import { EditTaskComponent } from './modules/edit-task/edit-task.component';
 @NgModule({
   declarations: [
+    AssignDialog,
     AppComponent,
     MyheaderComponent,
     AboutComponent,
@@ -86,6 +87,7 @@ import { CreateTaskOnProjectComponent } from './modules/create-task-on-project/c
     AddUserOnProjectComponent,
     CreateTaskComponent,
     CreateTaskOnProjectComponent,
+    EditTaskComponent
   ],
   imports: [
     BrowserModule,
@@ -127,6 +129,7 @@ import { CreateTaskOnProjectComponent } from './modules/create-task-on-project/c
     MatSortModule,
     MatPaginatorModule
   ],
+  entryComponents:[AssignDialog],
   providers: [],
   bootstrap: [AppComponent]
 })

@@ -64,7 +64,7 @@ public class UserController {
         return new ResponseEntity<>(UserMainMapper.INSTANCE.usersToUserDTOs(usersResult),HttpStatus.OK);
     }
     @PatchMapping("/addUserOnProject/{idProject}")
-    public ResponseEntity<com.be.DTO.UserMain.User> addUserOnProject(@RequestBody User user, @PathVariable int idProject) {
+    public ResponseEntity<com.be.DTO.UserMain.User> addUserOnProject(@RequestBody com.be.DTO.UserMain.User user, @PathVariable int idProject) {
         User userResult = userRepository.findUserByIdUser(user.getIdUser());
         Project projectResult = projectRepository.findProjectByIdProject(idProject);
         if(userResult==null || projectResult==null)

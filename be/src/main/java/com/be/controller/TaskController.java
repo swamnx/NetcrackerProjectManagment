@@ -39,7 +39,8 @@ public class TaskController {
         return new ResponseEntity<>(TaskMainMapper.INSTANCE.taskToTaskDTO(taskResult),HttpStatus.OK);
     }
     @PostMapping("")
-    public ResponseEntity<com.be.DTO.TaskMain.Task> createTask(@RequestBody Task task){
+    public ResponseEntity<com.be.DTO.TaskMain.Task> createTask(@RequestBody com.be.DTO.TaskMain.Task taskDTO){
+        Task task = TaskMainMapper.INSTANCE.taskDTOToTask(taskDTO);
         Project project = projectRepository.findProjectByIdProject(task.getTaskProject().getIdProject());
         Set<Task> tasks = project.getProjectTasks();
         if(tasks.size()==0){
@@ -58,6 +59,23 @@ public class TaskController {
         Task taskResult = taskRepository.save(task);
         if(taskResult==null)
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        return new ResponseEntity<>(TaskMainMapper.INSTANCE.taskToTaskDTO(taskResult),HttpStatus.OK);
+    }
+    @PatchMapping("")
+    public ResponseEntity<com.be.DTO.TaskMain.Task> updateTask(@RequestBody com.be.DTO.TaskMain.Task taskDTO){
+        Task task = TaskMainMapper.INSTANCE.taskDTOToTask(taskDTO);
+        Task foundTask = taskRepository.findTaskByIdTask(task.getIdTask());
+        foundTask.setStatus(task.getStatus());
+        foundTask.setPriority(task.getPriority());
+        foundTask.setUpdateDate(task.getUpdateDate());
+        foundTask.setDueDate(task.getDueDate());
+        foundTask.setEstimationDate(task.getEstimationDate());
+        foundTask.setTaskComments(task.getTaskComments());
+        foundTask.setTaskUser(task.getTaskUser());
+        Task taskResult = taskRepository.save(foundTask);
+        if(taskResult==null)
+
+                return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         return new ResponseEntity<>(TaskMainMapper.INSTANCE.taskToTaskDTO(taskResult),HttpStatus.OK);
     }
 

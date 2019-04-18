@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.HttpServerErrorException;
@@ -53,6 +54,21 @@ public class TaskController {
             ResponseEntity<com.fapi.DTO.TaskMain.Task> responseEntity = restTemplate.postForEntity(backendServerUrl+"/api/tasks",task,com.fapi.DTO.TaskMain.Task.class);
             return responseEntity;
     }
+        catch (HttpClientErrorException e){
+            return new ResponseEntity<>(e.getStatusCode());
+        }
+
+    }
+    @PatchMapping("")
+    public ResponseEntity<com.fapi.DTO.TaskMain.Task> updateTask(@RequestBody com.fapi.DTO.TaskMain.Task task){
+        HttpComponentsClientHttpRequestFactory httpRequestFactory = new HttpComponentsClientHttpRequestFactory();
+        httpRequestFactory.setConnectTimeout(10000);
+        httpRequestFactory.setReadTimeout(10000);
+        RestTemplate restTemplate = new RestTemplate(httpRequestFactory);
+        try {
+            Task responseTask = restTemplate.patchForObject(backendServerUrl+"/api/tasks",task,com.fapi.DTO.TaskMain.Task.class);
+            return new ResponseEntity<>(responseTask,HttpStatus.OK);
+        }
         catch (HttpClientErrorException e){
             return new ResponseEntity<>(e.getStatusCode());
         }

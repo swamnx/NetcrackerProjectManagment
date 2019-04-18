@@ -7,7 +7,36 @@
         <h6 class="card-subtitle mb-2 text-muted">{{task.taskProject.description}}</h6>
     </div>
   </div>
-  
+
+  <div class="card">
+    <div class="card-body">
+      <h4 class="card-title">Actions</h4>
+      <h5 class="card-title">Here all actions, you can do:</h5>
+      <button [disabled]="!(task.taskUser.idUser == auth.user.idUser)" mat-raised-button color="primary" (click)="assignDialog()">Assign</button>
+      <button [disabled]="!(((task.status === 'Open') || (task.status === 'Reopen')) &&
+       (task.taskUser.idUser == auth.user.idUser) && (auth.user.role === 'dev'))" mat-raised-button
+        color="primary" (click)="updateStatus('In Progress')" >
+        Start
+      </button>
+      <button [disabled]="!((task.status === 'In Progress') && (task.taskUser.idUser == auth.user.idUser) && (auth.user.role === 'dev'))"
+        mat-raised-button color="primary" (click)="updateStatus('Resolved')">
+        Resolve
+      </button>
+      <button [disabled]="!((task.status === 'Resolved') && (task.taskUser.idUser == auth.user.idUser) && (auth.user.role === 'dev'))"
+      mat-raised-button color="primary" (click)="updateStatus('Ready for test')">
+      Ready for test
+    </button>
+      <button [disabled]="!((task.status === 'Ready for test') && (task.taskUser.idUser == auth.user.idUser) && (auth.user.role === 'tester'))"
+        mat-raised-button color="primary" (click)="updateStatus('Closed')">
+        Close
+      </button>
+      <button [disabled]="!((task.status === 'Ready for test') && (task.taskUser.idUser == auth.user.idUser) && (auth.user.role === 'tester'))"
+      mat-raised-button color="primary" (click)="updateStatus('Reopen')">
+      Reopen
+    </button>
+    </div>
+  </div>
+
   <div class="card">
       <div class="card-body">
           <h4 class="card-title">Task code:{{task.code}}</h4>

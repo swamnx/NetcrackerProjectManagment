@@ -10,7 +10,8 @@ import {MatFormField} from '@angular/material';
 })
 export class LoginComponent implements OnInit {
   constructor(private auth:AuthService, private http: HttpClient, private router: Router) { }
-
+  email="vladsobchuk@gmail.com";
+  password="vladsobchuk";
   ngOnInit() {
   }
   login(data){
