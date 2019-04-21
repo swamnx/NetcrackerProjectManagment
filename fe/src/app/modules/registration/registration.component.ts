@@ -14,6 +14,6 @@ export class RegistrationComponent implements OnInit {
   ngOnInit() {
   }
   register(data){
-    this.auth.register(data.value.email,data.value.name,data.value.password,data.value.role);
+    this.auth.register(data.value.email,data.value.name,data.value.password,data.value.role,data.value.remember);
   }
 }

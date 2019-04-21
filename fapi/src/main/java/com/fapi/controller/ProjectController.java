@@ -4,6 +4,7 @@ import com.fapi.DTO.Default.Project;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.*;
 import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.HttpServerErrorException;
@@ -31,6 +32,7 @@ public class ProjectController {
             return new ResponseEntity<>(e.getStatusCode());
         }
     }
+    @PreAuthorize("hasRole('ROLE_PM')")
     @PostMapping("/{idUser}")
     public ResponseEntity<com.fapi.DTO.ProjectMain.Project> createProject(@RequestBody Project project,@PathVariable int idUser){
         RestTemplate restTemplate = new RestTemplate();

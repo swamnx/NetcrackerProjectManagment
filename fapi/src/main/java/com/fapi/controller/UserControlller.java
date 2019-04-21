@@ -1,7 +1,7 @@
 package com.fapi.controller;
 
 import com.fapi.DTO.Default.User;
-import com.fapi.service.UserService;
+import com.fapi.service.UserServiceAuth;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.*;
@@ -11,14 +11,10 @@ import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.HttpServerErrorException;
 import org.springframework.web.client.RestTemplate;
 
-import java.util.HashMap;
-
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
 @RequestMapping("/api/users")
 public class UserControlller {
-    @Autowired
-    private UserService userService;
     @Value("${backend.server.url}")
     private String backendServerUrl;
 

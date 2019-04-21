@@ -1,7 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
 import {Routes} from "@angular/router";
@@ -61,6 +61,7 @@ import { AddUserOnProjectComponent } from './modules/add-user-on-project/add-use
 import { CreateTaskComponent } from './modules/create-task/create-task.component';
 import { CreateTaskOnProjectComponent } from './modules/create-task-on-project/create-task-on-project.component';
 import { EditTaskComponent } from './modules/edit-task/edit-task.component';
+import { AuthInterceptor } from './services/auth-interceptor.service';
 @NgModule({
   declarations: [
     AssignDialog,
@@ -130,7 +131,7 @@ import { EditTaskComponent } from './modules/edit-task/edit-task.component';
     MatPaginatorModule
   ],
   entryComponents:[AssignDialog],
-  providers: [],
+  providers: [{provide:HTTP_INTERCEPTORS,useClass:AuthInterceptor,multi:true}],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

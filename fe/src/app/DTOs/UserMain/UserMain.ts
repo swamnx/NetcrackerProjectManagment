@@ -19,6 +19,24 @@ export class User{
     userProjects:Array<Project>
     userTasks:Array<Task>
 }
+export class UserWithPassword{
+    password:string;
+    idUser:number;
+    name:string;
+    role:string;
+    email:string;
+    userProjects:Array<Project>
+    userTasks:Array<Task>
+}
+export class UserAuth{
+    idUser:number;
+    name:string;
+    role:string;
+    email:string;
+}
+export class AuthToken{
+    token:string;
+}
 export class Project{
     idProject:number;
     code:number;

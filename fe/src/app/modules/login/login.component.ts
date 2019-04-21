@@ -15,6 +15,6 @@ export class LoginComponent implements OnInit {
   ngOnInit() {
   }
   login(data){
-       this.auth.authenticate(data.value.email,data.value.password);
+       this.auth.authenticate(data.value.email,data.value.password,data.value.remember);
   }
 }
