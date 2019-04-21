@@ -21,12 +21,9 @@ export class User{
 }
 export class UserWithPassword{
     password:string;
-    idUser:number;
     name:string;
     role:string;
     email:string;
-    userProjects:Array<Project>
-    userTasks:Array<Task>
 }
 export class UserAuth{
     idUser:number;

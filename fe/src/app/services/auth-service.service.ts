@@ -34,7 +34,6 @@ export class AuthService {
     return this.http.post<AuthToken>('api/users/auth/signup',user);
   }
   private getUserAuth():Observable<UserAuth>{
-    //const headers  = new HttpHeaders().set("Authorization",'Bearer '+this.token);
     return this.http.get<UserAuth>('api/users/auth/user');
   }
   public authenticate(emailp, passwordp,remember):void{
