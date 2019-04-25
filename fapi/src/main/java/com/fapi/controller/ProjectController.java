@@ -32,12 +32,12 @@ public class ProjectController {
             return new ResponseEntity<>(e.getStatusCode());
         }
     }
-    @PreAuthorize("hasRole('ROLE_PM')")
-    @PostMapping("/{idUser}")
-    public ResponseEntity<com.fapi.DTO.ProjectMain.Project> createProject(@RequestBody Project project,@PathVariable int idUser){
+    @PreAuthorize("hasRole('ROLE_pm')")
+    @PostMapping()
+    public ResponseEntity<com.fapi.DTO.ProjectMain.Project> createProject(@RequestBody Project project){
         RestTemplate restTemplate = new RestTemplate();
         try {
-            ResponseEntity<com.fapi.DTO.ProjectMain.Project> responseProjectDTO = restTemplate.postForEntity(backendServerUrl + "/api/projects/"+idUser,project,com.fapi.DTO.ProjectMain.Project.class);
+            ResponseEntity<com.fapi.DTO.ProjectMain.Project> responseProjectDTO = restTemplate.postForEntity(backendServerUrl + "/api/projects",project,com.fapi.DTO.ProjectMain.Project.class);
             return responseProjectDTO;
         }
         catch (HttpClientErrorException e){

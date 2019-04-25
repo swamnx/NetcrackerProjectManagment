@@ -17,7 +17,4 @@ public class Project {
     private String code;
     private String description;
 
-    private Set<User> projectUsers;
-    private Set<Task> projectTasks;
-
 }

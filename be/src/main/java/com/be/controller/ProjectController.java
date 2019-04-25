@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -30,12 +31,14 @@ public class ProjectController {
         else
             return new ResponseEntity<>(ProjectMainMapper.INSTANCE.projectToProjectDTO(projectResult),HttpStatus.OK);
     }
-    @PostMapping("/{idUser}")
-    public ResponseEntity<com.be.DTO.ProjectMain.Project> createProject(@RequestBody Project project,@PathVariable Integer idUser){
+    @PostMapping("")
+    public ResponseEntity<com.be.DTO.ProjectMain.Project> createProject(@RequestBody Project project){
         Project projectFound = projectRepository.findProjectByCode(project.getCode());
         if(projectFound!=null)
             return new ResponseEntity<>(HttpStatus.CONFLICT);
-        User user = userRepository.findUserByIdUser(idUser);
+        ArrayList<User> users = new ArrayList<>();
+        users.addAll(project.getProjectUsers());
+        User user = userRepository.findUserByIdUser(users.get(0).getIdUser());
         Project projectResult = projectRepository.save(project);
         Set<Project> userProjects = user.getUserProjects();
         userProjects.add(projectResult);

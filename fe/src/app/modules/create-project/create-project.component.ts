@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ProjectServiceService } from 'src/app/services/project-service.service';
 import { Project } from 'src/app/DTOs/ProjectMain/ProjectMain';
-import { routerNgProbeToken } from '@angular/router/src/router_module';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-create-project',
@@ -11,20 +11,32 @@ import { routerNgProbeToken } from '@angular/router/src/router_module';
 })
 export class CreateProjectComponent implements OnInit {
 
-  constructor(private router: Router, private projectService:ProjectServiceService) { }
-  problem:string='';
+  createProjectForm:FormGroup;
+
+  project:Project;
+
+  constructor(private router: Router, private projectService:ProjectServiceService) {
+    this.project = new Project();
+    this.createProjectForm = new FormGroup({
+      'code': new FormControl(
+        this.project.code,
+        [Validators.required]
+      ),
+      'description':new FormControl(
+        this.project.description,
+        [Validators.required]
+      ),
+    })
+  }
   ngOnInit() {
   }
-  createProject(data){
-    let prj = new Project();
-    prj.code = data.value.prjcode;
-    prj.description = data.value.description;
-    this.projectService.createProject(prj).subscribe(
+  createProject(){
+    this.projectService.createProject(this.project).subscribe(
       value=>{
         this.router.navigateByUrl('projects/'+value.idProject);
       },
       error=>{
-        this.problem=error.status;
+        this.router.navigateByUrl('/error/'+error.status);
       }
     )
   }

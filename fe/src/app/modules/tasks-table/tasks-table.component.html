@@ -1,0 +1,46 @@
+<div class="card">
+    <div class="card-body">
+      <h4 class="card-title">Info about {{type}} tasks</h4>
+
+  </div>
+  </div>
+  <div *ngIf="readyPage == true">
+        <nav class="navbar navbar-light bg-light">
+                <span class="navbar-brand mb-0 h5">
+                    Amount of pages:{{page.totalPages}}
+                    You are on page:{{page.number+1}}
+                </span>
+        </nav>
+      <table class="table table-hover">
+        <thead class="thead-dark">
+            <tr>
+                <th scope="col">Project Code</th>
+                <th scope="col">Code</th>
+                <th scope="col">Description</th>
+                <th scope="col">Status</th>
+                <th scope="col">Asigned to</th>
+                <th scope="col">Create Date</th>
+                <th scope="col">Update Date</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let task of page.content" (click)=onChooseTask(task.idTask)>
+                <td scope="row">{{task.taskProject.code}}</td>
+                <td scope="row">{{task.code}}</td>
+                <td scope="row">{{task.description}}</td>
+                <td scope="row">{{task.status}}</td>
+                <td scope="row"><a class="nav-item nav-link" routerLink="/users/{{task.taskUser.idUser}}">{{task.taskUser.name}}</a></td>
+                <td scope="row">{{task.createDate}}</td>
+                <td scope="row">{{task.updateDate}}</td>
+            </tr>
+        </tbody>
+        
+        <div class="btn-group" role="group" aria-label="Basic example">
+                <button type="button" class="btn btn-secondary" [disabled]="page.firstPage" (click)="firstPage()">First</button>
+                <button type="button" class="btn btn-secondary" [disabled]="page.firstPage" (click)="previousPage()">Previous</button>
+                <button type="button" class="btn btn-secondary" [disabled]="page.lastPage" (click)="nextPage()">Next</button>
+                <button type="button" class="btn btn-secondary" [disabled]="page.lastPage" (click)="lastPage()">Last</button>
+        </div>
+      </table>
+      </div>
+      

@@ -18,6 +18,5 @@ public class User {
     private String role;
     private String email;
     Set<Project> userProjects;
-    Set<Task> userTasks;
 
 }

@@ -1,7 +1,5 @@
 package com.fapi.DTO.TaskMain;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -11,9 +9,10 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class User {
-
-    private int idUser;
-    private String name;
-
+public class TaskForProjectTable {
+    private int code;
+    private String priority;
+    private String status;
+    private String description;
+    private User taskUser;
 }

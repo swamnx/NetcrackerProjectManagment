@@ -1,5 +1,3 @@
-import { tokenKey } from '@angular/core/src/view';
-
 export class Task{
     idTask:number;
     idCreatedBy:number;
@@ -22,18 +20,49 @@ export class User{
     email:string;
 }
 export class Project{
-    idProject:number;
     code:number;
-    description:string;
-    projectUsers:Array<User>;
 }
 export class Comment{
     idComment:number;
     comment:string;
     user:User;
 }
-export class Page{
-    content:Array<Task>;
+export class UserForTable{
+    idUser:number;
+    name:string;
+}
+export class TaskForTable{
+    idTask:number;
+    code:number;
+    status:string;
+    description:string;
+    createDate:Date;
+    updateDate:Date;
+    dueDate:Date;
+    estimationDate:Date;
+    taskUser:UserForTable;
+    taskProject:Project;
+}
+export class PageForTasksTable{
+    content:Array<TaskForTable>;
+    firstPage:boolean;
+    lastPage:boolean;
+    number:number;
+    numberOfElements:number;
+    size:number;
+    sort:string;
+    totalElements:number;
+    totalPages:number;
+}
+export class TaskForProjectTable{
+    code:number;
+    priority:string;
+    status:string;
+    description:string;
+    taskUser:UserForTable;
+}
+export class PageForProjectTable{
+    content:Array<TaskForProjectTable>;
     firstPage:boolean;
     lastPage:boolean;
     number:number;

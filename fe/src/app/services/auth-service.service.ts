@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { UserServiceService } from './user-service.service';
 import { ProjectServiceService } from './project-service.service';
 import { TaskServiceService } from './task-service.service';
+import {recogniseError} from './exceptions';
 import { UserAuth,UserWithPassword,AuthToken} from '../DTOs/UserMain/UserMain';
 
 @Injectable(
@@ -12,12 +13,14 @@ import { UserAuth,UserWithPassword,AuthToken} from '../DTOs/UserMain/UserMain';
 )
 export class AuthService {
 
-  authenticated = false;
-  problem = '';
+  authenticated:boolean ;
+  problem:string;
   user:UserAuth;
-  token:string='';
+  token:string;
 
   constructor(private http: HttpClient, private router: Router) {
+    this.authenticated=false;
+    this.problem='';
     let user = JSON.parse(localStorage.getItem('user'));
     let authenticated = JSON.parse(localStorage.getItem('authenticated'));
     let token = localStorage.getItem('token');
@@ -25,6 +28,10 @@ export class AuthService {
       this.user=user;
       this.authenticated=true;
       this.token=token;
+    }
+    else{
+      this.user=null;
+      this.token='';
     }
   }
   private getToken(user:UserWithPassword):Observable<AuthToken>{
@@ -56,12 +63,12 @@ export class AuthService {
             this.router.navigateByUrl('/');
           },
           (error)=>{
-            this.problem=error.status;
+            this.problem=recogniseError(error.status);
           }
         )
       },
       (error)=>{
-        this.problem=error.status;
+        this.problem=recogniseError(error.status);
       }
     )
   }
@@ -87,12 +94,12 @@ export class AuthService {
             this.router.navigateByUrl('/');
           },
           (error)=>{
-            this.problem=error.status;
+            this.problem=recogniseError(error.status);
           }
         )
       },
       (error)=>{
-        this.problem=error.status;
+        this.problem=recogniseError(error.status);
       }
     )
   }

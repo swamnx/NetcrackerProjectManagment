@@ -2,7 +2,7 @@ import { Component, OnInit, NgModule} from '@angular/core';
 import { AuthService } from 'src/app/services/auth-service.service';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
-import { FormGroup, FormControl, Validators, AbstractControl, ValidationErrors, ValidatorFn } from '@angular/forms';
+import { FormGroup, FormControl, Validators, AbstractControl, ValidationErrors, ValidatorFn, FormBuilder } from '@angular/forms';
 import { UserWithPassword } from 'src/app/DTOs/UserMain/UserMain';
 
 @Component({
@@ -15,33 +15,33 @@ export class RegistrationComponent implements OnInit {
 
   user:UserWithPassword;
 
-  constructor(private auth:AuthService) {
+  constructor(private auth:AuthService, private fb:FormBuilder) {
     this.user = new UserWithPassword();
-    this.registrationForm = new FormGroup({
-      'email': new FormControl(
+    this.registrationForm = fb.group({
+      email: new FormControl(
         this.user.email,
         [Validators.required,Validators.email]
       ),
-      'name': new FormControl(
+      name: new FormControl(
         this.user.name,
         [Validators.required]
       ),
-      'password':new FormControl(
+      password:new FormControl(
         this.user.password,
         [Validators.required]
       ),
-      'repeat':new FormControl(
+      repeat:new FormControl(
         '',
         [Validators.required]
       ),
-      'role':new FormControl(
+      role:new FormControl(
         this.user.role,
         [Validators.required]
       ),
-      'remember':new FormControl(
+      remember:new FormControl(
         false
       )
-    },{validators:RegistrationComponent.equalPasswordsValidator})
+    },{validator: confirmPasswordValidator});
   }
 
   ngOnInit() {
@@ -54,13 +54,22 @@ export class RegistrationComponent implements OnInit {
       this.registrationForm.controls.role.value,
       this.registrationForm.controls.remember.value);
   }
-  static equalPasswordsValidator(control:FormControl){
-    const password = control.get('password');
-    const repeat = control.get('repeat');
-    return  password && repeat && password.value == control.value ?{ equalPasswords1:true} :null;
-  }
-  modelChanged(){
-    console.log(this.registrationForm.errors);
-  }
 }
-
+export function confirmPasswordValidator(formGroup: FormGroup) {
+      const controlPassword = formGroup.controls['password'];
+      const controlRepeat = formGroup.controls['repeat'];
+      if(controlPassword.untouched || controlPassword.value==''){
+        return;
+      }
+      if (controlPassword.errors && !controlRepeat.errors) {
+        return;
+    }
+      if (controlPassword.errors && !controlRepeat.errors.notEqual) {
+          return;
+      }
+      if (controlPassword.value !== controlRepeat.value) {
+        controlRepeat.setErrors({ notEqual: true });
+      } else {
+        controlRepeat.setErrors(null);
+      }
+}

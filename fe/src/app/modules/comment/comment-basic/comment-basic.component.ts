@@ -6,7 +6,6 @@ import { UserServiceService } from 'src/app/services/user-service.service';
 import { ProjectServiceService } from 'src/app/services/project-service.service';
 import { AuthService } from 'src/app/services/auth-service.service';
 import { TaskServiceService } from 'src/app/services/task-service.service';
-import { CommentBasicWithIds } from 'src/app/DTOs/comment';
 @Component({
   selector: 'app-comment-basic',
   templateUrl: './comment-basic.component.html',
@@ -21,5 +20,4 @@ export class CommentBasicComponent implements OnInit {
     ready:boolean=false;
   ngOnInit() {
   }
-  @Input() comment:CommentBasicWithIds;
 }

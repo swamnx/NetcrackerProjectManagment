@@ -1,18 +1,47 @@
-<div *ngIf="ready==true" class="card">
-    <div class="card-body">
-        <mat-card-content>
-          <h6 class="card-title">Project Code</h6>
-          <div class="card-subtitle mb-2 text-muted">{{project.code}}</div> 
-          <h6 class="card-title">Project Description</h6>
-          <div class="card-subtitle mb-2 text-muted">{{project.description}}</div> 
-        </mat-card-content>
-    </div>
+<div class="card" *ngIf="readyProject==true">
+  <div class="card-body">
+    <h4 class="card-title">Project Info</h4>
+    <mat-card-content>
+      <h5 class="card-title">Project Code</h5>
+      <div class="card-subtitle mb-2 text-muted">{{project.code}}</div>
+      <h6 class="card-title">Project Description</h6>
+      <div class="card-subtitle mb-2 text-muted">{{project.description}}</div>
+    </mat-card-content>
   </div>
-  <div *ngIf="auth.user.role =='pm' ">
-    <a routerLink="addUser">Add User</a>
+</div>
+<div *ngIf="auth.user.role =='pm' ">
+  <a routerLink="addUser">Add User</a>
+</div>
+<div *ngIf="readyPage == true">
+  <nav class="navbar navbar-light bg-light">
+          <span class="navbar-brand mb-0 h5">
+              Amount of pages:{{page.totalPages}}
+              You are on page:{{page.number+1}}
+          </span>
+  </nav>
+<table class="table table-hover">
+  <thead class="thead-dark">
+      <tr>
+          <th scope="col">Code</th>
+          <th scope="col">Description</th>
+          <th scope="col">Status</th>
+          <th scope="col">Asigned to</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr *ngFor="let task of page.content">
+          <td scope="row">{{task.code}}</td>
+          <td scope="row">{{task.description}}</td>
+          <td scope="row">{{task.status}}</td>
+          <td scope="row"><a class="nav-item nav-link" routerLink="/users/{{task.taskUser.idUser}}">{{task.taskUser.name}}</a></td>
+      </tr>
+  </tbody>
+  
+  <div class="btn-group" role="group" aria-label="Basic example">
+          <button type="button" class="btn btn-secondary" [disabled]="page.firstPage" (click)="firstPage()">First</button>
+          <button type="button" class="btn btn-secondary" [disabled]="page.firstPage" (click)="previousPage()">Previous</button>
+          <button type="button" class="btn btn-secondary" [disabled]="page.lastPage" (click)="nextPage()">Next</button>
+          <button type="button" class="btn btn-secondary" [disabled]="page.lastPage" (click)="lastPage()">Last</button>
   </div>
-  <mat-list *ngIf="ready==true">
-    <mat-list-item *ngFor="let user of project.projectUsers">
-      <a routerLink="/users/{{user.idUser}}">{{user.name}}</a>
-    </mat-list-item>
-  </mat-list>
+</table>
+</div>

@@ -18,35 +18,6 @@ public class UserControlller {
     @Value("${backend.server.url}")
     private String backendServerUrl;
 
-    @PostMapping("/sign")
-    public ResponseEntity<com.fapi.DTO.UserMain.User> signUser(@RequestBody User user) {
-        RestTemplate restTemplate = new RestTemplate();
-        try {
-            ResponseEntity<com.fapi.DTO.UserMain.User> responseUser = restTemplate.postForEntity(backendServerUrl + "/api/users/sign",user,com.fapi.DTO.UserMain.User.class);
-            return responseUser;
-        }
-        catch (HttpClientErrorException e){
-            return new ResponseEntity<>(e.getStatusCode());
-        }
-        catch (HttpServerErrorException e){
-            return new ResponseEntity<>(e.getStatusCode());
-        }
-    }
-    @PostMapping("")
-    public ResponseEntity<com.fapi.DTO.UserMain.User> createUser(@RequestBody User user) {
-        RestTemplate restTemplate = new RestTemplate();
-        try {
-            ResponseEntity<com.fapi.DTO.UserMain.User> responseUser = restTemplate.postForEntity(backendServerUrl + "/api/users",user,com.fapi.DTO.UserMain.User.class);
-            return responseUser;
-        }
-        catch (HttpClientErrorException e){
-            return new ResponseEntity<>(e.getStatusCode());
-        }
-        catch (HttpServerErrorException e){
-            return new ResponseEntity<>(e.getStatusCode());
-        }
-    }
-
     @GetMapping("/{idUser}")
     public ResponseEntity<com.fapi.DTO.UserMain.User> getUserById(@PathVariable int idUser) {
         RestTemplate restTemplate = new RestTemplate();
@@ -55,9 +26,6 @@ public class UserControlller {
             return responseUser;
         }
         catch (HttpClientErrorException e){
-            return new ResponseEntity<>(e.getStatusCode());
-        }
-        catch (HttpServerErrorException e){
             return new ResponseEntity<>(e.getStatusCode());
         }
     }

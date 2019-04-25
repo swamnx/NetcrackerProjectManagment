@@ -13,7 +13,6 @@ import { NotFoundComponent } from 'src/app/modules/not-found/not-found.component
 import { HomeComponent } from 'src/app/modules/home/home.component';
 import { LoginComponent } from './modules/login/login.component';
 import { RegistrationComponent } from './modules/registration/registration.component';
-import { TestComponent } from './modules/test/test.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {MatCheckboxModule, MatNativeDateModule} from '@angular/material';
 import {MatButtonModule} from '@angular/material';
@@ -46,22 +45,18 @@ import {MatTableModule} from '@angular/material/table';
 import {MatSortModule} from '@angular/material/sort';
 import {MatPaginatorModule} from '@angular/material/paginator';
 import { UserBasicComponent } from './modules/user/user-basic/user-basic.component';
-import { UserFullComponent } from './modules/user/user-full/user-full.component';
 import { ErrorComponent } from './modules/error/error.component';
 import { ProjectBasicComponent } from './modules/project/project-basic/project-basic.component';
-import { ProjectFullComponent } from './modules/project/project-full/project-full.component';
-import { TaskBasicComponent } from './modules/task/task-basic/task-basic.component';
 import { TaskFullComponent, AssignDialog } from './modules/task/task-full/task-full.component';
 import { CommentBasicComponent } from './modules/comment/comment-basic/comment-basic.component';
 import { CommentFullComponent } from './modules/comment/comment-full/comment-full.component';
-import { TableTasksRealComponent } from './modules/table-tasks-real/table-tasks-real.component';
-import { TableTasksAvailableComponent } from './modules/table-tasks-available/table-tasks-available.component';
 import { CreateProjectComponent } from './modules/create-project/create-project.component';
 import { AddUserOnProjectComponent } from './modules/add-user-on-project/add-user-on-project.component';
 import { CreateTaskComponent } from './modules/create-task/create-task.component';
 import { CreateTaskOnProjectComponent } from './modules/create-task-on-project/create-task-on-project.component';
 import { EditTaskComponent } from './modules/edit-task/edit-task.component';
 import { AuthInterceptor } from './services/auth-interceptor.service';
+import { TasksTableComponent } from './modules/tasks-table/tasks-table.component';
 @NgModule({
   declarations: [
     AssignDialog,
@@ -72,23 +67,18 @@ import { AuthInterceptor } from './services/auth-interceptor.service';
     HomeComponent,
     LoginComponent,
     RegistrationComponent,
-    TestComponent,
     UserBasicComponent,
-    UserFullComponent,
     ErrorComponent,
     ProjectBasicComponent,
-    ProjectFullComponent,
-    TaskBasicComponent,
     TaskFullComponent,
     CommentBasicComponent,
     CommentFullComponent,
-    TableTasksRealComponent,
-    TableTasksAvailableComponent,
     CreateProjectComponent,
     AddUserOnProjectComponent,
     CreateTaskComponent,
     CreateTaskOnProjectComponent,
-    EditTaskComponent
+    EditTaskComponent,
+    TasksTableComponent
   ],
   imports: [
     BrowserModule,
@@ -97,7 +87,6 @@ import { AuthInterceptor } from './services/auth-interceptor.service';
     BrowserAnimationsModule,
     FormsModule,
     ReactiveFormsModule,
-
     MatCheckboxModule,
     MatButtonModule,
     MatInputModule,

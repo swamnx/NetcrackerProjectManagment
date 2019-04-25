@@ -62,7 +62,7 @@ export class TaskFullComponent implements OnInit {
     comparator='tester';
     if(this.task.status === 'Closed')
     comparator='';
-    data.users = this.task.taskProject.projectUsers.filter(user=>( comparator.indexOf(user.role)!=-1) );
+   // data.users = this.task.taskProject.projectUsers.filter(user=>( comparator.indexOf(user.role)!=-1) );
     const dialogRef = this.dialog.open(AssignDialog, {
       width: '250px',
       data

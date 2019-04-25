@@ -12,10 +12,7 @@ import java.util.Set;
 @NoArgsConstructor
 //@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "idProject",scope = Project.class)
 public class Project {
-
     private int idProject;
     private String code;
-    private String description;
-    private Set<User> projectUsers;
 
 }

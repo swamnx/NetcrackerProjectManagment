@@ -1,26 +1,32 @@
 <div class="card">
   <div class="card-body">
 
-    <h6 class="alert alert-danger" [hidden]="(problem === '') ">Status problem: {{problem}}</h6>
+    <h4 class="card-title">Create project</h4>
 
-    <h4 class="card-title">Create new project</h4>
+    <h6 class="card-subtitle mb-2 text-muted">Hi, Put all necessary data for creating project</h6>
 
-    <form #f="ngForm" (ngSubmit)="createProject(f)" class="form-group">
+    <form [formGroup]="createProjectForm" (ngSubmit)="createProject()" class="form-group">
 
       <div class="form-group">
         <mat-form-field>
-          <input matInput placeholder="Project code"  [(ngModel)]="prjcode" name="prjcode"/>
+          <input matInput placeholder="Code" formControlName="code" [(ngModel)]="project.code"/>
+          <mat-error *ngIf="createProjectForm.get('code').hasError('required')">
+              Project code is required!
+          </mat-error>
         </mat-form-field>
       </div>
 
       <div class="form-group">
         <mat-form-field>
-          <input matInput placeholder="Description" [(ngModel)]="description" name="description"/>
+          <input matInput placeholder="Description" formControlName="description" [(ngModel)]="project.description"/>
+          <mat-error *ngIf="createProjectForm.get('description').hasError('required')">
+            Description is required!
+          </mat-error>
         </mat-form-field>
       </div>
 
       <div class="form-group">
-      <button class="btn btn-primary">Create!</button>
+        <button mat-raised-button color="primary" type="submit" [disabled]="createProjectForm.invalid">Create!</button>
       </div>
 
     </form>

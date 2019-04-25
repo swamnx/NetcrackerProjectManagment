@@ -1,5 +1,6 @@
 package com.be.controller;
 
+import com.be.DTO.TaskMain.TaskForProjectTable;
 import com.be.DTO.TaskMain.TaskMainMapper;
 import com.be.entity.*;
 import com.be.repository.*;
@@ -23,14 +24,29 @@ public class TaskController {
     @Autowired
     private UserRepository userRepository;
 
-    @GetMapping("")
-    public Page<com.be.DTO.TaskMain.Task> getAllAvailableTasks(@RequestParam int page,@RequestParam int size,@RequestParam int idUser) {
-        User user = userRepository.findUserByIdUser(idUser);
+    @GetMapping("/page/availableTasks")
+    public Page<com.be.DTO.TaskMain.TaskForTable> getPageOfAvailableTasksForUser(@RequestParam int page,@RequestParam int size,@RequestParam String email) {
+        User user = userRepository.findUserByEmail(email);
         Page<Task> entityPage=taskRepository.findAllByTaskProjectIn(new PageRequest(page,size),user.getUserProjects());
         List<Task> tasks = entityPage.getContent();
-        List<com.be.DTO.TaskMain.Task> tasksDTO = TaskMainMapper.INSTANCE.tasksToTasksDTO(tasks);
-
+        List<com.be.DTO.TaskMain.TaskForTable> tasksDTO = TaskMainMapper.INSTANCE.tasksToTasksForTable(tasks);
         return new PageImpl<>(tasksDTO,new PageRequest(page,size),entityPage.getTotalElements());
+    }
+    @GetMapping("/page/realTasks")
+    public Page<com.be.DTO.TaskMain.TaskForTable> getPageOfRealTasksForUser(@RequestParam int page,@RequestParam int size,@RequestParam String email) {
+        User user = userRepository.findUserByEmail(email);
+        Page<Task> entityPage=taskRepository.findAllByTaskUser(new PageRequest(page,size),user);
+        List<Task> tasks = entityPage.getContent();
+        List<com.be.DTO.TaskMain.TaskForTable> tasksDTO = TaskMainMapper.INSTANCE.tasksToTasksForTable(tasks);
+        return new PageImpl<>(tasksDTO,new PageRequest(page,size),entityPage.getTotalElements());
+    }
+    @GetMapping("/page/projectTasks")
+    public Page<TaskForProjectTable> getPageOfTasksForProject(@RequestParam int page, @RequestParam int size, @RequestParam Integer idProject){
+        Project project = projectRepository.findProjectByIdProject(idProject);
+        Page<Task> entityPage=taskRepository.findAllByTaskProject(new PageRequest(page,size),project);
+        List<Task> tasks = entityPage.getContent();
+        List<TaskForProjectTable> taskForProjectTables =TaskMainMapper.INSTANCE.tasksToTasksForProjectTable(tasks);
+        return new PageImpl<>(taskForProjectTables,new PageRequest(page,size),entityPage.getTotalElements());
     }
     @GetMapping("/{idTask}")
     public ResponseEntity<com.be.DTO.TaskMain.Task> getTaskById(@PathVariable int idTask){

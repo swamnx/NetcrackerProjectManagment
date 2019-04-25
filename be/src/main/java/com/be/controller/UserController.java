@@ -31,27 +31,6 @@ public class UserController {
     @Autowired
     private UserRepository userRepository;
 
-    /*@PostMapping("")
-    public ResponseEntity<com.be.DTO.UserMain.User> createUser(@RequestBody User user) {
-        User userFound = userRepository.findUserByEmail(user.getEmail());
-        if(userFound!=null)
-            return new ResponseEntity<>(HttpStatus.CONFLICT);
-
-        User userResult = userRepository.save(user);
-        return new ResponseEntity<>(HttpStatus.OK);
-    }*/
-
-    /*@PostMapping("/sign")
-    public ResponseEntity<com.be.DTO.UserMain.User> signUser(@RequestBody User user) {
-        User userResult=userRepository.findUserByEmail(user.getEmail());
-        if(userResult==null)
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        else if(userResult.getPassword().equals(user.getPassword()))
-            return new ResponseEntity<>(UserMainMapper.INSTANCE.userToUserDTO(userResult),HttpStatus.OK);
-        else
-            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
-    }
-    */
     @GetMapping("/{idUser}")
     public ResponseEntity<com.be.DTO.UserMain.User> getUserById(@PathVariable int idUser){
         User userResult = userRepository.findUserByIdUser(idUser);

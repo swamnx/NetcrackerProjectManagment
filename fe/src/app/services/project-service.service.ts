@@ -15,13 +15,11 @@ export class ProjectServiceService {
     return this.http.get<Project[]>('api/projects/users/'+this.auth.user.idUser.toString(10));
   }
   createProject(project:Project):Observable<Project>{
-    return this.http.post<Project>('api/projects/'+this.auth.user.idUser.toString(10),project);
+    project.projectUsers=[this.auth.user];
+    return this.http.post<Project>('api/projects',project);
   }
   updateProject(project:Project):Observable<Project>{
     return this.http.patch<Project>('api/projects',project);
-  }
-  deleteProjectById(idProject:number):Observable<void>{
-    return this.http.delete<void>('api/projects/'+idProject);
   }
   getProjectById(idProject:number):Observable<Project>{
     return this.http.get<Project>('api/projects/'+idProject);
