@@ -21,7 +21,7 @@ const routes: Routes = [
   {path:'createProject',component:CreateProjectComponent},
   {path:'users/:idUser', component:UserBasicComponent},
   {path:'tasks/:idTask', component:TaskFullComponent},
-  {path:'tasksTable/:type',component:TasksTableComponent},
+  {path:'tasksTable',component:TasksTableComponent},
   {path:'login', component: LoginComponent},
   {path:'registration', component: RegistrationComponent},
   {path:'error/:error',component: ErrorComponent},

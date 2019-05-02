@@ -1,13 +1,21 @@
 <h1 mat-dialog-title>Hi, choose next person</h1>
-<mat-form-field>
-    <mat-label>User email</mat-label>
-    <mat-select [(ngModel)]="user111" name="user111">
-      <mat-option *ngFor="let user of data.users" [value]="user">
-        {{user.email}}
-      </mat-option>
-    </mat-select>
+<mat-dialog-content [formGroup]="assignForm">
+  <mat-form-field>
+    <input matInput placeholder="Type user email" type ="text" formControlName="email" [matAutocomplete]="auto"/>
+    <mat-error *ngIf="assignForm.get('email').hasError('notUser')">
+        Please, choose person
+    </mat-error>
+    <mat-error *ngIf="assignForm.get('email').hasError('required')">
+        Fill form
+    </mat-error>
   </mat-form-field>
+  <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
+      <mat-option *ngFor="let user of (dynamicUsers | async) as dynamicUsers" [value]="user">
+         {{ user.email }}
+      </mat-option>
+  </mat-autocomplete> 
+</mat-dialog-content>
 <div mat-dialog-actions>
-  <button mat-button [mat-dialog-close]="null">No Thanks</button>
-  <button mat-button [mat-dialog-close]="user111" cdkFocusInitial>Ok</button>
+    <button mat-button [mat-dialog-close]="null">No Thanks</button>
+    <button mat-button [disabled]="assignForm.invalid" [mat-dialog-close]="assignForm.get('email').value" cdkFocusInitial>Ok</button>
 </div>

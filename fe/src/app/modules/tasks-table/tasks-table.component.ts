@@ -23,24 +23,30 @@ export class TasksTableComponent implements OnInit {
 
   page:PageForTasksTable;
   readyPage:boolean=false;
-  type:string;
+  type:string='real';
+
+  onClickReal(){
+    this.type = 'real';
+    this.firstPage();
+  }
+  onClickAvailable(){
+    this.type = 'available';
+    this.firstPage();
+
+  }
   ngOnInit() {
-    this.type=this.activatedRoute.snapshot.params['type'];
-    if(!(this.type=='real' || this.type=='available')){
-      this.router.navigateByUrl('/notFound');
-    }
     this.taskService.getPageOfTasksForUser(0,this.type).subscribe(
       (value)=>{
         this.page=value;
         this.readyPage=true;
       },
       (error)=>{
-        this.router.navigateByUrl('error/'+error.status);
+        this.router.navigateByUrl('/error/'+error.status);
       }
     );
   }
   onChooseTask(idTask:number){
-    this.router.navigateByUrl('tasks/'+idTask);
+    this.router.navigateByUrl('/tasks/'+idTask);
   }
   firstPage(){
     this.readyPage=false;
@@ -50,7 +56,7 @@ export class TasksTableComponent implements OnInit {
         this.readyPage=true;
       },
       (error)=>{
-        this.router.navigateByUrl('error/'+error.status);
+        this.router.navigateByUrl('/error/'+error.status);
       }
     );
   }
@@ -62,7 +68,7 @@ export class TasksTableComponent implements OnInit {
         this.readyPage=true;
       },
       (error)=>{
-        this.router.navigateByUrl('error/'+error.status);
+        this.router.navigateByUrl('/error/'+error.status);
       }
     );
   }
@@ -74,7 +80,7 @@ export class TasksTableComponent implements OnInit {
         this.readyPage=true;
       },
       (error)=>{
-        this.router.navigateByUrl('error/'+error.status);
+        this.router.navigateByUrl('/error/'+error.status);
       }
     );
   }
@@ -87,7 +93,7 @@ export class TasksTableComponent implements OnInit {
         this.readyPage=true;
       },
       (error)=>{
-        this.router.navigateByUrl('error/'+error.status);
+        this.router.navigateByUrl('/error/'+error.status);
       }
     );
   }

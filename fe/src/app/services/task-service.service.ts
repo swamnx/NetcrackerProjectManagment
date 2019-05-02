@@ -29,6 +29,15 @@ export class TaskServiceService {
     }
     return this.http.get<PageForProjectTable>('api/tasks/page/projectTasks',options);
   }
+  getUsersOnProjectForTaskAssign(role:string,firstEmailLetters:string,idProject:number,):Observable<User[]>{
+    let options = {
+      params:new HttpParams()
+      .set('firstEmailLetters',firstEmailLetters)
+      .set('role',role)
+      .set('idProject',idProject.toString(10))
+    }
+    return this.http.get<User[]>('api/tasks/onProjectForTaskAssign',options);
+  }
   createTask(task:Task):Observable<Task>{
     return this.http.post<Task>('api/tasks',task);
   }

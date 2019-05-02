@@ -21,6 +21,20 @@ public class TaskController {
     @Value("${backend.server.url}")
     private String backendServerUrl;
 
+
+    @GetMapping("/onProjectForTaskAssign")
+    public ResponseEntity<com.fapi.DTO.TaskMain.User[]> getUsersOnProjectForTaskAssign(@RequestParam String role,@RequestParam String firstEmailLetters, @RequestParam int idProject){
+        RestTemplate restTemplate = new RestTemplate();
+        try {
+            ResponseEntity<com.fapi.DTO.TaskMain.User[]> responseUserDTOs = restTemplate.getForEntity(backendServerUrl
+                    + "/api/tasks/onProjectForTaskAssign?role="+role+"&firstEmailLetters="+firstEmailLetters+"&idProject="+idProject,com.fapi.DTO.TaskMain.User[].class);
+            return responseUserDTOs;
+        }
+        catch (HttpClientErrorException e){
+            return new ResponseEntity<>(e.getStatusCode());
+        }
+    }
+
     @GetMapping("/{idTask}")
     public ResponseEntity<com.fapi.DTO.TaskMain.Task> getTask(@PathVariable int idTask) {
         RestTemplate restTemplate = new RestTemplate();

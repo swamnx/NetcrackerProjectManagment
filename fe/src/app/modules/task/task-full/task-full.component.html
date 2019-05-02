@@ -12,7 +12,8 @@
     <div class="card-body">
       <h4 class="card-title">Actions</h4>
       <h5 class="card-title">Here all actions, you can do:</h5>
-      <button [disabled]="!(task.taskUser.idUser == auth.user.idUser)" mat-raised-button color="primary" (click)="assignDialog()">Assign</button>
+      <button [disabled]="!(task.taskUser.idUser == auth.user.idUser || task.status == Closed) " mat-raised-button color="primary" (click)="assignDialog()">Assign</button>
+      
       <button [disabled]="!(((task.status === 'Open') || (task.status === 'Reopen')) &&
        (task.taskUser.idUser == auth.user.idUser) && (auth.user.role === 'dev'))" mat-raised-button
         color="primary" (click)="updateStatus('In Progress')" >
@@ -75,9 +76,17 @@
       </div>
   </div>
 
-  <div class="card" *ngIf="task.taskComments.length>0">
+  <div class="card">
       <div class="card-body">
           <h4 class="card-title">Comments:</h4>
+          <h5 class="card-title">Leave comment</h5>
+          <button [disabled]="commentControl.invalid" mat-raised-button color="primary" (click)="leaveComment()">Leave comment</button>
+          <mat-form-field>
+          <input matInput placeholder="Type comment" type ="text" [formControl]="commentControl"/>
+          <mat-error *ngIf="commentControl.hasError('required')">
+              Please,type smth
+          </mat-error>
+        </mat-form-field>
           <div class="card" *ngFor="let comment of task.taskComments">
             <div class="card-body">
               <h5 class="card-title">{{comment.commentUser.name}}:</h5>

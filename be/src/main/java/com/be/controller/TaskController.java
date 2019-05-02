@@ -24,6 +24,14 @@ public class TaskController {
     @Autowired
     private UserRepository userRepository;
 
+    @GetMapping("/onProjectForTaskAssign")
+    public ResponseEntity<List<com.be.DTO.TaskMain.User>> getUsersOnProjectForTaskAssign(@RequestParam String role,@RequestParam String firstEmailLetters, @RequestParam int idProject){
+        Project projectFound = projectRepository.findProjectByIdProject(idProject);
+        if(projectFound == null) return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        List<User> usersResult = userRepository.findAllByUserProjectsContainsAndEmailStartingWithAndAndRole(projectFound,firstEmailLetters,role);
+        return new ResponseEntity<>(TaskMainMapper.INSTANCE.usersToUserDTOs(usersResult),HttpStatus.OK);
+    }
+
     @GetMapping("/page/availableTasks")
     public Page<com.be.DTO.TaskMain.TaskForTable> getPageOfAvailableTasksForUser(@RequestParam int page,@RequestParam int size,@RequestParam String email) {
         User user = userRepository.findUserByEmail(email);

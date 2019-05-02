@@ -3,8 +3,7 @@
   <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
         <div class="collapse navbar-collapse" id="navbarNav">
                    <a class="nav-item nav-link" routerLink="/">About</a>
-                         <a *ngIf=" auth.authenticated == true" class="nav-item nav-link" routerLink="/tasksTable/available">Available tasks</a>
-                         <a *ngIf=" auth.authenticated == true" class="nav-item nav-link" routerLink="/tasksTable/real">Real tasks</a>
+                         <a *ngIf=" auth.authenticated == true" class="nav-item nav-link" routerLink="/tasksTable">Tasks</a> 
                          <a *ngIf=" auth.authenticated == true" class="nav-item nav-link" routerLink="/createTask">Create taskg</a>
                          <a *ngIf=" auth.authenticated == true && auth.user.role === 'pm' " class="nav-item nav-link" routerLink="/createProject">Create Project</a>
                          

@@ -5,10 +5,13 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.LinkedHashSet;
 import java.util.Objects;
 import java.util.Set;
+import java.util.SortedSet;
 
 import lombok.*;
+import org.hibernate.annotations.SortNatural;
 
 @Table(name ="Tasks")
 @Entity
@@ -63,6 +66,7 @@ public class Task {
     @ManyToOne
     @JoinColumn(name = "idUser")
     private User taskUser;
+
 
     @OneToMany(mappedBy = "commentTask",cascade = CascadeType.ALL)
     private Set<Comment> taskComments;

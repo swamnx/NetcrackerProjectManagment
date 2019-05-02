@@ -20,12 +20,13 @@ export class User{
     email:string;
 }
 export class Project{
+    idProject:number;
     code:number;
 }
 export class Comment{
     idComment:number;
     comment:string;
-    user:User;
+    commentUser:User;
 }
 export class UserForTable{
     idUser:number;

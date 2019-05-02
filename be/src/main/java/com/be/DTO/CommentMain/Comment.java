@@ -1,8 +1,9 @@
-package com.be.DTO.TaskMain;
+package com.be.DTO.CommentMain;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Getter
 @Setter
@@ -15,4 +16,5 @@ public class Comment {
     private String comment;
 
     private User commentUser;
+    private Task commentTask;
 }

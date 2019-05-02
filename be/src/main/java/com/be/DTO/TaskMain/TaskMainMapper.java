@@ -16,5 +16,6 @@ public interface TaskMainMapper {
     List<TaskForProjectTable> tasksToTasksForProjectTable(List<com.be.entity.Task> tasks);
     TaskForTable taskToTaskForTable(com.be.entity.Task task);
     List<TaskForTable> tasksToTasksForTable(List<com.be.entity.Task> tasks);
-
+    List<User> usersToUserDTOs(List<com.be.entity.User> users);
+    Comment commentToCommentDTO(com.be.entity.Comment comment);
 }

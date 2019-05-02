@@ -1,5 +1,6 @@
 package com.be.repository;
 
+import com.be.entity.Project;
 import com.be.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
@@ -14,4 +15,5 @@ public interface UserRepository extends JpaRepository<User,Integer> {
     User findUserByIdUser(Integer id);
     User save(User user);
     void delete(User user);
+    List<User> findAllByUserProjectsContainsAndEmailStartingWithAndAndRole(Project project, String email,String role);
 }

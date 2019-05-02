@@ -14,7 +14,7 @@ import java.util.Set;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Project {
-
+    private int idProject;
     private String code;
 
 }

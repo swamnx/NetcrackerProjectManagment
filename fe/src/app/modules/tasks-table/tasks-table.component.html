@@ -1,7 +1,8 @@
 <div class="card">
     <div class="card-body">
       <h4 class="card-title">Info about {{type}} tasks</h4>
-
+      <button mat-raised-button color="primary" (click)="onClickReal()" [disabled]="type =='real'">Real!</button>
+      <button mat-raised-button color="primary" (click)="onClickAvailable()" [disabled]="type =='available'">Available!</button>
   </div>
   </div>
   <div *ngIf="readyPage == true">
