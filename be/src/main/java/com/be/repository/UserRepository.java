@@ -15,5 +15,6 @@ public interface UserRepository extends JpaRepository<User,Integer> {
     User findUserByIdUser(Integer id);
     User save(User user);
     void delete(User user);
-    List<User> findAllByUserProjectsContainsAndEmailStartingWithAndAndRole(Project project, String email,String role);
+    List<User> findFirst10ByUserProjectsContainsAndEmailStartingWithAndRole(Project project, String email,String role);
+    List<User> findFirst10ByEmailStartsWith(String email);
 }

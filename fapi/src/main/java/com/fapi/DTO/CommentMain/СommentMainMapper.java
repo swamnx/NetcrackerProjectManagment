@@ -7,5 +7,4 @@ import org.mapstruct.factory.Mappers;
 public interface СommentMainMapper {
 
     СommentMainMapper INSTANCE = Mappers.getMapper(СommentMainMapper.class);
-    com.fapi.DTO.Default.Comment commentDTOtoComment(Comment comment);
 }

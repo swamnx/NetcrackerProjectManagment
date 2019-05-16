@@ -19,4 +19,10 @@ export class UserServiceService {
   getUserById(idUser:number):Observable<User>{
     return this.http.get<User>('api/users/'+idUser);
   }
+  addUserOnProject(idUser:number,idProject:number){
+    return this.http.post('api/users/'+idUser+'/projects/'+idProject,null,{observe:'response'});
+  }
+  isUserOnProject(idUser:number,idProject:number){
+    return this.http.get('api/users/'+idUser+'/projects/'+idProject,{observe:'response'});
+  }
 }

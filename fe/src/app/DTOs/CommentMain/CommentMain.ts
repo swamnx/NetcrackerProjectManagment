@@ -3,9 +3,11 @@ export class CommentForCreating{
     comment:string;
     commentUser:User;
     commentTask:Task;
+    date:Date;
     constructor(){
         this.commentTask = new Task();
         this.commentUser = new User();
+        this.date=new Date();
     }
 }
 export class User{

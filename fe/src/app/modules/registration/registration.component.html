@@ -56,7 +56,6 @@
           <mat-label>Your Role</mat-label>
           <mat-select formControlName="role">
             <mat-option value="pm">Project Manager</mat-option>
-            <mat-option value="admin">Admin</mat-option>
             <mat-option value="dev">Developer</mat-option>
             <mat-option value="tester">Tester</mat-option>
           </mat-select>
@@ -71,7 +70,7 @@
         </mat-slide-toggle>
       </div>
       <div class="form-group">
-        <button mat-raised-button color="primary" type="submit" [disabled]="registrationForm.invalid">Register!</button>
+        <button mat-raised-button color="primary" type="submit" [disabled]="registrationForm.invalid || sent">Register!</button>
       </div>
 
     </form>
@@ -79,3 +78,4 @@
   </div>
 
 </div>
+<app-spinner-overlay *ngIf="auth.ready==false"></app-spinner-overlay>

@@ -1,15 +1,15 @@
-<h2 mat-dialog-title>Hi, choose next person</h2>
-<div mat-dialog-content [formGroup]="assignForm" class="formGroup">
+<h2 mat-dialog-title>Hi, choose person</h2>
+<div mat-dialog-content [formGroup]="addUserForm" class="formGroup">
 
   <mat-form-field>
     <input matInput placeholder="Type user email" type="text" formControlName="email" [matAutocomplete]="auto" />
-    <mat-error *ngIf="assignForm.get('email').hasError('userNotSelected')">
+    <mat-error *ngIf="addUserForm.get('email').hasError('userNotSelected')">
       Please, choose person
     </mat-error>
-    <mat-error *ngIf="assignForm.get('email').hasError('userNotFound')">
-       No user with such email
+    <mat-error *ngIf="addUserForm.get('email').hasError('userNotFound')">
+      No user with such email
     </mat-error>
-    <mat-error *ngIf="assignForm.get('email').hasError('required')">
+    <mat-error *ngIf="addUserForm.get('email').hasError('required')">
       Fill form
     </mat-error>
   </mat-form-field>
@@ -23,7 +23,7 @@
 </div>
 <div mat-dialog-actions>
   <button mat-button [mat-dialog-close]="null">Close</button>
-  <button mat-button [disabled]="assignForm.invalid" [mat-dialog-close]="assignForm.get('email').value" cdkFocusInitial>
+  <button mat-button [disabled]="addUserForm.invalid" [mat-dialog-close]="addUserForm.get('email').value" cdkFocusInitial>
     Ok
   </button>
 </div>

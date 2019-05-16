@@ -12,6 +12,9 @@ export class Task{
     taskUser:User;
     taskProject:Project;
     taskComments:Array<Comment>;
+    constructor(){
+        this.taskProject=new Project();
+    }
 }
 export class User{
     idUser:number;
@@ -24,6 +27,7 @@ export class Project{
     code:number;
 }
 export class Comment{
+    date:Date;
     idComment:number;
     comment:string;
     commentUser:User;
@@ -46,24 +50,6 @@ export class TaskForTable{
 }
 export class PageForTasksTable{
     content:Array<TaskForTable>;
-    firstPage:boolean;
-    lastPage:boolean;
-    number:number;
-    numberOfElements:number;
-    size:number;
-    sort:string;
-    totalElements:number;
-    totalPages:number;
-}
-export class TaskForProjectTable{
-    code:number;
-    priority:string;
-    status:string;
-    description:string;
-    taskUser:UserForTable;
-}
-export class PageForProjectTable{
-    content:Array<TaskForProjectTable>;
     firstPage:boolean;
     lastPage:boolean;
     number:number;

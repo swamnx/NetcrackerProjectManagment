@@ -13,5 +13,6 @@ public interface ProjectMainMapper {
     Project projectToProjectDTO(com.be.entity.Project project);
     List<Project> projectsToProjectsDTO(List<com.be.entity.Project> projects);
     Set<Project> projectsToProjectsDTO(Set<com.be.entity.Project> projects);
+    List<User> usersToUsersDTO(List<com.be.entity.User> users);
 
 }

@@ -13,27 +13,21 @@ export class CreateProjectComponent implements OnInit {
 
   createProjectForm:FormGroup;
 
-  project:Project;
-
   constructor(private router: Router, private projectService:ProjectServiceService) {
-    this.project = new Project();
     this.createProjectForm = new FormGroup({
-      'code': new FormControl(
-        this.project.code,
-        [Validators.required]
-      ),
-      'description':new FormControl(
-        this.project.description,
-        [Validators.required]
-      ),
+      code: new FormControl('',[Validators.required]),
+      description:new FormControl('',[Validators.required])
     })
   }
   ngOnInit() {
   }
   createProject(){
-    this.projectService.createProject(this.project).subscribe(
+    let project = new Project();
+    project.code=this.createProjectForm.controls['code'].value;
+    project.description=this.createProjectForm.controls['description'].value;
+    this.projectService.createProject(project).subscribe(
       value=>{
-        this.router.navigateByUrl('projects/'+value.idProject);
+        this.router.navigateByUrl('/projects/'+value.idProject);
       },
       error=>{
         this.router.navigateByUrl('/error/'+error.status);

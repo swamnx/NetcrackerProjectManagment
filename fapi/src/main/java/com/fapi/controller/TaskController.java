@@ -2,7 +2,6 @@ package com.fapi.controller;
 
 import com.fapi.DTO.CustomPageImpl;
 import com.fapi.DTO.TaskMain.Task;
-import com.fapi.DTO.TaskMain.TaskForProjectTable;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
@@ -13,6 +12,7 @@ import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
 import java.security.Principal;
+import java.util.Map;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
@@ -46,33 +46,13 @@ public class TaskController {
             return new ResponseEntity<>(e.getStatusCode());
         }
     }
-    @GetMapping("/page/availableTasks")
-    public ResponseEntity<Page<com.fapi.DTO.TaskMain.TaskForTable>> getPageOfAvailableTasksForUser(@RequestParam Integer page,@RequestParam Integer size,Principal user){
+    @GetMapping("/page")
+    public ResponseEntity<Page<com.fapi.DTO.TaskMain.TaskForTable>> getPageOfAvailableTasksForUser(@RequestParam Map<String,String> allParams,Principal user){
         RestTemplate restTemplate = new RestTemplate();
         try {
-            Page<com.fapi.DTO.TaskMain.TaskForTable> responsePage = restTemplate.getForObject(backendServerUrl + "/api/tasks/page/availableTasks?page="+page+"&email="+user.getName()+"&size="+size,CustomPageImpl.class);
-            return new ResponseEntity<>(responsePage,HttpStatus.OK);
-        }
-        catch (HttpClientErrorException e){
-            return new ResponseEntity<>(e.getStatusCode());
-        }
-    }
-    @GetMapping("/page/realTasks")
-    public ResponseEntity<Page<com.fapi.DTO.TaskMain.TaskForTable>> getPageOfRealTasksForUser(@RequestParam Integer page,@RequestParam Integer size,Principal user){
-        RestTemplate restTemplate = new RestTemplate();
-        try {
-            Page<com.fapi.DTO.TaskMain.TaskForTable> responsePage = restTemplate.getForObject(backendServerUrl + "/api/tasks/page/realTasks?page="+page+"&email="+user.getName()+"&size="+size,CustomPageImpl.class);
-            return new ResponseEntity<>(responsePage,HttpStatus.OK);
-        }
-        catch (HttpClientErrorException e){
-            return new ResponseEntity<>(e.getStatusCode());
-        }
-    }
-    @GetMapping("/page/projectTasks")
-    public ResponseEntity<Page<TaskForProjectTable>> getPageOfTasksForProject(@RequestParam Integer page, @RequestParam Integer size, @RequestParam int idProject){
-        RestTemplate restTemplate = new RestTemplate();
-        try {
-            Page<TaskForProjectTable> responsePage = restTemplate.getForObject(backendServerUrl + "/api/tasks/page/projectTasks?page="+page+"&size="+size+"&idProject="+idProject,CustomPageImpl.class);
+            allParams.put("email",user.getName());
+            Page<com.fapi.DTO.TaskMain.TaskForTable> responsePage = restTemplate.getForObject(backendServerUrl + "/api/tasks/page?page={page}&size={size}&directionSort={directionSort}" +
+                    "&fieldSort={fieldSort}&type={type}&search={search}&idProject={idProject}&email={email}",CustomPageImpl.class,allParams);
             return new ResponseEntity<>(responsePage,HttpStatus.OK);
         }
         catch (HttpClientErrorException e){
@@ -80,10 +60,10 @@ public class TaskController {
         }
     }
     @PostMapping("")
-    public ResponseEntity<com.fapi.DTO.TaskMain.Task> createTask(@RequestBody com.fapi.DTO.TaskMain.Task task){
+    public ResponseEntity createTask(@RequestBody com.fapi.DTO.TaskMain.Task task){
         RestTemplate restTemplate = new RestTemplate();
         try {
-            ResponseEntity<com.fapi.DTO.TaskMain.Task> responseEntity = restTemplate.postForEntity(backendServerUrl+"/api/tasks",task,com.fapi.DTO.TaskMain.Task.class);
+            ResponseEntity responseEntity = restTemplate.postForEntity(backendServerUrl+"/api/tasks",task,Task.class);
             return responseEntity;
     }
         catch (HttpClientErrorException e){

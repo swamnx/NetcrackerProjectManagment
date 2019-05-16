@@ -12,8 +12,6 @@ public interface TaskMainMapper {
     Task taskToTaskDTO(com.be.entity.Task task);
     List<Task> tasksToTasksDTO(List<com.be.entity.Task> tasks);
     com.be.entity.Task taskDTOToTask(Task task);
-    TaskForProjectTable taskToTaskForProjectTable(com.be.entity.Task task);
-    List<TaskForProjectTable> tasksToTasksForProjectTable(List<com.be.entity.Task> tasks);
     TaskForTable taskToTaskForTable(com.be.entity.Task task);
     List<TaskForTable> tasksToTasksForTable(List<com.be.entity.Task> tasks);
     List<User> usersToUserDTOs(List<com.be.entity.User> users);

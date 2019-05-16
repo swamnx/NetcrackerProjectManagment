@@ -1,13 +1,14 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, ViewChild, Input } from '@angular/core';
 import { AuthService } from 'src/app/services/auth-service.service';
 import { HttpClient } from '@angular/common/http';
-import { Router, ActivatedRoute } from '@angular/router';
-import { Task } from 'src/app/models/task';
-import { UserServiceService } from 'src/app/services/user-service.service';
-import { ProjectServiceService } from 'src/app/services/project-service.service';
+import { Router } from '@angular/router';
 import { TaskServiceService } from 'src/app/services/task-service.service';
-import { PageForTasksTable } from 'src/app/DTOs/TaskMain/TaskMain';
-import { routerNgProbeToken } from '@angular/router/src/router_module';
+import { TaskForTable } from 'src/app/DTOs/TaskMain/TaskMain';
+import { BehaviorSubject, Observable, of, merge, fromEvent, timer } from 'rxjs';
+import { CollectionViewer, DataSource } from '@angular/cdk/collections';
+import { catchError, finalize, tap, debounceTime, distinctUntilChanged } from 'rxjs/operators';
+import { MatPaginator, MatSort } from '@angular/material';
+import { FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-tasks-table',
@@ -16,86 +17,81 @@ import { routerNgProbeToken } from '@angular/router/src/router_module';
 })
 export class TasksTableComponent implements OnInit {
 
-  constructor(private auth:AuthService, private http: HttpClient, private router: Router,
-    private userService:UserServiceService,private projectService:ProjectServiceService,
-    private taskService:TaskServiceService, private activatedRoute:ActivatedRoute) {
-  }
+  dataSource:TasksDataSource;
+  displayedColumns=["projectCode","code","description","status","assignedTo","createDate","updateDate","dueDate"];
 
-  page:PageForTasksTable;
-  readyPage:boolean=false;
-  type:string='real';
+  @ViewChild(MatPaginator) paginator:MatPaginator;
+  @ViewChild(MatSort) sort: MatSort;
+  @Input() type:string;
+  @Input() idProject:number;
+  searchControl = new FormControl('');
 
-  onClickReal(){
-    this.type = 'real';
-    this.firstPage();
+  constructor(private auth:AuthService, private http: HttpClient, private router: Router,private taskService:TaskServiceService) {}
+  clickOnProjectCell(idProject){
+    this.router.navigateByUrl('/projects/'+idProject);
   }
-  onClickAvailable(){
-    this.type = 'available';
-    this.firstPage();
-
+  clickOnUserCell(idUser){
+    this.router.navigateByUrl('/users/'+idUser);
   }
-  ngOnInit() {
-    this.taskService.getPageOfTasksForUser(0,this.type).subscribe(
-      (value)=>{
-        this.page=value;
-        this.readyPage=true;
-      },
-      (error)=>{
-        this.router.navigateByUrl('/error/'+error.status);
-      }
-    );
-  }
-  onChooseTask(idTask:number){
+  clickOnTaskCell(idTask){
     this.router.navigateByUrl('/tasks/'+idTask);
   }
-  firstPage(){
-    this.readyPage=false;
-    this.taskService.getPageOfTasksForUser(0,this.type).subscribe(
-      (value)=>{
-        this.page=value;
-        this.readyPage=true;
-      },
-      (error)=>{
-        this.router.navigateByUrl('/error/'+error.status);
-      }
-    );
+  ngOnInit() {
   }
-  previousPage(){
-    this.readyPage=false;
-    this.taskService.getPageOfTasksForUser(this.page.number-1,this.type).subscribe(
-      (value)=>{
-        this.page=value;
-        this.readyPage=true;
-      },
-      (error)=>{
-        this.router.navigateByUrl('/error/'+error.status);
-      }
-    );
+  ngOnChanges() {
+    this.dataSource = new TasksDataSource(this.taskService,this.paginator,this.router);
+    this.dataSourceLoadTasks();
   }
-  nextPage(){
-    this.readyPage=false;
-    this.taskService.getPageOfTasksForUser(this.page.number+1,this.type).subscribe(
-      (value)=>{
-        this.page=value;
-        this.readyPage=true;
-      },
-      (error)=>{
-        this.router.navigateByUrl('/error/'+error.status);
-      }
-    );
+  dataSourceLoadTasks(){
+    this.dataSource.loadTasks(this.type,this.sort.active,this.sort.direction,this.paginator.pageIndex,this.paginator.pageSize,this.searchControl.value,this.idProject);
   }
-  lastPage(){
-    this.readyPage=false;
-    this.taskService.getPageOfTasksForUser(this.page.totalPages-1,this.type).subscribe(
-      (value)=>{
-        console.log(value);
-        this.page=value;
-        this.readyPage=true;
-      },
-      (error)=>{
-        this.router.navigateByUrl('/error/'+error.status);
-      }
-    );
+  ngAfterViewInit(){
+    this.searchControl.valueChanges.pipe(
+      debounceTime(500),
+      tap(
+        ()=>{
+        this.paginator.pageIndex=0;
+        this.dataSourceLoadTasks();
+        }
+      )
+    ).subscribe();
+    this.sort.sortChange.subscribe(() => this.paginator.pageIndex = 0);
+    merge(this.sort.sortChange,this.paginator.page).
+    pipe(tap(()=>this.dataSourceLoadTasks())).subscribe();
   }
 
+}
+export class TasksDataSource implements DataSource<TaskForTable>{
+
+  private tasksSubject = new BehaviorSubject<TaskForTable[]>([]);
+  private loadingSubject = new BehaviorSubject<boolean>(false);
+  public loading$ = this.loadingSubject.asObservable();
+
+  constructor(private taskService:TaskServiceService,private paginator:MatPaginator,private router: Router){
+
+  }
+
+  connect(collectionViewer:CollectionViewer):Observable<TaskForTable[]>{
+    return this.tasksSubject.asObservable();
+  }
+  disconnect(collectionViewer:CollectionViewer):void{
+    this.tasksSubject.complete();
+    this.loadingSubject.complete();
+  }
+  loadTasks(type,fieldSort='code',directionSort='asc',page=0,size=3,search='',idProject=-1){
+    this.loadingSubject.next(true);
+    this.tasksSubject.next([]);
+    timer(1000).subscribe(
+      val=>{
+        this.taskService.getPageOfTasksForUser(type,fieldSort,directionSort,page,size,search,idProject).pipe(
+          catchError((error)=>this.router.navigateByUrl('/error/'+error.status)),
+          finalize(()=>this.loadingSubject.next(false))
+        ).subscribe(
+          page=>{
+            this.paginator.length=page['totalElements'];
+            this.tasksSubject.next(page['content'])}
+        )
+      }
+    )
+  }
 }

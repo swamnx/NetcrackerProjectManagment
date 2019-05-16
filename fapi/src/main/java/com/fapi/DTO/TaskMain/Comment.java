@@ -1,22 +1,24 @@
 package com.fapi.DTO.TaskMain;
 
-import com.fapi.DTO.Default.Task;
-import com.fapi.DTO.Default.User;
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import lombok.*;
+
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class Comment {
+public class Comment implements Comparable<Comment>{
 
     private int idComment;
     private String comment;
     private User commentUser;
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
+    private LocalDateTime date;
+    @Override
+    public int compareTo(Comment comment){
+        return this.date.compareTo(comment.date);
+    }
 
 }

@@ -1,4 +1,4 @@
-<div class="card" *ngIf="readyProject==true">
+<div class="card" *ngIf="projectReady">
   <div class="card-body">
     <h4 class="card-title">Project Info</h4>
     <mat-card-content>
@@ -9,39 +9,10 @@
     </mat-card-content>
   </div>
 </div>
-<div *ngIf="auth.user.role =='pm' ">
-  <a routerLink="addUser">Add User</a>
-</div>
-<div *ngIf="readyPage == true">
-  <nav class="navbar navbar-light bg-light">
-          <span class="navbar-brand mb-0 h5">
-              Amount of pages:{{page.totalPages}}
-              You are on page:{{page.number+1}}
-          </span>
-  </nav>
-<table class="table table-hover">
-  <thead class="thead-dark">
-      <tr>
-          <th scope="col">Code</th>
-          <th scope="col">Description</th>
-          <th scope="col">Status</th>
-          <th scope="col">Asigned to</th>
-      </tr>
-  </thead>
-  <tbody>
-      <tr *ngFor="let task of page.content">
-          <td scope="row">{{task.code}}</td>
-          <td scope="row">{{task.description}}</td>
-          <td scope="row">{{task.status}}</td>
-          <td scope="row"><a class="nav-item nav-link" routerLink="/users/{{task.taskUser.idUser}}">{{task.taskUser.name}}</a></td>
-      </tr>
-  </tbody>
-  
-  <div class="btn-group" role="group" aria-label="Basic example">
-          <button type="button" class="btn btn-secondary" [disabled]="page.firstPage" (click)="firstPage()">First</button>
-          <button type="button" class="btn btn-secondary" [disabled]="page.firstPage" (click)="previousPage()">Previous</button>
-          <button type="button" class="btn btn-secondary" [disabled]="page.lastPage" (click)="nextPage()">Next</button>
-          <button type="button" class="btn btn-secondary" [disabled]="page.lastPage" (click)="lastPage()">Last</button>
+<div class="card" *ngIf="auth.user.role =='pm' && userOnThisProject">
+    <div class="card-body">
+  <a button mat-raised-button color="primary" (click)="addUser()">Add User</a>
   </div>
-</table>
 </div>
+<app-tasks-table *ngIf="projectReady==true" type="project" idProject="{{project.idProject}}"></app-tasks-table>
+<app-spinner-overlay *ngIf="actionsWithProject"></app-spinner-overlay>

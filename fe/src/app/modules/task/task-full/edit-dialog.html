@@ -1,30 +1,10 @@
-<div class="card">
-  <div class="card-body">
+<h2 mat-dialog-title>Hi, edit fields, which you need</h2>
+<div mat-dialog-content [formGroup]="editForm" class="formGroup">
 
-    <h4 class="card-title">Create Task</h4>
-
-    <h6 class="card-subtitle mb-2 text-muted">Hi, Put all necessary data for creating task</h6>
-
-    <form [formGroup]="createTaskForm" (ngSubmit)="createTask()" class="form-group" onC>
-
-      <div class="form-group">
+    <div class="form-group">
         <mat-form-field>
           <input matInput placeholder="Description" formControlName="description" />
-          <mat-error *ngIf="createTaskForm.get('description').hasError('required')">
-            Description is required!
-          </mat-error>
-        </mat-form-field>
-      </div>
-
-      <div class="form-group">
-        <mat-form-field>
-          <mat-label>Select project</mat-label>
-          <mat-select formControlName="taskProject">
-            <mat-option *ngFor="let project of projects" [value]="project">
-              {{project.code}}
-            </mat-option>
-          </mat-select>
-          <mat-error *ngIf="createTaskForm.get('taskProject').hasError('required')">
+          <mat-error *ngIf="editForm.get('description').hasError('required')">
             Description is required!
           </mat-error>
         </mat-form-field>
@@ -38,7 +18,7 @@
             <mat-option value="normal">Normal</mat-option>
             <mat-option value="high">High</mat-option>
           </mat-select>
-          <mat-error *ngIf="createTaskForm.get('priority').hasError('required')">
+          <mat-error *ngIf="editForm.get('priority').hasError('required')">
             Description is required!
           </mat-error>
         </mat-form-field>
@@ -50,10 +30,10 @@
           <mat-datepicker-toggle matSuffix [for]="dueDate"></mat-datepicker-toggle>
           <mat-datepicker #dueDate></mat-datepicker>
           <mat-error
-            *ngIf="createTaskForm.get('dueDate').hasError('required') && !createTaskForm.get('dueDate').hasError('matDatepickerParse')">
+            *ngIf="editForm.get('dueDate').hasError('required') && !editForm.get('dueDate').hasError('matDatepickerParse')">
             Due date is required!
           </mat-error>
-          <mat-error *ngIf="createTaskForm.get('dueDate').hasError('matDatepickerParse')">
+          <mat-error *ngIf="editForm.get('dueDate').hasError('matDatepickerParse')">
             Bad date, choose right format!
           </mat-error>
         </mat-form-field>
@@ -66,22 +46,17 @@
           <mat-datepicker-toggle matSuffix [for]="estimationDate"></mat-datepicker-toggle>
           <mat-datepicker #estimationDate></mat-datepicker>
           <mat-error
-            *ngIf="createTaskForm.get('estimationDate').hasError('required') && !createTaskForm.get('estimationDate').hasError('matDatepickerParse')">
+            *ngIf="editForm.get('estimationDate').hasError('required') && !editForm.get('estimationDate').hasError('matDatepickerParse')">
             Estimation date is required!
           </mat-error>
-          <mat-error *ngIf="createTaskForm.get('estimationDate').hasError('matDatepickerParse')">
+          <mat-error *ngIf="editForm.get('estimationDate').hasError('matDatepickerParse')">
             Bad date, choose right format!
           </mat-error>
         </mat-form-field>
       </div>
-
-      <div class="form-group">
-        <button mat-raised-button color="primary" type="submit" [disabled]="createTaskForm.invalid">Create!</button>
-      </div>
-
-    </form>
-
+  
   </div>
-
-</div>
-<app-spinner-overlay *ngIf="(!ready) || sendingData"></app-spinner-overlay>
+  <div mat-dialog-actions>
+    <button mat-button [mat-dialog-close]="null">Close</button>
+    <button mat-button [disabled]="editForm.invalid" [mat-dialog-close]="editForm" cdkFocusInitial>Ok</button>
+  </div>

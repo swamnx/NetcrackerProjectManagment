@@ -1,0 +1,7 @@
+<div class="card-body">
+    <h4 class="card-title">Info about {{type}} tasks</h4>
+    <button mat-raised-button color="primary" (click)="onClickReal()" [disabled]="type =='real'">Real!</button>
+    <button mat-raised-button color="primary" (click)="onClickAvailable()" [disabled]="type =='available'">Available!</button>
+    <button mat-raised-button color="primary" (click)="onClickAll()" [disabled]="type =='all'">All!</button>
+</div>
+<app-tasks-table type="{{type}}"></app-tasks-table>

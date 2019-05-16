@@ -5,10 +5,7 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import javax.persistence.*;
 import java.time.LocalDate;
-import java.util.LinkedHashSet;
-import java.util.Objects;
-import java.util.Set;
-import java.util.SortedSet;
+import java.util.*;
 
 import lombok.*;
 import org.hibernate.annotations.SortNatural;
@@ -67,9 +64,9 @@ public class Task {
     @JoinColumn(name = "idUser")
     private User taskUser;
 
-
+    @SortNatural
     @OneToMany(mappedBy = "commentTask",cascade = CascadeType.ALL)
-    private Set<Comment> taskComments;
+    private SortedSet<Comment> taskComments=new TreeSet<>();
 
     @ManyToOne
     @JoinColumn(name = "idProject")

@@ -8,6 +8,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.Objects;
 
 @Table(name = "Comments")
@@ -17,7 +19,7 @@ import java.util.Objects;
 @AllArgsConstructor
 @NoArgsConstructor
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "idComment",scope = Comment.class)
-public class Comment {
+public class Comment implements Comparable<Comment> {
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     @Column(name = "idComment")
@@ -35,6 +37,10 @@ public class Comment {
     @JoinColumn(name = "idUser")
     private User commentUser;
 
+    @Basic
+    @Column(name="date")
+    private LocalDateTime date;
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -48,5 +54,9 @@ public class Comment {
     public int hashCode() {
 
         return Objects.hash(idComment, comment);
+    }
+    @Override
+    public int compareTo(Comment comment){
+        return this.date.compareTo(comment.date);
     }
 }

@@ -8,7 +8,10 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Set;
+import java.util.SortedSet;
+import java.util.TreeSet;
 
 @Getter
 @Setter
@@ -27,7 +30,7 @@ public class Task {
     private LocalDate dueDate;
     private LocalDate estimationDate;
 
-    private Set<Comment> taskComments;
+    private List<Comment> taskComments;
     private User taskUser;
     private Project taskProject;
 

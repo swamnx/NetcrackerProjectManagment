@@ -26,6 +26,5 @@ public class Task {
     private LocalDate estimationDate;
 
     private User taskUser;
-    private Set<Comment> taskComments;
 
 }

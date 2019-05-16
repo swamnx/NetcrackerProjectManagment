@@ -1,9 +1,7 @@
-import { Component, OnInit, NgModule} from '@angular/core';
+import { Component, OnInit} from '@angular/core';
 import { AuthService } from 'src/app/services/auth-service.service';
-import { HttpClient } from '@angular/common/http';
-import { Router } from '@angular/router';
-import { FormGroup, FormControl, Validators, AbstractControl, ValidationErrors, ValidatorFn, FormBuilder } from '@angular/forms';
-import { UserWithPassword } from 'src/app/DTOs/UserMain/UserMain';
+import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
+import { timer } from 'rxjs';
 
 @Component({
   selector: 'app-registration',
@@ -13,38 +11,18 @@ export class RegistrationComponent implements OnInit {
 
   registrationForm:FormGroup;
 
-  user:UserWithPassword;
-
   constructor(private auth:AuthService, private fb:FormBuilder) {
-    this.user = new UserWithPassword();
     this.registrationForm = fb.group({
-      email: new FormControl(
-        this.user.email,
-        [Validators.required,Validators.email]
-      ),
-      name: new FormControl(
-        this.user.name,
-        [Validators.required]
-      ),
-      password:new FormControl(
-        this.user.password,
-        [Validators.required]
-      ),
-      repeat:new FormControl(
-        '',
-        [Validators.required]
-      ),
-      role:new FormControl(
-        this.user.role,
-        [Validators.required]
-      ),
-      remember:new FormControl(
-        false
-      )
+      email: new FormControl('',[Validators.required,Validators.email]),
+      name: new FormControl('',[Validators.required]),
+      password:new FormControl('',[Validators.required]),
+      repeat:new FormControl('',[Validators.required]),
+      role:new FormControl('',[Validators.required]),
+      remember:new FormControl(false)
     },{validator: confirmPasswordValidator});
   }
-
   ngOnInit() {
+    localStorage.clear();
   }
   register(){
     this.auth.register(

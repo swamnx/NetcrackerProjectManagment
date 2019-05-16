@@ -1,11 +1,10 @@
 package com.be.DTO.TaskMain;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.*;
 
 import java.time.LocalDate;
-import java.util.Set;
+import java.util.SortedSet;
+import java.util.TreeSet;
 
 @Getter
 @Setter
@@ -25,7 +24,7 @@ public class Task {
     private LocalDate dueDate;
     private LocalDate estimationDate;
 
-    private Set<Comment> taskComments;
+    private SortedSet<Comment> taskComments=new TreeSet<>();
     private User taskUser;
     private Project taskProject;
 

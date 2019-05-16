@@ -12,32 +12,38 @@
     <div class="card-body">
       <h4 class="card-title">Actions</h4>
       <h5 class="card-title">Here all actions, you can do:</h5>
-      <button [disabled]="!(task.taskUser.idUser == auth.user.idUser || task.status == Closed) " mat-raised-button color="primary" (click)="assignDialog()">Assign</button>
+      <button [disabled]="!(task.taskUser.idUser == auth.user.idUser || task.status == closed) " mat-raised-button color="primary" (click)="assignDialog()">Assign</button>
       
-      <button [disabled]="!(((task.status === 'Open') || (task.status === 'Reopen')) &&
+      <button [disabled]="!(((task.status === 'open') || (task.status === 'reopen')) &&
        (task.taskUser.idUser == auth.user.idUser) && (auth.user.role === 'dev'))" mat-raised-button
-        color="primary" (click)="updateStatus('In Progress')" >
+        color="primary" (click)="updateStatus('inProgress')" >
         Start
       </button>
-      <button [disabled]="!((task.status === 'In Progress') && (task.taskUser.idUser == auth.user.idUser) && (auth.user.role === 'dev'))"
-        mat-raised-button color="primary" (click)="updateStatus('Resolved')">
+      <button [disabled]="!((task.status === 'inProgress') && (task.taskUser.idUser == auth.user.idUser) && (auth.user.role === 'dev'))"
+        mat-raised-button color="primary" (click)="updateStatus('resolved')">
         Resolve
       </button>
-      <button [disabled]="!((task.status === 'Resolved') && (task.taskUser.idUser == auth.user.idUser) && (auth.user.role === 'dev'))"
-      mat-raised-button color="primary" (click)="updateStatus('Ready for test')">
+      <button [disabled]="!((task.status === 'resolved') && (task.taskUser.idUser == auth.user.idUser) && (auth.user.role === 'dev'))"
+      mat-raised-button color="primary" (click)="updateStatus('readyForTest')">
       Ready for test
     </button>
-      <button [disabled]="!((task.status === 'Ready for test') && (task.taskUser.idUser == auth.user.idUser) && (auth.user.role === 'tester'))"
-        mat-raised-button color="primary" (click)="updateStatus('Closed')">
+      <button [disabled]="!((task.status === 'readyForTest') && (task.taskUser.idUser == auth.user.idUser) && (auth.user.role === 'tester'))"
+        mat-raised-button color="primary" (click)="updateStatus('closed')">
         Close
       </button>
-      <button [disabled]="!((task.status === 'Ready for test') && (task.taskUser.idUser == auth.user.idUser) && (auth.user.role === 'tester'))"
-      mat-raised-button color="primary" (click)="updateStatus('Reopen')">
+      <button [disabled]="!((task.status === 'readyForTest') && (task.taskUser.idUser == auth.user.idUser) && (auth.user.role === 'tester'))"
+      mat-raised-button color="primary" (click)="updateStatus('reopen')">
       Reopen
     </button>
     </div>
   </div>
 
+  <div class="card" *ngIf="(userOnThisProject && auth.user.role == 'pm')">
+    <div class="card-body">
+        <h4 class="card-title">Additional options</h4>
+        <button mat-raised-button color="primary" (click)="editDialog()">Edit task</button>
+    </div>
+</div>
   <div class="card">
       <div class="card-body">
           <h4 class="card-title">Task code:{{task.code}}</h4>
@@ -76,24 +82,29 @@
       </div>
   </div>
 
-  <div class="card">
+  <div class="card" *ngIf="commentsReady">
       <div class="card-body">
           <h4 class="card-title">Comments:</h4>
-          <h5 class="card-title">Leave comment</h5>
-          <button [disabled]="commentControl.invalid" mat-raised-button color="primary" (click)="leaveComment()">Leave comment</button>
           <mat-form-field>
           <input matInput placeholder="Type comment" type ="text" [formControl]="commentControl"/>
           <mat-error *ngIf="commentControl.hasError('required')">
-              Please,type smth
+            You should write something
           </mat-error>
         </mat-form-field>
-          <div class="card" *ngFor="let comment of task.taskComments">
+        <button [disabled]="commentControl.invalid  || !userOnThisProject" mat-raised-button color="primary" (click)="leaveComment()">Leave comment</button>
+        <div class="card" *ngFor="let comment of task.taskComments">
             <div class="card-body">
-              <h5 class="card-title">{{comment.commentUser.name}}:</h5>
+              <h5 class="card-title">{{comment.commentUser.name}} {{dateShow(comment.date)}}:</h5>
                 <h6 class="card-subtitle mb-2 text-muted">{{comment.comment}}</h6>
             </div>
-          </div>
+        </div>
       </div>
   </div>
+  <div *ngIf="!commentsReady" style="display:flex;justify-content: center;">
+    <mat-spinner></mat-spinner>
+  </div>
 
+</div>
+<div *ngIf="!ready" style="display:flex;justify-content: center;">
+  <mat-spinner></mat-spinner>
 </div>

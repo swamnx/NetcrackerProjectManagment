@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { AuthService } from './auth-service.service';
-import { Task,Project,Comment,User, PageForProjectTable, PageForTasksTable } from 'src/app/DTOs/TaskMain/TaskMain';
+import { Task,Project,Comment,User, PageForTasksTable } from 'src/app/DTOs/TaskMain/TaskMain';
 import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -11,24 +12,20 @@ export class TaskServiceService {
 
   constructor(private http:HttpClient, private auth:AuthService) { }
 
-  getPageOfTasksForUser(page:number,type:string){
+  getPageOfTasksForUser(type:string,fieldSort:string,directionSort:string,page:number,size:number,search:string,idProject:number){
     let options = {
       params:new HttpParams()
       .set('page',page.toString(10))
-      .set('size','3')
-    }
-    return this.http.get<PageForTasksTable>('/api/tasks/page/'+type+'Tasks',options);
-  }
-  
-  getPageOfTasksForProject(page:number,idProject:number):Observable<PageForProjectTable>{
-    let options = {
-      params:new HttpParams()
-      .set('page',page.toString(10))
-      .set('size','3')
+      .set('size',size.toString(10))
+      .set('directionSort',directionSort)
+      .set('fieldSort',fieldSort)
+      .set('type',type)
+      .set('search',search)
       .set('idProject',idProject.toString(10))
     }
-    return this.http.get<PageForProjectTable>('api/tasks/page/projectTasks',options);
+    return this.http.get<PageForTasksTable>('/api/tasks/page',options);
   }
+  
   getUsersOnProjectForTaskAssign(role:string,firstEmailLetters:string,idProject:number,):Observable<User[]>{
     let options = {
       params:new HttpParams()

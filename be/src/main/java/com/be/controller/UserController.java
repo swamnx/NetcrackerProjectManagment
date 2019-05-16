@@ -1,5 +1,6 @@
 package com.be.controller;
 
+import com.be.DTO.ProjectMain.ProjectMainMapper;
 import com.be.DTO.TaskMain.TaskMainMapper;
 import com.be.DTO.UserMain.UserMainMapper;
 import com.be.entity.Project;
@@ -11,6 +12,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.mapstruct.factory.Mappers;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -38,14 +40,10 @@ public class UserController {
         if(userResult==null) return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         return new ResponseEntity<>(UserMainMapper.INSTANCE.userToUserDTO(userResult),HttpStatus.OK);
     }
-    @GetMapping("")
-    public ResponseEntity<List<com.be.DTO.UserMain.User>> getAllUser(){
-        List<User> usersResult = userRepository.findAll();
-        return new ResponseEntity<>(UserMainMapper.INSTANCE.usersToUserDTOs(usersResult),HttpStatus.OK);
-    }
-    @PatchMapping("/addUserOnProject/{idProject}")
-    public ResponseEntity<com.be.DTO.UserMain.User> addUserOnProject(@RequestBody com.be.DTO.UserMain.User user, @PathVariable int idProject) {
-        User userResult = userRepository.findUserByIdUser(user.getIdUser());
+
+    @PostMapping("/{idUser}/projects/{idProject}")
+    public ResponseEntity<com.be.DTO.UserMain.User> addUserOnProject(@PathVariable int idUser,@PathVariable int idProject) {
+        User userResult = userRepository.findUserByIdUser(idUser);
         Project projectResult = projectRepository.findProjectByIdProject(idProject);
         if(userResult==null || projectResult==null)
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -54,8 +52,23 @@ public class UserController {
             return new ResponseEntity<>(HttpStatus.CONFLICT);
         }
         userResult.setUserProjects(projectSet);
-        User userResponse = userRepository.save(userResult);
-        return new ResponseEntity<>(UserMainMapper.INSTANCE.userToUserDTO(userResponse),HttpStatus.OK);
+        userRepository.save(userResult);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+    @GetMapping("/{idUser}/projects/{idProject}")
+    public ResponseEntity userOnProject(@PathVariable int idUser, @PathVariable int idProject){
+        User userResult = userRepository.findUserByIdUser(idUser);
+        Project projectResult = projectRepository.findProjectByIdProject(idProject);
+        if(projectResult==null || userResult==null) return new ResponseEntity(HttpStatus.NOT_FOUND);
+        if(userResult.getUserProjects().contains(projectResult)){
+            return new ResponseEntity(HttpStatus.OK);
+        }
+        return new ResponseEntity(HttpStatus.NO_CONTENT);
+    }
+    @GetMapping("/emailPart")
+    public ResponseEntity getUsersStartWithEmailForAddingOnProject(@RequestParam String emailPart){
+        List<User> usersResult = userRepository.findFirst10ByEmailStartsWith(emailPart);
+        return new ResponseEntity<>(ProjectMainMapper.INSTANCE.usersToUsersDTO(usersResult),HttpStatus.OK);
     }
 
 }

@@ -1,0 +1,15 @@
+mat-cell.my-cell-hover:hover{
+    background:	 #E2E2E2;
+}
+mat-cell{
+    display:flex;
+    justify-content: center;
+}
+mat-header-cell{
+    display:flex;
+    justify-content: center;
+}
+div.spinner{
+    display:flex;
+    justify-content: center;
+}

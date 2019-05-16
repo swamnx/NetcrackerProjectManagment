@@ -35,25 +35,32 @@ public class AuthController {
 
     @PostMapping("/token")
     ResponseEntity getToken(@RequestBody UserWithPassword userWithPassword){
-        final Authentication authentication = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(
-                        userWithPassword.getEmail(),
-                        userWithPassword.getPassword()
-                )
-        );
+        Authentication authentication=null;
+        try {
+            authentication = authenticationManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(
+                            userWithPassword.getEmail(),
+                            userWithPassword.getPassword()
+                    )
+            );
+        }
+        catch (Exception e){
+           return new ResponseEntity(HttpStatus.BAD_REQUEST);
+        }
         SecurityContextHolder.getContext().setAuthentication(authentication);
         final String token = tokenProvider.generateToken(authentication);
         return ResponseEntity.ok(new AuthToken(token));
     }
     @PostMapping("/signup")
     ResponseEntity registerUser(@RequestBody UserWithPassword userWithPassword){
+        String password = userWithPassword.getPassword();
         UserWithPassword userWithPasswordResult = userServiceAuth.save(userWithPassword);
         if(userWithPasswordResult==null) return new ResponseEntity<>(HttpStatus.CONFLICT);
 
         final Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
                         userWithPassword.getEmail(),
-                        userWithPassword.getPassword()
+                        password
                 )
         );
         SecurityContextHolder.getContext().setAuthentication(authentication);

@@ -10,7 +10,6 @@ import { AppComponent } from './app.component';
 import { MyheaderComponent } from 'src/app/modules/myheader/myheader.component';
 import { AboutComponent } from './modules/about/about.component';
 import { NotFoundComponent } from 'src/app/modules/not-found/not-found.component';
-import { HomeComponent } from 'src/app/modules/home/home.component';
 import { LoginComponent } from './modules/login/login.component';
 import { RegistrationComponent } from './modules/registration/registration.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -46,39 +45,35 @@ import {MatSortModule} from '@angular/material/sort';
 import {MatPaginatorModule} from '@angular/material/paginator';
 import { UserBasicComponent } from './modules/user/user-basic/user-basic.component';
 import { ErrorComponent } from './modules/error/error.component';
-import { ProjectBasicComponent } from './modules/project/project-basic/project-basic.component';
-import { TaskFullComponent, AssignDialog } from './modules/task/task-full/task-full.component';
-import { CommentBasicComponent } from './modules/comment/comment-basic/comment-basic.component';
-import { CommentFullComponent } from './modules/comment/comment-full/comment-full.component';
+import { ProjectBasicComponent, AddUserDialog } from './modules/project/project-basic/project-basic.component';
+import { TaskFullComponent, AssignDialog, EditDialog } from './modules/task/task-full/task-full.component';
 import { CreateProjectComponent } from './modules/create-project/create-project.component';
-import { AddUserOnProjectComponent } from './modules/add-user-on-project/add-user-on-project.component';
 import { CreateTaskComponent } from './modules/create-task/create-task.component';
-import { CreateTaskOnProjectComponent } from './modules/create-task-on-project/create-task-on-project.component';
-import { EditTaskComponent } from './modules/edit-task/edit-task.component';
 import { AuthInterceptor } from './services/auth-interceptor.service';
 import { TasksTableComponent } from './modules/tasks-table/tasks-table.component';
+import { TasksComponent } from './modules/task/tasks/tasks.component';
+import { SpinnerOverlayComponent, DialogSpinnerComponent } from './modules/spinner-overlay/spinner-overlay.component';
 @NgModule({
   declarations: [
     AssignDialog,
+    AddUserDialog,
+    EditDialog,
+    DialogSpinnerComponent,
     AppComponent,
     MyheaderComponent,
     AboutComponent,
     NotFoundComponent,
-    HomeComponent,
     LoginComponent,
     RegistrationComponent,
     UserBasicComponent,
     ErrorComponent,
     ProjectBasicComponent,
     TaskFullComponent,
-    CommentBasicComponent,
-    CommentFullComponent,
     CreateProjectComponent,
-    AddUserOnProjectComponent,
     CreateTaskComponent,
-    CreateTaskOnProjectComponent,
-    EditTaskComponent,
-    TasksTableComponent
+    TasksTableComponent,
+    TasksComponent,
+    SpinnerOverlayComponent
   ],
   imports: [
     BrowserModule,
@@ -119,7 +114,7 @@ import { TasksTableComponent } from './modules/tasks-table/tasks-table.component
     MatSortModule,
     MatPaginatorModule
   ],
-  entryComponents:[AssignDialog],
+  entryComponents:[AssignDialog,AddUserDialog,EditDialog,DialogSpinnerComponent],
   providers: [{provide:HTTP_INTERCEPTORS,useClass:AuthInterceptor,multi:true}],
   bootstrap: [AppComponent]
 })

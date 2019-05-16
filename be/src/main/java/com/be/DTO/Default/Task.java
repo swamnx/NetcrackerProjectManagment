@@ -6,6 +6,7 @@ import lombok.*;
 
 import java.time.LocalDate;
 import java.util.Set;
+import java.util.SortedSet;
 
 @Getter
 @Setter
@@ -27,6 +28,6 @@ public class Task {
 
     private User taskUser;
     private Project taskProject;
-    private Set<Comment> taskComments;
+    private SortedSet<Comment> taskComments;
 
 }

@@ -18,6 +18,7 @@ public class UserControlller {
     @Value("${backend.server.url}")
     private String backendServerUrl;
 
+
     @GetMapping("/{idUser}")
     public ResponseEntity<com.fapi.DTO.UserMain.User> getUserById(@PathVariable int idUser) {
         RestTemplate restTemplate = new RestTemplate();
@@ -39,9 +40,6 @@ public class UserControlller {
         catch (HttpClientErrorException e){
             return new ResponseEntity<>(e.getStatusCode());
         }
-        catch (HttpServerErrorException e){
-            return new ResponseEntity<>(e.getStatusCode());
-        }
     }
     @PatchMapping("/addUserOnProject/{idProject}")
     public ResponseEntity<com.fapi.DTO.UserMain.User> addUserOnProject(@RequestBody User user, @PathVariable int idProject){
@@ -52,6 +50,39 @@ public class UserControlller {
         try {
             com.fapi.DTO.UserMain.User responseUser = restTemplate.patchForObject(backendServerUrl + "/api/users/addUserOnProject/"+idProject,user, com.fapi.DTO.UserMain.User.class);
             return new ResponseEntity<>(responseUser,HttpStatus.OK);
+        }
+        catch (HttpClientErrorException e){
+            return new ResponseEntity<>(e.getStatusCode());
+        }
+    }
+    @GetMapping("/{idUser}/projects/{idProject}")
+    public ResponseEntity isUserOnProject(@PathVariable int idUser, @PathVariable int idProject) {
+        RestTemplate restTemplate = new RestTemplate();
+        try {
+            ResponseEntity response = restTemplate.getForEntity(backendServerUrl + "/api/users/"+idUser+"/projects/"+idProject,Void.class);
+            return response;
+        }
+        catch (HttpClientErrorException e){
+            return new ResponseEntity<>(e.getStatusCode());
+        }
+    }
+    @PostMapping("/{idUser}/projects/{idProject}")
+    public ResponseEntity addUserOnProject(@PathVariable int idUser, @PathVariable int idProject) {
+        RestTemplate restTemplate = new RestTemplate();
+        try {
+            ResponseEntity response = restTemplate.postForEntity(backendServerUrl + "/api/users/"+idUser+"/projects/"+idProject,null,Void.class);
+            return response;
+        }
+        catch (HttpClientErrorException e){
+            return new ResponseEntity<>(e.getStatusCode());
+        }
+    }
+    @GetMapping("/emailPart")
+    public ResponseEntity getUsersStartWithEmailForAddingOnProject(@RequestParam String emailPart) {
+        RestTemplate restTemplate = new RestTemplate();
+        try {
+            ResponseEntity response = restTemplate.getForEntity(backendServerUrl + "/api/users/emailPart?emailPart="+emailPart,com.fapi.DTO.ProjectMain.User[].class);
+            return response;
         }
         catch (HttpClientErrorException e){
             return new ResponseEntity<>(e.getStatusCode());

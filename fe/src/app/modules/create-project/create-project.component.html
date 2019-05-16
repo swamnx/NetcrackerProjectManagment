@@ -9,16 +9,16 @@
 
       <div class="form-group">
         <mat-form-field>
-          <input matInput placeholder="Code" formControlName="code" [(ngModel)]="project.code"/>
+          <input matInput placeholder="Code" formControlName="code" />
           <mat-error *ngIf="createProjectForm.get('code').hasError('required')">
-              Project code is required!
+            Project code is required!
           </mat-error>
         </mat-form-field>
       </div>
 
       <div class="form-group">
         <mat-form-field>
-          <input matInput placeholder="Description" formControlName="description" [(ngModel)]="project.description"/>
+          <input matInput placeholder="Description" formControlName="description" />
           <mat-error *ngIf="createProjectForm.get('description').hasError('required')">
             Description is required!
           </mat-error>
