@@ -1,6 +1,6 @@
-import {FormControl, FormGroup, Validators} from '@angular/forms';
-import { Component, OnInit} from '@angular/core';
-import { Router} from '@angular/router';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth-service.service';
 import { ProjectServiceService } from 'src/app/services/project-service.service';
 import { TaskServiceService } from 'src/app/services/task-service.service';
@@ -13,57 +13,62 @@ import { timer } from 'rxjs';
 })
 export class CreateTaskComponent implements OnInit {
 
-  createTaskForm:FormGroup;
-  projects:Project[];
-  sendingData:boolean=false;
-  ready:boolean=false;
-  constructor(private router: Router, private auth:AuthService,private projectService:ProjectServiceService,private taskService:TaskServiceService) {
+  createTaskForm: FormGroup;
+  projects: Project[];
+  sendingData: boolean = true;
+
+  constructor(private auth: AuthService, private router: Router,
+    private projectService: ProjectServiceService, private taskService: TaskServiceService) {
+
+      if(!auth.authenticated) this.auth.authenticateNot();
+    
     this.createTaskForm = new FormGroup({
-      description: new FormControl('',[Validators.required]),
-      taskProject: new FormControl(null,[Validators.required]),
-      priority:new FormControl('normal',[Validators.required]),
+      description: new FormControl('', [Validators.required]),
+      taskProject: new FormControl(null, [Validators.required]),
+      priority: new FormControl('normal', [Validators.required]),
       dueDate: new FormControl(''),
-      estimationDate:new FormControl('')
+      estimationDate: new FormControl('')
     });
+
   }
 
 
   ngOnInit() {
     timer(500).subscribe(
-      val=>{
+      val => {
         this.projectService.getProjects().subscribe(
-          (value)=>{
-            this.projects=value;
-            this.ready=true;
+          (value) => {
+            this.projects = value;
+            this.sendingData = false;
           },
-          (error)=>{
-            this.router.navigateByUrl('/error/'+error.status);
+          (error) => {
+            this.router.navigateByUrl('/error/' + error.status);
           }
         );
       }
     )
   }
-  createTask(){
-    this.sendingData=true;
+  createTask() {
+    this.sendingData = true;
     let task = new Task();
-    task.description=this.createTaskForm.controls['description'].value;
-    task.status='open';
-    task.priority=this.createTaskForm.controls['priority'].value;
-    task.createDate=new Date();
-    task.updateDate=task.createDate;
-    task.dueDate=this.createTaskForm.controls['dueDate'].value;
-    task.estimationDate=this.createTaskForm.controls['estimationDate'].value;
-    task.taskProject=this.createTaskForm.controls['taskProject'].value;
-    task.taskUser=this.auth.user;
-    task.idCreatedBy=this.auth.user.idUser;
+    task.description = this.createTaskForm.controls['description'].value;
+    task.status = 'open';
+    task.priority = this.createTaskForm.controls['priority'].value;
+    task.createDate = new Date();
+    task.updateDate = task.createDate;
+    task.dueDate = this.createTaskForm.controls['dueDate'].value;
+    task.estimationDate = this.createTaskForm.controls['estimationDate'].value;
+    task.taskProject = this.createTaskForm.controls['taskProject'].value;
+    task.taskUser = this.auth.user;
+    task.idCreatedBy = this.auth.user.idUser;
     timer(500).subscribe(
-      val=>{
+      val => {
         this.taskService.createTask(task).subscribe(
-          (value)=>{
-            this.router.navigateByUrl('/tasks/'+value.idTask);
+          (value) => {
+            this.router.navigateByUrl('/tasks/' + value.idTask);
           },
-          (error)=>{
-            this.router.navigateByUrl('/error/'+error.status);
+          (error) => {
+            this.router.navigateByUrl('/error/' + error.status);
           }
         )
       }

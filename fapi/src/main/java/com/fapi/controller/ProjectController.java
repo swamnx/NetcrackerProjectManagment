@@ -25,8 +25,7 @@ public class ProjectController {
     public ResponseEntity<com.fapi.DTO.ProjectMain.Project> getFullProjectById(@PathVariable int idProject) {
         RestTemplate restTemplate = new RestTemplate();
         try {
-            ResponseEntity<com.fapi.DTO.ProjectMain.Project> responseProjectDTO = restTemplate.getForEntity(backendServerUrl + "/api/projects/" + idProject,com.fapi.DTO.ProjectMain.Project.class);
-            return responseProjectDTO;
+            return restTemplate.getForEntity(backendServerUrl + "/api/projects/" + idProject,com.fapi.DTO.ProjectMain.Project.class);
         }
         catch (HttpClientErrorException e){
             return new ResponseEntity<>(e.getStatusCode());
@@ -37,8 +36,7 @@ public class ProjectController {
     public ResponseEntity<com.fapi.DTO.ProjectMain.Project> createProject(@RequestBody Project project){
         RestTemplate restTemplate = new RestTemplate();
         try {
-            ResponseEntity<com.fapi.DTO.ProjectMain.Project> responseProjectDTO = restTemplate.postForEntity(backendServerUrl + "/api/projects",project,com.fapi.DTO.ProjectMain.Project.class);
-            return responseProjectDTO;
+            return restTemplate.postForEntity(backendServerUrl + "/api/projects",project,com.fapi.DTO.ProjectMain.Project.class);
         }
         catch (HttpClientErrorException e){
             return new ResponseEntity<>(e.getStatusCode());
@@ -46,13 +44,9 @@ public class ProjectController {
     }
     @GetMapping("/users/{idUser}")
     public ResponseEntity<com.fapi.DTO.ProjectMain.Project[]> getAllProjects(@PathVariable int idUser){
-        HttpComponentsClientHttpRequestFactory httpRequestFactory = new HttpComponentsClientHttpRequestFactory();
-        httpRequestFactory.setConnectTimeout(10000);
-        httpRequestFactory.setReadTimeout(10000);
-        RestTemplate restTemplate = new RestTemplate(httpRequestFactory);
+        RestTemplate restTemplate = new RestTemplate();
         try {
-            ResponseEntity<com.fapi.DTO.ProjectMain.Project[]> responseProjectDTOs = restTemplate.getForEntity(backendServerUrl + "/api/projects/users/ "+idUser,com.fapi.DTO.ProjectMain.Project[].class);
-            return responseProjectDTOs;
+            return restTemplate.getForEntity(backendServerUrl + "/api/projects/users/ "+idUser,com.fapi.DTO.ProjectMain.Project[].class);
         }
         catch (HttpClientErrorException e){
             return new ResponseEntity<>(e.getStatusCode());

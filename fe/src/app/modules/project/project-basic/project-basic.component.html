@@ -1,4 +1,4 @@
-<div class="card" *ngIf="projectReady">
+<div class="card" *ngIf="readyProject">
   <div class="card-body">
     <h4 class="card-title">Project Info</h4>
     <mat-card-content>
@@ -10,9 +10,9 @@
   </div>
 </div>
 <div class="card" *ngIf="auth.user.role =='pm' && userOnThisProject">
-    <div class="card-body">
-  <a button mat-raised-button color="primary" (click)="addUser()">Add User</a>
+  <div class="card-body">
+    <a button mat-raised-button color="primary" (click)="addUser()">Add User</a>
   </div>
 </div>
-<app-tasks-table *ngIf="projectReady==true" type="project" idProject="{{project.idProject}}"></app-tasks-table>
-<app-spinner-overlay *ngIf="actionsWithProject"></app-spinner-overlay>
+<app-tasks-table *ngIf="readyProject" type="project" idProject="{{project.idProject}}"></app-tasks-table>
+<app-spinner-overlay *ngIf="sendingData"></app-spinner-overlay>

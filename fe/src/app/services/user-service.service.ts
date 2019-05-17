@@ -10,12 +10,6 @@ export class UserServiceService {
 
   constructor(private http:HttpClient, private auth:AuthService) { }
 
-  getUsers():Observable<any[]>{
-    return this.http.get<any[]>('api/users');
-  }
-  updateUser(user:User):Observable<User>{
-    return this.http.patch<User>('api/users',user);
-  }
   getUserById(idUser:number):Observable<User>{
     return this.http.get<User>('api/users/'+idUser);
   }
@@ -24,5 +18,12 @@ export class UserServiceService {
   }
   isUserOnProject(idUser:number,idProject:number){
     return this.http.get('api/users/'+idUser+'/projects/'+idProject,{observe:'response'});
+  }
+  getUsersStartWithEmailForAddingOnProject(emailPart:string):Observable<User[]>{
+    let options = {
+      params:new HttpParams()
+      .set('emailPart',emailPart)
+    }
+    return this.http.get<User[]>('api/users/emailPart',options);
   }
 }

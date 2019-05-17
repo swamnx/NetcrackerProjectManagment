@@ -18,7 +18,7 @@ export class SpinnerOverlayComponent implements OnInit {
 
   ngOnInit() {
       setTimeout(()=>{
-        this.dialog=this.matDialog.open(DialogSpinnerComponent,{panelClass:'spin',id:'sdfmponent',disableClose:true})
+        this.dialog=this.matDialog.open(DialogSpinnerComponent,{panelClass:'spin',disableClose:true})
       })
   }
   ngOnDestroy(){

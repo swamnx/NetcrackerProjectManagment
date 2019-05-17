@@ -1,62 +1,62 @@
 <h2 mat-dialog-title>Hi, edit fields, which you need</h2>
 <div mat-dialog-content [formGroup]="editForm" class="formGroup">
 
-    <div class="form-group">
-        <mat-form-field>
-          <input matInput placeholder="Description" formControlName="description" />
-          <mat-error *ngIf="editForm.get('description').hasError('required')">
-            Description is required!
-          </mat-error>
-        </mat-form-field>
-      </div>
-
-      <div class="form-group">
-        <mat-form-field>
-          <mat-label>Select priority</mat-label>
-          <mat-select formControlName="priority">
-            <mat-option value="low">Low</mat-option>
-            <mat-option value="normal">Normal</mat-option>
-            <mat-option value="high">High</mat-option>
-          </mat-select>
-          <mat-error *ngIf="editForm.get('priority').hasError('required')">
-            Description is required!
-          </mat-error>
-        </mat-form-field>
-      </div>
-
-      <div class="form-group">
-        <mat-form-field>
-          <input required matInput [matDatepicker]="dueDate" placeholder="Choose a due date" formControlName="dueDate">
-          <mat-datepicker-toggle matSuffix [for]="dueDate"></mat-datepicker-toggle>
-          <mat-datepicker #dueDate></mat-datepicker>
-          <mat-error
-            *ngIf="editForm.get('dueDate').hasError('required') && !editForm.get('dueDate').hasError('matDatepickerParse')">
-            Due date is required!
-          </mat-error>
-          <mat-error *ngIf="editForm.get('dueDate').hasError('matDatepickerParse')">
-            Bad date, choose right format!
-          </mat-error>
-        </mat-form-field>
-      </div>
-
-      <div class="form-group">
-        <mat-form-field>
-          <input required matInput [matDatepicker]="estimationDate" placeholder="Choose a estimation date"
-            formControlName="estimationDate">
-          <mat-datepicker-toggle matSuffix [for]="estimationDate"></mat-datepicker-toggle>
-          <mat-datepicker #estimationDate></mat-datepicker>
-          <mat-error
-            *ngIf="editForm.get('estimationDate').hasError('required') && !editForm.get('estimationDate').hasError('matDatepickerParse')">
-            Estimation date is required!
-          </mat-error>
-          <mat-error *ngIf="editForm.get('estimationDate').hasError('matDatepickerParse')">
-            Bad date, choose right format!
-          </mat-error>
-        </mat-form-field>
-      </div>
-  
+  <div class="form-group">
+    <mat-form-field>
+      <input matInput placeholder="Description" formControlName="description" />
+      <mat-error *ngIf="editForm.get('description').hasError('required')">
+        Description is required!
+      </mat-error>
+    </mat-form-field>
   </div>
-  <div mat-dialog-actions>
-    <button mat-button [mat-dialog-close]="null">Close</button>
-    <button mat-button [disabled]="editForm.invalid" [mat-dialog-close]="editForm" cdkFocusInitial>Ok</button>
+
+  <div class="form-group">
+    <mat-form-field>
+      <mat-label>Select priority</mat-label>
+      <mat-select formControlName="priority">
+        <mat-option value="low">Low</mat-option>
+        <mat-option value="normal">Normal</mat-option>
+        <mat-option value="high">High</mat-option>
+      </mat-select>
+      <mat-error *ngIf="editForm.get('priority').hasError('required')">
+        Description is required!
+      </mat-error>
+    </mat-form-field>
   </div>
+
+  <div class="form-group">
+    <mat-form-field>
+      <input required matInput [matDatepicker]="dueDate" placeholder="Choose a due date" formControlName="dueDate">
+      <mat-datepicker-toggle matSuffix [for]="dueDate"></mat-datepicker-toggle>
+      <mat-datepicker #dueDate></mat-datepicker>
+      <mat-error
+        *ngIf="editForm.get('dueDate').hasError('required') && !editForm.get('dueDate').hasError('matDatepickerParse')">
+        Due date is required!
+      </mat-error>
+      <mat-error *ngIf="editForm.get('dueDate').hasError('matDatepickerParse')">
+        Bad date, choose right format!
+      </mat-error>
+    </mat-form-field>
+  </div>
+
+  <div class="form-group">
+    <mat-form-field>
+      <input required matInput [matDatepicker]="estimationDate" placeholder="Choose a estimation date"
+        formControlName="estimationDate">
+      <mat-datepicker-toggle matSuffix [for]="estimationDate"></mat-datepicker-toggle>
+      <mat-datepicker #estimationDate></mat-datepicker>
+      <mat-error
+        *ngIf="editForm.get('estimationDate').hasError('required') && !editForm.get('estimationDate').hasError('matDatepickerParse')">
+        Estimation date is required!
+      </mat-error>
+      <mat-error *ngIf="editForm.get('estimationDate').hasError('matDatepickerParse')">
+        Bad date, choose right format!
+      </mat-error>
+    </mat-form-field>
+  </div>
+
+</div>
+<div mat-dialog-actions style="display:flex;justify-content:space-around;">
+  <button mat-button [mat-dialog-close]="null" style="flex:1">Close</button>
+  <button mat-button [disabled]="editForm.invalid" [mat-dialog-close]="editForm" style="flex:1">Ok</button>
+</div>

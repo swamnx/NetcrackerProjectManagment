@@ -19,8 +19,7 @@ public class CommentController {
     public ResponseEntity<com.fapi.DTO.TaskMain.Comment> createComment(@RequestBody Comment commentDTO){
         RestTemplate restTemplate = new RestTemplate();
         try {
-            ResponseEntity<com.fapi.DTO.TaskMain.Comment> responseCommentDTO = restTemplate.postForEntity(backendServerUrl + "/api/comments",commentDTO,com.fapi.DTO.TaskMain.Comment.class);
-            return responseCommentDTO;
+           return restTemplate.postForEntity(backendServerUrl + "/api/comments",commentDTO,com.fapi.DTO.TaskMain.Comment.class);
         }
         catch (HttpClientErrorException e){
             return new ResponseEntity<>(e.getStatusCode());

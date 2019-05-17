@@ -25,7 +25,6 @@ public class CommentController {
     ResponseEntity<Comment> createComment(@RequestBody com.be.DTO.CommentMain.Comment commentDTO){
         com.be.entity.Comment comment = СommentMainMapper.INSTANCE.commentDTOtoComment(commentDTO);
         com.be.entity.Comment createdComment = commentRepositroy.save(comment);
-        System.out.println(createdComment.getCommentUser().getName());
         if(createdComment == null) return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         return new ResponseEntity<>(TaskMainMapper.INSTANCE.commentToCommentDTO(createdComment),HttpStatus.OK);
     }

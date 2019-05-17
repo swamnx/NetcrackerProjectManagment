@@ -3,6 +3,8 @@ import { Router } from '@angular/router';
 import { ProjectServiceService } from 'src/app/services/project-service.service';
 import { Project } from 'src/app/DTOs/ProjectMain/ProjectMain';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { timer } from 'rxjs';
+import { AuthService } from 'src/app/services/auth-service.service';
 
 @Component({
   selector: 'app-create-project',
@@ -11,26 +13,37 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 })
 export class CreateProjectComponent implements OnInit {
 
-  createProjectForm:FormGroup;
+  createProjectForm: FormGroup;
+  sendingData: boolean = false;
 
-  constructor(private router: Router, private projectService:ProjectServiceService) {
+  constructor(private auth: AuthService, private router: Router, private projectService: ProjectServiceService) {
+
+    if(!auth.authenticated) this.auth.authenticateNot();
+
     this.createProjectForm = new FormGroup({
-      code: new FormControl('',[Validators.required]),
-      description:new FormControl('',[Validators.required])
+      code: new FormControl('', [Validators.required]),
+      description: new FormControl('', [Validators.required])
     })
   }
+
   ngOnInit() {
   }
-  createProject(){
+  
+  createProject() {
+    this.sendingData = true;
     let project = new Project();
-    project.code=this.createProjectForm.controls['code'].value;
-    project.description=this.createProjectForm.controls['description'].value;
-    this.projectService.createProject(project).subscribe(
-      value=>{
-        this.router.navigateByUrl('/projects/'+value.idProject);
-      },
-      error=>{
-        this.router.navigateByUrl('/error/'+error.status);
+    project.code = this.createProjectForm.controls['code'].value;
+    project.description = this.createProjectForm.controls['description'].value;
+    timer(500).subscribe(
+      val => {
+        this.projectService.createProject(project).subscribe(
+          value => {
+            this.router.navigateByUrl('/projects/' + value.idProject);
+          },
+          error => {
+            this.router.navigateByUrl('/error/' + error.status);
+          }
+        )
       }
     )
   }

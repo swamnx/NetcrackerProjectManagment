@@ -53,6 +53,7 @@ import { AuthInterceptor } from './services/auth-interceptor.service';
 import { TasksTableComponent } from './modules/tasks-table/tasks-table.component';
 import { TasksComponent } from './modules/task/tasks/tasks.component';
 import { SpinnerOverlayComponent, DialogSpinnerComponent } from './modules/spinner-overlay/spinner-overlay.component';
+import { FooterComponent } from './modules/footer/footer.component';
 @NgModule({
   declarations: [
     AssignDialog,
@@ -73,7 +74,8 @@ import { SpinnerOverlayComponent, DialogSpinnerComponent } from './modules/spinn
     CreateTaskComponent,
     TasksTableComponent,
     TasksComponent,
-    SpinnerOverlayComponent
+    SpinnerOverlayComponent,
+    FooterComponent
   ],
   imports: [
     BrowserModule,

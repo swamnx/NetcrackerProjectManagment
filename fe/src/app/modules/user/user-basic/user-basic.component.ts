@@ -3,6 +3,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { UserServiceService } from 'src/app/services/user-service.service';
 import { User} from 'src/app/DTOs/UserMain/UserMain';
 import { timer } from 'rxjs';
+import { AuthService } from 'src/app/services/auth-service.service';
 
 @Component({
   selector: 'app-user-basic',
@@ -11,15 +12,15 @@ import { timer } from 'rxjs';
 })
 export class UserBasicComponent implements OnInit {
 
-  readyUser: boolean;
+  readyUser: boolean=false;
   user: User;
 
-  constructor(private router: Router,private userService: UserServiceService,private activatedRoute: ActivatedRoute) {
-    this.readyUser = false;
+  constructor(private auth:AuthService,private router: Router,private userService: UserServiceService,private activatedRoute: ActivatedRoute) {
+    if(!auth.authenticated) this.auth.authenticateNot();
   }
   
   ngOnInit() {
-    timer(1000).subscribe(
+    timer(500).subscribe(
       val=>{
           const idUser = this.activatedRoute.snapshot.params['idUser'];
           this.userService.getUserById(idUser).subscribe(

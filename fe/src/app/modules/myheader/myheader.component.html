@@ -1,15 +1,15 @@
-<mat-toolbar >
-      <span class="one">Swamnx project</span>
+<mat-toolbar style="background-image:url(assets/test.jpg);height:13vh;color:white">
+      <span class="one" style="font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;height:25%;">Project contol system</span>
       <span class="second">
-            <a mat-button routerLink="/">About</a>
-            <a mat-button routerLink="/tasks" *ngIf="auth.authenticated">Tasks</a>
-            <a mat-button routerLink="/createTask" *ngIf="auth.authenticated">Create task</a>
-            <a mat-button routerLink="/createProject" *ngIf="auth.authenticated && auth.user.role == 'pm' ">Create project</a>
+            <a mat-raised-button class="add-space" routerLink="/about">About</a>
+            <a mat-raised-button class="add-space" routerLink="/tasks" *ngIf="auth.authenticated">Tasks</a>
+            <a mat-raised-button class="add-space" routerLink="/createTask" *ngIf="auth.authenticated">Create task</a>
+            <a mat-raised-button class="add-space" routerLink="/createProject" *ngIf="auth.authenticated && auth.user.role == 'pm' ">Create project</a>
       </span>
       <span class="third">
-            <a mat-button routerLink="/login" *ngIf="!auth.authenticated">Login</a>
-            <a mat-button routerLink="/registration" *ngIf="!auth.authenticated">Registration</a>
-            <a mat-button routerLink="/users/{{auth.user.idUser}}" *ngIf="auth.authenticated">{{auth.user.name}}</a>
-            <button mat-button (click)="auth.authenticateNot()" *ngIf="auth.authenticated">Logout</button>
+            <a mat-raised-button class="add-space" routerLink="/login" *ngIf="!auth.authenticated">Login</a>
+            <a mat-raised-button class="add-space" routerLink="/registration" *ngIf="!auth.authenticated">Registration</a>
+            <a mat-raised-button class="add-space" routerLink="/users/{{auth.user.idUser}}" *ngIf="auth.authenticated">{{auth.user.name}}</a>
+            <button mat-raised-button (click)="auth.authenticateNot()" *ngIf="auth.authenticated">Logout</button>
       </span>
 </mat-toolbar>

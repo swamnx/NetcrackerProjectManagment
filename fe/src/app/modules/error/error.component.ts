@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute} from '@angular/router';
-import {recogniseError} from 'src/app/services/exceptions';
+import { ActivatedRoute, Router } from '@angular/router';
+import { recogniseError } from 'src/app/services/exceptions';
 import { AuthService } from 'src/app/services/auth-service.service';
 
 @Component({
@@ -10,12 +10,14 @@ import { AuthService } from 'src/app/services/auth-service.service';
 })
 export class ErrorComponent implements OnInit {
 
-  error:string;
-  constructor(private auth: AuthService,private activatedRoute:ActivatedRoute) { }
+  error: string;
+  constructor(private auth: AuthService, private router: Router, private activatedRoute: ActivatedRoute) {
+    if (auth.user == null) this.auth.authenticateNot();
+  }
 
   ngOnInit() {
-    this.error=recogniseError(this.activatedRoute.snapshot.params['error']);
-    if(this.error == 'Token expired' || this.error == 'Unauthorized') this.auth.authenticateNotProblem(this.error);
+    this.error = recogniseError(this.activatedRoute.snapshot.params['error']);
+    if (this.error == 'Token expired' || this.error == 'Unauthorized') this.auth.authenticateNotProblem(this.error);
   }
 
 }

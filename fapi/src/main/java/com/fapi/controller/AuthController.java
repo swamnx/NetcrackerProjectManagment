@@ -1,23 +1,16 @@
 package com.fapi.controller;
 import com.fapi.DTO.AuthToken;
 import com.fapi.DTO.UserMain.UserAuth;
-import com.fapi.DTO.UserMain.UserMainMapper;
 import com.fapi.DTO.UserMain.UserWithPassword;
 import com.fapi.security.TokenProvider;
 import com.fapi.service.UserServiceAuth;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.*;
-import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.client.HttpClientErrorException;
-import org.springframework.web.client.HttpServerErrorException;
-import org.springframework.web.client.RestTemplate;
 
 import java.security.Principal;
 

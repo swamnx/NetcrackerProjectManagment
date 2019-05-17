@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AuthService } from 'src/app/services/auth-service.service';
 
 @Component({
   selector: 'app-tasks',
@@ -7,20 +8,24 @@ import { Component, OnInit } from '@angular/core';
 })
 export class TasksComponent implements OnInit {
 
-  constructor() { }
+  type: string = 'real';
+
+  constructor(private auth: AuthService) {
+    if (!auth.authenticated) this.auth.authenticateNot();
+  }
 
   ngOnInit() {
   }
-  type='real';
-  onClickReal(){
+
+  onClickReal() {
     this.type = 'real';
-   
+
   }
-  onClickAvailable(){
+  onClickAvailable() {
     this.type = 'available';
 
   }
-  onClickAll(){
+  onClickAll() {
     this.type = 'all';
 
   }

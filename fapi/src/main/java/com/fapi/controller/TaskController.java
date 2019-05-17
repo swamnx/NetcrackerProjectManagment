@@ -7,6 +7,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
@@ -26,9 +27,8 @@ public class TaskController {
     public ResponseEntity<com.fapi.DTO.TaskMain.User[]> getUsersOnProjectForTaskAssign(@RequestParam String role,@RequestParam String firstEmailLetters, @RequestParam int idProject){
         RestTemplate restTemplate = new RestTemplate();
         try {
-            ResponseEntity<com.fapi.DTO.TaskMain.User[]> responseUserDTOs = restTemplate.getForEntity(backendServerUrl
-                    + "/api/tasks/onProjectForTaskAssign?role="+role+"&firstEmailLetters="+firstEmailLetters+"&idProject="+idProject,com.fapi.DTO.TaskMain.User[].class);
-            return responseUserDTOs;
+            return restTemplate.getForEntity(backendServerUrl +
+                    "/api/tasks/onProjectForTaskAssign?role="+role+"&firstEmailLetters="+firstEmailLetters+"&idProject="+idProject,com.fapi.DTO.TaskMain.User[].class);
         }
         catch (HttpClientErrorException e){
             return new ResponseEntity<>(e.getStatusCode());
@@ -39,15 +39,14 @@ public class TaskController {
     public ResponseEntity<com.fapi.DTO.TaskMain.Task> getTask(@PathVariable int idTask) {
         RestTemplate restTemplate = new RestTemplate();
         try {
-            ResponseEntity<com.fapi.DTO.TaskMain.Task> responseTask = restTemplate.getForEntity(backendServerUrl + "/api/tasks/"+idTask,com.fapi.DTO.TaskMain.Task.class);
-            return responseTask;
+            return restTemplate.getForEntity(backendServerUrl + "/api/tasks/"+idTask,com.fapi.DTO.TaskMain.Task.class);
         }
         catch (HttpClientErrorException e){
             return new ResponseEntity<>(e.getStatusCode());
         }
     }
     @GetMapping("/page")
-    public ResponseEntity<Page<com.fapi.DTO.TaskMain.TaskForTable>> getPageOfAvailableTasksForUser(@RequestParam Map<String,String> allParams,Principal user){
+    public ResponseEntity<Page<com.fapi.DTO.TaskMain.TaskForTable>> getPageOfTasksForUser(@RequestParam Map<String,String> allParams,Principal user){
         RestTemplate restTemplate = new RestTemplate();
         try {
             allParams.put("email",user.getName());
@@ -63,14 +62,14 @@ public class TaskController {
     public ResponseEntity createTask(@RequestBody com.fapi.DTO.TaskMain.Task task){
         RestTemplate restTemplate = new RestTemplate();
         try {
-            ResponseEntity responseEntity = restTemplate.postForEntity(backendServerUrl+"/api/tasks",task,Task.class);
-            return responseEntity;
+            return restTemplate.postForEntity(backendServerUrl+"/api/tasks",task,Task.class);
     }
         catch (HttpClientErrorException e){
             return new ResponseEntity<>(e.getStatusCode());
         }
 
     }
+    @PreAuthorize("hasRole('ROLE_pm')")
     @PatchMapping("")
     public ResponseEntity<com.fapi.DTO.TaskMain.Task> updateTask(@RequestBody com.fapi.DTO.TaskMain.Task task){
         HttpComponentsClientHttpRequestFactory httpRequestFactory = new HttpComponentsClientHttpRequestFactory();

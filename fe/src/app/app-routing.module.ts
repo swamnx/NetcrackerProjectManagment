@@ -14,7 +14,8 @@ import { TasksComponent } from './modules/task/tasks/tasks.component';
 import { CreateTaskComponent } from './modules/create-task/create-task.component';
 
 const routes: Routes = [
-  {path:'', component: AboutComponent},
+  {path:'', component:LoginComponent},
+  {path:'about',component:AboutComponent},
   {path:'createTask',component:CreateTaskComponent},
   {path:'projects/:idProject',component:ProjectBasicComponent},
   {path:'createProject',component:CreateProjectComponent},

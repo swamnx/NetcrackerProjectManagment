@@ -7,7 +7,7 @@
       Please, choose person
     </mat-error>
     <mat-error *ngIf="assignForm.get('email').hasError('userNotFound')">
-       No user with such email
+      No user with such email
     </mat-error>
     <mat-error *ngIf="assignForm.get('email').hasError('required')">
       Fill form
@@ -21,9 +21,7 @@
   </mat-autocomplete>
 
 </div>
-<div mat-dialog-actions>
-  <button mat-button [mat-dialog-close]="null">Close</button>
-  <button mat-button [disabled]="assignForm.invalid" [mat-dialog-close]="assignForm.get('email').value" cdkFocusInitial>
-    Ok
-  </button>
+<div mat-dialog-actions style="display:flex;justify-content:space-around;">
+  <button mat-button [mat-dialog-close]="null" style="flex:1">Close</button>
+  <button mat-button [disabled]="assignForm.invalid" [mat-dialog-close]="assignForm.get('email').value" style="flex:1">Ok</button>
 </div>

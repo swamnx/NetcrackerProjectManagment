@@ -1,7 +1,7 @@
 <div class="card">
   <div class="card-body">
 
-    <h6 class="alert alert-danger" [hidden]="(auth.problem === '') ">Something goes wrong: {{auth.problem}}</h6>
+    <h6 class="alert alert-danger" [hidden]="(error == '') ">Something goes wrong: {{error}}</h6>
     <h4 class="card-title">Login page</h4>
 
     <h6 class="card-subtitle mb-2 text-muted">Hi, Type your informaton and let start work</h6>
@@ -42,6 +42,5 @@
     </form>
 
   </div>
-
 </div>
-<app-spinner-overlay *ngIf="auth.ready==false"></app-spinner-overlay>
+<app-spinner-overlay *ngIf="sendingData"></app-spinner-overlay>
