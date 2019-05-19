@@ -17,7 +17,7 @@ import org.hibernate.annotations.SortNatural;
 @AllArgsConstructor
 @NoArgsConstructor
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "idTask",scope = Task.class)
-public class Task {
+public class Task{
 
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
@@ -30,8 +30,11 @@ public class Task {
 
     @Basic
     @Column(name = "code")
-    private int code;
+    private Integer code;
 
+    @Basic
+    @Column(name = "name")
+    private String name;
     @Basic
     @Column(name = "priority")
     private String priority;
@@ -77,20 +80,13 @@ public class Task {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Task task = (Task) o;
-        return idTask == task.idTask &&
-                Objects.equals(code, task.code) &&
-                Objects.equals(priority, task.priority) &&
-                Objects.equals(status, task.status) &&
-                Objects.equals(description, task.description) &&
-                Objects.equals(createDate, task.createDate) &&
-                Objects.equals(updateDate, task.updateDate) &&
-                Objects.equals(dueDate, task.dueDate) &&
-                Objects.equals(estimationDate, task.estimationDate);
+        return idTask == task.idTask;
     }
 
     @Override
     public int hashCode() {
 
-        return Objects.hash(idTask, code, priority, status, description, createDate, updateDate, dueDate, estimationDate);
+        return Objects.hash(idTask,code,name, priority, status, description, createDate, updateDate, dueDate, estimationDate);
     }
+
 }

@@ -11,10 +11,14 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class Project {
+public class Project implements Comparable<Project> {
 
     private int idProject;
     private String code;
     private String description;
 
+    @Override
+    public int compareTo(Project o) {
+        return this.code.compareTo(o.code);
+    }
 }

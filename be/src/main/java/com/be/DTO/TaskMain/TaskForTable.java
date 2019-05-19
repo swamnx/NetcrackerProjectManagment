@@ -12,6 +12,7 @@ import java.time.LocalDate;
 public class TaskForTable {
     private int idTask;
     private int code;
+    private String name;
     private String status;
     private String description;
     private LocalDate createDate;

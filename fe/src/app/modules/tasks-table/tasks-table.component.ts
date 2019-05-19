@@ -18,7 +18,7 @@ import { FormControl } from '@angular/forms';
 export class TasksTableComponent implements OnInit {
 
   dataSource: TasksDataSource;
-  displayedColumns = ["projectCode", "code", "description", "status", "assignedTo", "createDate", "updateDate", "dueDate"];
+  displayedColumns = ["projectCode", "code", "name", "status", "assignedTo", "createDate", "updateDate", "dueDate"];
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;

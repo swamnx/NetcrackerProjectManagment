@@ -10,6 +10,7 @@ export class Task {
     dueDate: Date;
     estimationDate: Date;
     taskUser: User;
+    name:string;
     taskComments: Comment[];
 }
 export class User {

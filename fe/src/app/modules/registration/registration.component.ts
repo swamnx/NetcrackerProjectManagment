@@ -21,12 +21,13 @@ export class RegistrationComponent implements OnInit {
     this.auth.deleteAuthData();
 
     this.registrationForm = fb.group({
-      email: new FormControl('', [Validators.required, Validators.email]),
-      name: new FormControl('', [Validators.required]),
-      password: new FormControl('', [Validators.required]),
+      email: new FormControl('', [Validators.required, Validators.email,Validators.maxLength(60)]),
+      name: new FormControl('', [Validators.required,Validators.pattern
+        ('[0-9a-zA-Z!@#$%^&*_+-=;.,%:?*]{1,32}')]),
+      password: new FormControl('', [Validators.required,Validators.pattern
+        ('(?=.*[0-9].*)(?=.*[a-z].*)(?=.*[A-Z].*)[0-9a-zA-Z!@#$%^&*_+-=;.,%:?*]{8,32}')]),
       repeat: new FormControl('', [Validators.required]),
       role: new FormControl('', [Validators.required]),
-      remember: new FormControl(false)
     }, { validator: confirmPasswordValidator });
   }
 
@@ -47,11 +48,8 @@ export class RegistrationComponent implements OnInit {
             this.auth.token = value.token;
             this.auth.getUserAuth().subscribe(
               (value) => {
-                if (this.registrationForm.controls.remember.value) {
-                  localStorage.setItem('user', JSON.stringify(value));
-                  localStorage.setItem('authenticated', JSON.stringify(true));
-                  localStorage.setItem('token', this.auth.token);
-                }
+                localStorage.setItem('user', JSON.stringify(value));
+                localStorage.setItem('token', this.auth.token);
                 this.auth.user = value;
                 this.auth.authenticated = true;
                 this.router.navigateByUrl('/about');

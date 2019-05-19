@@ -1,6 +1,6 @@
 package com.fapi.controller;
 
-import com.fapi.DTO.Default.Project;
+import com.fapi.DTO.ProjectMain.Project;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.*;
 import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
@@ -33,7 +33,7 @@ public class ProjectController {
     }
     @PreAuthorize("hasRole('ROLE_pm')")
     @PostMapping()
-    public ResponseEntity<com.fapi.DTO.ProjectMain.Project> createProject(@RequestBody Project project){
+    public ResponseEntity<com.fapi.DTO.ProjectMain.Project> createProject(@RequestBody com.fapi.DTO.Default.Project project){
         RestTemplate restTemplate = new RestTemplate();
         try {
             return restTemplate.postForEntity(backendServerUrl + "/api/projects",project,com.fapi.DTO.ProjectMain.Project.class);

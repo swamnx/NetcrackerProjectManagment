@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
+import java.util.SortedSet;
 
 @CrossOrigin(origins = "*")
 @RestController
@@ -40,7 +41,7 @@ public class ProjectController {
         users.addAll(project.getProjectUsers());
         User user = userRepository.findUserByIdUser(users.get(0).getIdUser());
         Project projectResult = projectRepository.save(project);
-        Set<Project> userProjects = user.getUserProjects();
+        SortedSet<Project> userProjects = user.getUserProjects();
         userProjects.add(projectResult);
         user.setUserProjects(userProjects);
         userRepository.save(user);

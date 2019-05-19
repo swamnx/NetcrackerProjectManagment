@@ -19,10 +19,11 @@ export class CreateProjectComponent implements OnInit {
   constructor(private auth: AuthService, private router: Router, private projectService: ProjectServiceService) {
 
     if(!auth.authenticated) this.auth.authenticateNot();
+    if(auth.user && auth.user.role!='pm')this.router.navigateByUrl('/error/'+403);
 
     this.createProjectForm = new FormGroup({
-      code: new FormControl('', [Validators.required]),
-      description: new FormControl('', [Validators.required])
+      code: new FormControl('', [Validators.required,Validators.maxLength(50)]),
+      description: new FormControl('', [Validators.required,Validators.maxLength(300)])
     })
   }
 

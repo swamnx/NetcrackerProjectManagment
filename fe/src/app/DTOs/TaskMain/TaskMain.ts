@@ -1,5 +1,6 @@
 export class Task {
     idTask: number;
+    name:string;
     idCreatedBy: number;
     code: number;
     priority: string;
@@ -39,6 +40,7 @@ export class UserForTable {
 export class TaskForTable {
     idTask: number;
     code: number;
+    name:string;
     status: string;
     description: string;
     createDate: Date;

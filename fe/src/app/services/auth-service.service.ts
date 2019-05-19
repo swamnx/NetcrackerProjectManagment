@@ -19,9 +19,8 @@ export class AuthService {
 
   constructor(private http: HttpClient, private router: Router) {
     let user = JSON.parse(localStorage.getItem('user'));
-    let authenticated = JSON.parse(localStorage.getItem('authenticated'));
     let token = localStorage.getItem('token');
-    if (user && authenticated && token) {
+    if (user && token) {
       this.user = user;
       this.authenticated = true;
       this.token = token;

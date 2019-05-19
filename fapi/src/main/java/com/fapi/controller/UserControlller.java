@@ -1,6 +1,5 @@
 package com.fapi.controller;
 
-import com.fapi.DTO.Default.User;
 import com.fapi.service.UserServiceAuth;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;

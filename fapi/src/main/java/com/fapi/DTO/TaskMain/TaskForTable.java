@@ -14,6 +14,7 @@ public class TaskForTable {
     private int idTask;
     private int code;
     private String status;
+    private String name;
     private String description;
     private LocalDate createDate;
     private LocalDate updateDate;

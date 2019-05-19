@@ -43,17 +43,17 @@ public class TaskController {
         String search=allParams.get("search");
         Page<Task> entityPage;
         if(allParams.get("type").equals("real")){
-            entityPage=taskRepository.findAllByTaskUserAndDescriptionContains(pageRequest,user,search);
+            entityPage=taskRepository.findAllByTaskUserAndNameContains(pageRequest,user,search);
         }
         else if(allParams.get("type").equals("available")){
-            entityPage=taskRepository.findAllByTaskProjectInAndDescriptionContains(pageRequest,user.getUserProjects(),search);
+            entityPage=taskRepository.findAllByTaskProjectInAndNameContains(pageRequest,user.getUserProjects(),search);
         }
         else if(allParams.get("type").equals("project")){
             Project project = projectRepository.findProjectByIdProject(Integer.parseInt(allParams.get("idProject")));
-            entityPage = taskRepository.findAllByTaskProjectAndDescriptionContains(pageRequest,project,search);
+            entityPage = taskRepository.findAllByTaskProjectAndNameContains(pageRequest,project,search);
         }
         else{
-            entityPage = taskRepository.findAllByDescriptionContains(pageRequest,search);
+            entityPage = taskRepository.findAllByNameContains(pageRequest,search);
         }
         List<Task> tasks = entityPage.getContent();
         List<com.be.DTO.TaskMain.TaskForTable> tasksDTO = TaskMainMapper.INSTANCE.tasksToTasksForTable(tasks);

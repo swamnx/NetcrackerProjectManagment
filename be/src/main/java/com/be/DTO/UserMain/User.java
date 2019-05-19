@@ -5,6 +5,8 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.*;
 
 import java.util.Set;
+import java.util.SortedSet;
+import java.util.TreeSet;
 
 @Getter
 @Setter
@@ -17,6 +19,6 @@ public class User {
     private String name;
     private String role;
     private String email;
-    Set<Project> userProjects;
+    SortedSet<Project> userProjects = new TreeSet<>();
 
 }

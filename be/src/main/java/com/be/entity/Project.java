@@ -19,7 +19,7 @@ import java.util.Set;
 @AllArgsConstructor
 @NoArgsConstructor
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "idProject",scope = Project.class)
-public class Project {
+public class Project implements Comparable<Project> {
 
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
@@ -45,14 +45,17 @@ public class Project {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Project project = (Project) o;
-        return idProject == project.idProject &&
-                Objects.equals(code, project.code) &&
-                Objects.equals(description, project.description);
+        return idProject == project.idProject;
     }
 
     @Override
     public int hashCode() {
 
         return Objects.hash(idProject, code, description);
+    }
+
+    @Override
+    public int compareTo(Project o) {
+        return this.code.compareTo(o.code);
     }
 }

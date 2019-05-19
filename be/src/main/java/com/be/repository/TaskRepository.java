@@ -13,10 +13,10 @@ import java.util.Set;
 
 @Repository
 public interface TaskRepository extends PagingAndSortingRepository<Task,Long> {
-    Page<Task> findAllByTaskProjectInAndDescriptionContains(Pageable pageable,Set<Project> set,String search);
-    Page<Task> findAllByTaskUserAndDescriptionContains(Pageable pageable, User user,String search);
-    Page<Task> findAllByTaskProjectAndDescriptionContains(Pageable pageable,Project project,String search);
-    Page<Task> findAllByDescriptionContains(Pageable pageable, String search);
+    Page<Task> findAllByTaskProjectInAndNameContains(Pageable pageable,Set<Project> set,String search);
+    Page<Task> findAllByTaskUserAndNameContains(Pageable pageable, User user,String search);
+    Page<Task> findAllByTaskProjectAndNameContains(Pageable pageable,Project project,String search);
+    Page<Task> findAllByNameContains(Pageable pageable, String search);
 
     Task findTaskByIdTask(Integer id);
     Task save(Task task);

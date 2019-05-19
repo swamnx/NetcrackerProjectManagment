@@ -9,15 +9,17 @@
         <mat-table [dataSource]="dataSource" matSort matSortDirection="asc" matSortActive="code" matSortDisableClear> 
             <ng-container matColumnDef="projectCode">
                 <mat-header-cell *matHeaderCellDef>Project code</mat-header-cell>
-                <mat-cell class="my-cell-hover" *matCellDef="let task" (click)="clickOnProjectCell(task.taskProject.idProject)">{{task.taskProject.code}}</mat-cell>>
+                <mat-cell class="my-cell-hover" *matCellDef="let task" (click)="clickOnProjectCell(task.taskProject.idProject)">
+                    {{task.taskProject.code}}
+                </mat-cell>>
             </ng-container>
             <ng-container matColumnDef="code">
                 <mat-header-cell *matHeaderCellDef mat-sort-header>Task code</mat-header-cell>
                 <mat-cell class="my-cell-hover" *matCellDef="let task" (click)="clickOnTaskCell(task.idTask)">{{task.code}}</mat-cell>>
             </ng-container>
-            <ng-container matColumnDef="description">
-                <mat-header-cell *matHeaderCellDef mat-sort-header>Description</mat-header-cell>
-                <mat-cell *matCellDef="let task">{{task.description}}</mat-cell>>
+            <ng-container matColumnDef="name">
+                <mat-header-cell *matHeaderCellDef mat-sort-header>Name</mat-header-cell>
+                <mat-cell *matCellDef="let task">{{task.name}}</mat-cell>>
             </ng-container>
             <ng-container matColumnDef="status">
                 <mat-header-cell *matHeaderCellDef mat-sort-header>Status</mat-header-cell>

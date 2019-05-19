@@ -3,8 +3,6 @@
   <div class="card">
     <div class="card-body">
         <h4 class="card-title">Project code:{{task.taskProject.code}}</h4>
-        <h5 class="card-title">Description:</h5>
-        <h6 class="card-subtitle mb-2 text-muted">{{task.taskProject.description}}</h6>
     </div>
   </div>
 
@@ -47,8 +45,10 @@
   <div class="card">
       <div class="card-body">
           <h4 class="card-title">Task code:{{task.code}}</h4>
+          <h5 class="card-title">Name:</h5>
+          <h6 class="card-subtitle mb-2 text-muted">{{task.name}}</h6>
           <h5 class="card-title">Description:</h5>
-          <h6 class="card-subtitle mb-2 text-muted">{{task.description}}</h6>
+          <textarea style="width: 50vh" readonly matNativeControl cdkTextareaAutosize>{{task.description}}</textarea>
       </div>
   </div>
 

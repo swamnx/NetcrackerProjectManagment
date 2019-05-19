@@ -6,8 +6,11 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import javax.persistence.*;
 import java.util.Objects;
 import java.util.Set;
+import java.util.SortedSet;
+import java.util.TreeSet;
 
 import lombok.*;
+import org.hibernate.annotations.SortNatural;
 
 @Data
 @Table(name = "Users")
@@ -16,9 +19,7 @@ import lombok.*;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@JsonIdentityInfo(generator = ObjectIdGenerators.
-                PropertyGenerator.class,
-        property = "idUser",scope = User.class)
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class,property = "idUser",scope = User.class)
 public class User {
 
     @Id
@@ -42,13 +43,14 @@ public class User {
     @Column(name = "role")
     private String role;
 
+    @SortNatural
     @ManyToMany
     @JoinTable(name = "user_and_project",
     joinColumns = @JoinColumn(name = "idUser"),
     inverseJoinColumns = @JoinColumn(name = "idProject"))
-    private Set<Project> userProjects;
+    private SortedSet<Project> userProjects = new TreeSet();
 
-    @OneToMany(mappedBy = "taskUser",cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "taskUser")
     private Set<Task> userTasks;
 
     @Override
@@ -56,11 +58,7 @@ public class User {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         User user = (User) o;
-        return idUser == user.idUser &&
-                Objects.equals(name, user.name) &&
-                Objects.equals(email, user.email) &&
-                Objects.equals(password, user.password) &&
-                Objects.equals(role, user.role);
+        return idUser == user.idUser;
     }
 
     @Override

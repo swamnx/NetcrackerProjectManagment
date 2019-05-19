@@ -13,6 +13,7 @@ import { debounceTime, switchMap } from 'rxjs/operators';
 import { CommentForCreating } from 'src/app/DTOs/CommentMain/CommentMain';
 import { CommentServiceService } from 'src/app/services/comment-service.service';
 import { MatDialogModule } from '@angular/material/dialog';
+import { dateDueAndEstimationValidator } from '../../create-task/create-task.component';
 
 export class AssignDialogData {
   role: string;
@@ -163,6 +164,7 @@ export class TaskFullComponent implements OnInit {
         this.sendingData=true;
         this.task.description = result.value['description'];
         this.task.dueDate = result.value['dueDate'];
+        this.task.name = result.value['name'];
         this.task.estimationDate = result.value['estimationDate'];
         this.task.priority = result.value['priority'];
         this.task.updateDate = new Date();
@@ -239,15 +241,32 @@ export function PersonValidator(amountOfDynamicUsers: number): ValidatorFn {
 })
 export class EditDialog {
   editForm: FormGroup;
+  nowDate:Date=new Date();
   constructor(
 
     public dialogRef: MatDialogRef<EditDialog>,
-    @Inject(MAT_DIALOG_DATA) public data: EditDialogData, private taskService: TaskServiceService) {
-    this.editForm = new FormGroup({
-      description: new FormControl(this.data.task.description, [Validators.required]),
+    @Inject(MAT_DIALOG_DATA) public data: EditDialogData, private taskService: TaskServiceService,private fb:FormBuilder) {
+    this.editForm = fb.group({
+      description: new FormControl(this.data.task.description, [Validators.required,Validators.maxLength(300)]),
       priority: new FormControl(this.data.task.priority, [Validators.required]),
       dueDate: new FormControl(this.data.task.dueDate),
-      estimationDate: new FormControl(this.data.task.estimationDate)
-    })
+      estimationDate: new FormControl(this.data.task.estimationDate),
+      name:new FormControl(this.data.task.name,[Validators.required,Validators.maxLength(50)])
+    },{validator:dateDueAndEstimationForEditValidator})
+  }
+}
+export function dateDueAndEstimationForEditValidator(formGroup: FormGroup) {
+  const controlDueDate = formGroup.controls['dueDate'];
+  const controlEstimationDate = formGroup.controls['estimationDate'];
+  if (controlDueDate.errors) {
+    return;
+  }
+  if (controlEstimationDate.errors && !controlEstimationDate.errors.badDataComparison) {
+    return;
+  }
+  if (new Date(controlDueDate.value) < controlEstimationDate.value) {
+    controlEstimationDate.setErrors({ badDataComparison: true });
+  } else {
+    controlEstimationDate.setErrors(null);
   }
 }

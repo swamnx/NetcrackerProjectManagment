@@ -22,6 +22,7 @@ public class Task {
     private int idTask;
     private int idCreatedBy;
     private int code;
+    private String name;
     private String priority;
     private String status;
     private String description;

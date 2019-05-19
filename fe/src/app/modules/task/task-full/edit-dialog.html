@@ -1,16 +1,31 @@
 <h2 mat-dialog-title>Hi, edit fields, which you need</h2>
 <div mat-dialog-content [formGroup]="editForm" class="formGroup">
 
-  <div class="form-group">
-    <mat-form-field>
-      <input matInput placeholder="Description" formControlName="description" />
-      <mat-error *ngIf="editForm.get('description').hasError('required')">
-        Description is required!
-      </mat-error>
-    </mat-form-field>
-  </div>
+    <div>
+        <mat-form-field style="width: 30vh;">
+            <input matInput placeholder="Name" formControlName="name"/>
+            <mat-error *ngIf="editForm.get('name').hasError('required')">
+              Name is required!
+            </mat-error>
+            <mat-error *ngIf="editForm.get('name').hasError('maxlength')">
+              Name must be less than 50 symbols
+            </mat-error>
+          </mat-form-field>
+      </div>
 
-  <div class="form-group">
+      <div>
+        <mat-form-field style="width: 40vh;"> 
+          <textarea matNativeControl cdkTextareaAutosize placeholder="Description" formControlName="description"></textarea>
+          <mat-error *ngIf="editForm.get('description').hasError('required')">
+            Description is required!
+          </mat-error>
+          <mat-error *ngIf="editForm.get('description').hasError('maxlength')">
+            Description must be less than 300 symbols
+          </mat-error>
+        </mat-form-field>
+      </div>
+
+  <div>
     <mat-form-field>
       <mat-label>Select priority</mat-label>
       <mat-select formControlName="priority">
@@ -24,9 +39,9 @@
     </mat-form-field>
   </div>
 
-  <div class="form-group">
+  <div>
     <mat-form-field>
-      <input required matInput [matDatepicker]="dueDate" placeholder="Choose a due date" formControlName="dueDate">
+      <input required [min]="nowDate" matInput [matDatepicker]="dueDate" placeholder="Choose a due date" formControlName="dueDate">
       <mat-datepicker-toggle matSuffix [for]="dueDate"></mat-datepicker-toggle>
       <mat-datepicker #dueDate></mat-datepicker>
       <mat-error
@@ -39,9 +54,9 @@
     </mat-form-field>
   </div>
 
-  <div class="form-group">
+  <div>
     <mat-form-field>
-      <input required matInput [matDatepicker]="estimationDate" placeholder="Choose a estimation date"
+      <input required [min]="nowDate" matInput [matDatepicker]="estimationDate" placeholder="Choose a estimation date"
         formControlName="estimationDate">
       <mat-datepicker-toggle matSuffix [for]="estimationDate"></mat-datepicker-toggle>
       <mat-datepicker #estimationDate></mat-datepicker>
@@ -52,6 +67,9 @@
       <mat-error *ngIf="editForm.get('estimationDate').hasError('matDatepickerParse')">
         Bad date, choose right format!
       </mat-error>
+      <mat-error *ngIf="editForm.get('estimationDate').hasError('badDataComparison')">
+        Estimation date shouldn't more than due date!
+        </mat-error>
     </mat-form-field>
   </div>
 

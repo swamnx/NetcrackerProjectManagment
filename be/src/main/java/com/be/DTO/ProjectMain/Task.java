@@ -19,6 +19,7 @@ public class Task {
     private int code;
     private String priority;
     private String status;
+    private String name;
     private String description;
     private LocalDate createDate;
     private LocalDate updateDate;

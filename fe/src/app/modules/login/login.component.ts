@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from 'src/app/services/auth-service.service';
-import { FormGroup, Validators, FormControl } from '@angular/forms';
+import { FormGroup, Validators, FormControl, PatternValidator } from '@angular/forms';
 import { timer } from 'rxjs';
 import { UserWithPassword } from 'src/app/DTOs/UserMain/UserMain';
 import { Router } from '@angular/router';
@@ -9,7 +9,7 @@ import { recogniseError } from 'src/app/services/exceptions';
 
 @Component({
   selector: 'app-login',
-  templateUrl: './login.component.html',
+  templateUrl: './login.component.html'
 })
 export class LoginComponent implements OnInit {
 
@@ -21,8 +21,9 @@ export class LoginComponent implements OnInit {
     this.auth.deleteAuthData();
 
     this.loginForm = new FormGroup({
-      email: new FormControl('', [Validators.required, Validators.email]),
-      password: new FormControl('', [Validators.required]),
+      email: new FormControl('', [Validators.required, Validators.email,Validators.maxLength(60)]),
+      password: new FormControl('', [Validators.required,Validators.pattern
+        ('(?=.*[0-9].*)(?=.*[a-z].*)(?=.*[A-Z].*)[0-9a-zA-Z!@#$%^&*_+-=;.,%:?*]{8,32}')]),
       remember: new FormControl(false)
     });
   }
@@ -42,11 +43,8 @@ export class LoginComponent implements OnInit {
             this.auth.token = value.token;
             this.auth.getUserAuth().subscribe(
               (value) => {
-                if (this.loginForm.controls.remember.value == true) {
-                  localStorage.setItem('user', JSON.stringify(value));
-                  localStorage.setItem('authenticated', JSON.stringify(true));
-                  localStorage.setItem('token', this.auth.token);
-                }
+                localStorage.setItem('user', JSON.stringify(value));
+                localStorage.setItem('token', this.auth.token);
                 this.auth.user = value;
                 this.auth.authenticated = true;
                 this.router.navigateByUrl('/about');

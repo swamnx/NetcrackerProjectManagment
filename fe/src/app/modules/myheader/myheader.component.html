@@ -9,7 +9,7 @@
       <span class="third">
             <a mat-raised-button class="add-space" routerLink="/login" *ngIf="!auth.authenticated">Login</a>
             <a mat-raised-button class="add-space" routerLink="/registration" *ngIf="!auth.authenticated">Registration</a>
-            <a mat-raised-button class="add-space" routerLink="/users/{{auth.user.idUser}}" *ngIf="auth.authenticated">{{auth.user.name}}</a>
+            <a mat-raised-button class="add-space" routerLink="/users/{{auth.user.idUser}}" *ngIf="auth.authenticated">Profile</a>
             <button mat-raised-button (click)="auth.authenticateNot()" *ngIf="auth.authenticated">Logout</button>
       </span>
 </mat-toolbar>

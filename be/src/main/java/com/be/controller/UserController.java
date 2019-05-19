@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Set;
+import java.util.SortedSet;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -47,7 +48,7 @@ public class UserController {
         Project projectResult = projectRepository.findProjectByIdProject(idProject);
         if(userResult==null || projectResult==null)
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        Set<Project> projectSet = userResult.getUserProjects();
+        SortedSet<Project> projectSet = userResult.getUserProjects();
         if(!projectSet.add(projectResult)){
             return new ResponseEntity<>(HttpStatus.CONFLICT);
         }

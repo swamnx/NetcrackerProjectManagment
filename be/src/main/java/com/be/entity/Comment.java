@@ -46,8 +46,7 @@ public class Comment implements Comparable<Comment> {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Comment comment1 = (Comment) o;
-        return idComment == comment1.idComment &&
-                Objects.equals(comment, comment1.comment);
+        return idComment == comment1.idComment;
     }
 
     @Override
