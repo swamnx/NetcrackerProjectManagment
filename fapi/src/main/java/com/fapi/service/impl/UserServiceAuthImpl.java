@@ -27,13 +27,13 @@ public class UserServiceAuthImpl implements UserDetailsService, UserServiceAuth 
     @Override
     public UserWithPassword findByEmail(String email) {
         RestTemplate restTemplate = new RestTemplate();
-        UserWithPassword user = restTemplate.getForObject(backendServerUrl + "/api/users/auth/email/" + email, UserWithPassword.class);
+        UserWithPassword user = restTemplate.getForObject(backendServerUrl + "/api/users/auth/userWithPassword?email=" + email, UserWithPassword.class);
         return user;
     }
     @Override
     public UserAuth getUserAuthByEmail(String email) {
         RestTemplate restTemplate = new RestTemplate();
-        UserAuth user = restTemplate.getForObject(backendServerUrl + "/api/users/auth/user/" + email, UserAuth.class);
+        UserAuth user = restTemplate.getForObject(backendServerUrl + "/api/users/auth/userAuth?email=" + email, UserAuth.class);
         return user;
     }
 

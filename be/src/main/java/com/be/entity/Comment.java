@@ -8,6 +8,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.Objects;
@@ -27,18 +29,22 @@ public class Comment implements Comparable<Comment> {
 
     @Basic
     @Column(name = "comment")
+    @Size(min=1,max=255)
     private String comment;
 
     @ManyToOne
     @JoinColumn(name = "idTask")
+    @NotNull
     private Task commentTask;
 
     @ManyToOne
     @JoinColumn(name = "idUser")
+    @NotNull
     private User commentUser;
 
     @Basic
     @Column(name="date")
+    @NotNull
     private LocalDateTime date;
 
     @Override

@@ -6,6 +6,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
 
 @Getter
@@ -15,11 +18,15 @@ import java.time.LocalDateTime;
 //@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "idComment",scope = Comment.class)
 public class Comment implements Comparable<Comment> {
 
-    private int idComment;
+    private Integer idComment;
+    @Size(min=1,max=255)
     private String comment;
+    @NotNull
     private LocalDateTime date;
 
+    @NotNull
     private User commentUser;
+    @NotNull
     private Task commentTask;
     @Override
     public int compareTo(Comment comment){

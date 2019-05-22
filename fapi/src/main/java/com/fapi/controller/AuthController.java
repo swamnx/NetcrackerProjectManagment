@@ -11,6 +11,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.HttpClientErrorException;
 
 import java.security.Principal;
 
@@ -28,44 +29,45 @@ public class AuthController {
 
     @PostMapping("/token")
     ResponseEntity getToken(@RequestBody UserWithPassword userWithPassword){
-        Authentication authentication=null;
         try {
-            authentication = authenticationManager.authenticate(
-                    new UsernamePasswordAuthenticationToken(
-                            userWithPassword.getEmail(),
-                            userWithPassword.getPassword()
-                    )
+            Authentication authentication = authenticationManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(userWithPassword.getEmail(), userWithPassword.getPassword())
             );
+            SecurityContextHolder.getContext().setAuthentication(authentication);
+            final String token = tokenProvider.generateToken(authentication);
+            return ResponseEntity.ok(new AuthToken(token));
         }
-        catch (Exception e){
-           return new ResponseEntity(HttpStatus.BAD_REQUEST);
+        catch (HttpClientErrorException e){
+            return new ResponseEntity<>(e.getStatusCode());
         }
-        SecurityContextHolder.getContext().setAuthentication(authentication);
-        final String token = tokenProvider.generateToken(authentication);
-        return ResponseEntity.ok(new AuthToken(token));
     }
     @PostMapping("/signup")
     ResponseEntity registerUser(@RequestBody UserWithPassword userWithPassword){
         String password = userWithPassword.getPassword();
-        UserWithPassword userWithPasswordResult = userServiceAuth.save(userWithPassword);
-        if(userWithPasswordResult==null) return new ResponseEntity<>(HttpStatus.CONFLICT);
+        try {
+            UserWithPassword userWithPasswordResult = userServiceAuth.save(userWithPassword);
 
-        final Authentication authentication = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(
-                        userWithPassword.getEmail(),
-                        password
-                )
-        );
-        SecurityContextHolder.getContext().setAuthentication(authentication);
-        final String token = tokenProvider.generateToken(authentication);
-        return ResponseEntity.ok(new AuthToken(token));
+            Authentication authentication = authenticationManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(userWithPassword.getEmail(), password)
+            );
+            SecurityContextHolder.getContext().setAuthentication(authentication);
+            final String token = tokenProvider.generateToken(authentication);
+            return  new ResponseEntity(new AuthToken(token),HttpStatus.OK);
+        }
+        catch (HttpClientErrorException e) {
+            return new ResponseEntity<>(e.getStatusCode());
+        }
     }
 
     @GetMapping("/user")
     ResponseEntity<UserAuth> getUserAuth(Principal user){
-        UserAuth userAuth = userServiceAuth.getUserAuthByEmail(user.getName());
-        if(userAuth==null) return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        return new ResponseEntity<>(userAuth,HttpStatus.OK);
+        try {
+            UserAuth userAuth = userServiceAuth.getUserAuthByEmail(user.getName());
+            return new ResponseEntity<>(userAuth,HttpStatus.OK);
+        }
+        catch (HttpClientErrorException e) {
+            return new ResponseEntity<>(e.getStatusCode());
+        }
     }
 
 }
