@@ -8,6 +8,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.util.Objects;
 import java.util.Set;
 
@@ -24,14 +26,17 @@ public class Project implements Comparable<Project> {
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     @Column(name = "idProject")
-    private int idProject;
+    private Integer idProject;
 
     @Basic
     @Column(name ="code")
+    @NotNull
+    @Size(min=1,max=50)
     private String code;
 
     @Basic
     @Column(name = "description")
+    @Size(min=1,max=300)
     private String description;
 
     @ManyToMany(mappedBy = "userProjects")

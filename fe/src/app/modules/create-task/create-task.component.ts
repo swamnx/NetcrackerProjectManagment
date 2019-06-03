@@ -57,9 +57,9 @@ export class CreateTaskComponent implements OnInit {
     task.name = this.createTaskForm.controls['name'].value;
     task.priority = this.createTaskForm.controls['priority'].value;
     task.createDate = new Date();
-    task.updateDate = task.createDate;
-    task.dueDate = this.createTaskForm.controls['dueDate'].value;
-    task.estimationDate = this.createTaskForm.controls['estimationDate'].value;
+    task.updateDate = new Date();
+    task.dueDate = new Date(this.createTaskForm.controls['dueDate'].value +' UTC');
+    task.estimationDate = new Date(this.createTaskForm.controls['estimationDate'].value+ ' UTC');
     task.taskProject = this.createTaskForm.controls['taskProject'].value;
     task.taskUser = this.auth.user;
     task.idCreatedBy = this.auth.user.idUser;
@@ -75,6 +75,7 @@ export class CreateTaskComponent implements OnInit {
         )
       }
     )
+    
   }
 
 }

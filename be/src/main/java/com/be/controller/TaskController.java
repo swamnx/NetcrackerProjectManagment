@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -67,9 +68,12 @@ public class TaskController {
         return new ResponseEntity<>(TaskMainMapper.INSTANCE.taskToTaskDTO(taskResult),HttpStatus.OK);
     }
     @PostMapping("")
-    public ResponseEntity createTask(@RequestBody com.be.DTO.TaskMain.Task taskDTO){
-        Task task = TaskMainMapper.INSTANCE.taskDTOToTask(taskDTO);
+    public ResponseEntity createTask(@Valid @RequestBody Task task){
+        if(task.getTaskProject()==null || task.getTaskUser()==null)
+            return new ResponseEntity (HttpStatus.BAD_REQUEST);
         Project project = projectRepository.findProjectByIdProject(task.getTaskProject().getIdProject());
+        if(project == null)
+            return new ResponseEntity (HttpStatus.BAD_REQUEST);
         Set<Task> tasks = project.getProjectTasks();
         if(tasks.size()==0){
             task.setCode(0);
@@ -82,26 +86,37 @@ public class TaskController {
             }
             task.setCode(++lastcode);
         }
+        if(task.getEstimationDate().compareTo(task.getDueDate())==1){
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+        User userFound = userRepository.findUserByIdUser(task.getIdCreatedBy());
+        if(userFound == null)
+            return new ResponseEntity(HttpStatus.BAD_REQUEST);
         Task taskResult = taskRepository.save(task);
         if(taskResult==null)
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         return new ResponseEntity<>(TaskMainMapper.INSTANCE.taskToTaskDTO(taskResult),HttpStatus.OK);
     }
     @PatchMapping("")
-    public ResponseEntity<com.be.DTO.TaskMain.Task> updateTask(@RequestBody com.be.DTO.TaskMain.Task taskDTO){
+    public ResponseEntity<com.be.DTO.TaskMain.Task> updateTask(@Valid @RequestBody com.be.DTO.TaskMain.Task taskDTO){
         Task task = TaskMainMapper.INSTANCE.taskDTOToTask(taskDTO);
         Task foundTask = taskRepository.findTaskByIdTask(task.getIdTask());
+        if(foundTask==null)
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        if(task.getEstimationDate().compareTo(task.getDueDate())==1){
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+        if(task.getTaskUser() == null)
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+
         foundTask.setStatus(task.getStatus());
+        foundTask.setDescription(task.getDescription());
         foundTask.setPriority(task.getPriority());
         foundTask.setUpdateDate(task.getUpdateDate());
         foundTask.setDueDate(task.getDueDate());
         foundTask.setEstimationDate(task.getEstimationDate());
-        foundTask.setTaskComments(task.getTaskComments());
         foundTask.setTaskUser(task.getTaskUser());
         Task taskResult = taskRepository.save(foundTask);
-        if(taskResult==null)
-
-                return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         return new ResponseEntity<>(TaskMainMapper.INSTANCE.taskToTaskDTO(taskResult),HttpStatus.OK);
     }
 

@@ -40,6 +40,8 @@ public class ProjectController {
         ArrayList<User> users = new ArrayList<>();
         users.addAll(project.getProjectUsers());
         User user = userRepository.findUserByIdUser(users.get(0).getIdUser());
+        if(!user.getRole().equals("pm"))
+            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
         Project projectResult = projectRepository.save(project);
         SortedSet<Project> userProjects = user.getUserProjects();
         userProjects.add(projectResult);
@@ -52,6 +54,8 @@ public class ProjectController {
         User userFound = userRepository.findUserByIdUser(idUser);
         if(userFound==null || userFound.getUserProjects().size()==0)
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        if(userFound.getUserProjects().size()==0)
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         return new ResponseEntity<>(ProjectMainMapper.INSTANCE.projectsToProjectsDTO(userFound.getUserProjects()),HttpStatus.OK);
     }
 

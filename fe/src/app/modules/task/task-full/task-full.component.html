@@ -48,7 +48,7 @@
           <h5 class="card-title">Name:</h5>
           <h6 class="card-subtitle mb-2 text-muted">{{task.name}}</h6>
           <h5 class="card-title">Description:</h5>
-          <textarea style="width: 50vh" readonly matNativeControl cdkTextareaAutosize>{{task.description}}</textarea>
+          <textarea style="width: 45vh" readonly matNativeControl cdkTextareaAutosize>{{task.description}}</textarea>
       </div>
   </div>
 
@@ -94,7 +94,11 @@
         <button [disabled]="commentControl.invalid  || !userOnThisProject" mat-raised-button color="primary" (click)="leaveComment()">Leave comment</button>
         <div class="card" *ngFor="let comment of task.taskComments">
             <div class="card-body">
-              <h5 class="card-title">{{comment.commentUser.name}} {{dateShow(comment.date)}}:</h5>
+              <h5 class="card-title">
+                <a routerLink="/users/{{comment.commentUser.idUser}}">{{comment.commentUser.name}}</a>
+                {{dateShow(comment.date)}}:
+
+              </h5>
                 <h6 class="card-subtitle mb-2 text-muted">{{comment.comment}}</h6>
             </div>
         </div>

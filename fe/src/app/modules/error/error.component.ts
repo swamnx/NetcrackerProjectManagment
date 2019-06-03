@@ -11,12 +11,14 @@ import { AuthService } from 'src/app/services/auth-service.service';
 export class ErrorComponent implements OnInit {
 
   error: string;
+  status:string;
   constructor(private auth: AuthService, private router: Router, private activatedRoute: ActivatedRoute) {
     if (auth.user == null) this.auth.authenticateNot();
   }
 
   ngOnInit() {
-    this.error = recogniseError(this.activatedRoute.snapshot.params['error']);
+    this.status = this.activatedRoute.snapshot.params['error'];
+    this.error= recogniseError(this.status);
     if (this.error == 'Token expired' || this.error == 'Unauthorized') this.auth.authenticateNotProblem(this.error);
   }
 

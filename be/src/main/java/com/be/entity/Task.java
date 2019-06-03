@@ -4,6 +4,9 @@ import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 import java.time.LocalDate;
 import java.util.*;
 
@@ -26,7 +29,8 @@ public class Task{
 
     @Basic
     @Column(name ="idCreatedBy")
-    private int idCreatedBy;
+    @NotNull
+    private Integer idCreatedBy;
 
     @Basic
     @Column(name = "code")
@@ -34,33 +38,45 @@ public class Task{
 
     @Basic
     @Column(name = "name")
+    @NotNull
+    @Size(min=1,max=50)
     private String name;
     @Basic
     @Column(name = "priority")
+    @NotNull
+    @Pattern(regexp = "^low|normal|high$")
     private String priority;
 
     @Basic
     @Column(name = "status")
+    @NotNull
+    @Pattern(regexp = "^open|reopen|inProgress|readyForTest|closed|resolved$")
     private String status;
 
     @Basic
+    @NotNull
     @Column(name = "description")
+    @Size(min=1,max=300)
     private String description;
 
     @Basic
     @Column(name = "createDate")
+    @NotNull
     private LocalDate createDate;
 
     @Basic
     @Column(name = "updateDate")
+    @NotNull
     private LocalDate updateDate;
 
     @Basic
     @Column(name = "dueDate")
+    @NotNull
     private LocalDate dueDate;
 
     @Basic
     @Column(name = "estimationDate")
+    @NotNull
     private LocalDate estimationDate;
 
     @ManyToOne

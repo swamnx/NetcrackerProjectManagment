@@ -58,7 +58,7 @@ public class User {
 
     @SortNatural
     @ManyToMany
-    @JoinTable(name = "user_and_project",
+    @JoinTable(name = "us   er_and_project",
     joinColumns = @JoinColumn(name = "idUser"),
     inverseJoinColumns = @JoinColumn(name = "idProject"))
     private SortedSet<Project> userProjects = new TreeSet();

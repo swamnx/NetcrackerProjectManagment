@@ -47,7 +47,7 @@ export class LoginComponent implements OnInit {
                 localStorage.setItem('token', this.auth.token);
                 this.auth.user = value;
                 this.auth.authenticated = true;
-                this.router.navigateByUrl('/about');
+                this.router.navigateByUrl('/tasks');
               },
               (error) => {
                 this.auth.deleteAuthData();

@@ -1,7 +1,6 @@
 <mat-toolbar style="background-image:url(assets/test.jpg);height:13vh;color:white">
       <span class="one" style="font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;height:25%;">Project contol system</span>
       <span class="second">
-            <a mat-raised-button class="add-space" routerLink="/about">About</a>
             <a mat-raised-button class="add-space" routerLink="/tasks" *ngIf="auth.authenticated">Tasks</a>
             <a mat-raised-button class="add-space" routerLink="/createTask" *ngIf="auth.authenticated">Create task</a>
             <a mat-raised-button class="add-space" routerLink="/createProject" *ngIf="auth.authenticated && auth.user.role == 'pm' ">Create project</a>

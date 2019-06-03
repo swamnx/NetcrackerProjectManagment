@@ -69,7 +69,6 @@ public class TaskController {
         }
 
     }
-    @PreAuthorize("hasRole('ROLE_pm')")
     @PatchMapping("")
     public ResponseEntity<com.fapi.DTO.TaskMain.Task> updateTask(@RequestBody com.fapi.DTO.TaskMain.Task task){
         HttpComponentsClientHttpRequestFactory httpRequestFactory = new HttpComponentsClientHttpRequestFactory();

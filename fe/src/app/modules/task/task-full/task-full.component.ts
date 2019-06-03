@@ -69,8 +69,8 @@ export class TaskFullComponent implements OnInit {
 
   dateShow(date: Date) {
     let dateLocal = new Date(date + ' UTC');
-    return 'on ' + dateLocal.getDay() + '/' + dateLocal.getMonth() + '/' + dateLocal.getFullYear() + ' at ' +
-      dateLocal.getHours() + ':' + dateLocal.getMinutes();
+    return 'on ' + dateLocal.getDate() + '/' + (dateLocal.getMonth()+1) + '/' + dateLocal.getFullYear() + ' at ' +
+     dateLocal.getHours() + ':' + dateLocal.getMinutes();
   }
 
   updateStatus(status: string) {
@@ -98,6 +98,7 @@ export class TaskFullComponent implements OnInit {
     comment.commentTask.idTask = this.task.idTask;
     comment.commentUser.idUser = this.auth.user.idUser;
     comment.commentUser.name = this.auth.user.name;
+    comment.date = new Date();
     timer(500).subscribe(
       val => {
         this.commentService.createComment(comment).subscribe(
@@ -123,8 +124,8 @@ export class TaskFullComponent implements OnInit {
       data.role = 'tester';
     data.idProject = this.task.taskProject.idProject;
     const dialogRef = this.dialog.open(AssignDialog, {
-      width: '25vh',
-      height: '20vh',
+      width: '35vh',
+      height: '40vh',
       autoFocus: false,
       data
     });
@@ -154,8 +155,8 @@ export class TaskFullComponent implements OnInit {
     let data = new EditDialogData;
     data.task = this.task;
     const dialogRef = this.dialog.open(EditDialog, {
-      width: '30vh',
-      height: '45vh',
+      width: '50vh',
+      height: '70vh',
       autoFocus: false,
       data
     })
@@ -163,9 +164,9 @@ export class TaskFullComponent implements OnInit {
       if (result) {
         this.sendingData=true;
         this.task.description = result.value['description'];
-        this.task.dueDate = result.value['dueDate'];
+        this.task.dueDate = new Date(result.value['dueDate']+' UTC');
         this.task.name = result.value['name'];
-        this.task.estimationDate = result.value['estimationDate'];
+        this.task.estimationDate = new Date(result.value['estimationDate'] +' UTC');
         this.task.priority = result.value['priority'];
         this.task.updateDate = new Date();
         timer(500).subscribe(
@@ -253,6 +254,7 @@ export class EditDialog {
       estimationDate: new FormControl(this.data.task.estimationDate),
       name:new FormControl(this.data.task.name,[Validators.required,Validators.maxLength(50)])
     },{validator:dateDueAndEstimationForEditValidator})
+    console.log(this.editForm);
   }
 }
 export function dateDueAndEstimationForEditValidator(formGroup: FormGroup) {

@@ -56,8 +56,8 @@ export class ProjectBasicComponent implements OnInit {
   }
   addUser(): void {
     const dialogRef = this.dialog.open(AddUserDialog, {
-      width: '25vh',
-      height: '20vh',
+      width: '35vh',
+      height: '40vh',
       autoFocus: false,
     });
 

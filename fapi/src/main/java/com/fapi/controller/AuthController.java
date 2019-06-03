@@ -13,6 +13,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.HttpClientErrorException;
 
+import javax.validation.Valid;
 import java.security.Principal;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
@@ -28,7 +29,7 @@ public class AuthController {
     private TokenProvider tokenProvider;
 
     @PostMapping("/token")
-    ResponseEntity getToken(@RequestBody UserWithPassword userWithPassword){
+    ResponseEntity getToken(@Valid @RequestBody UserWithPassword userWithPassword){
         try {
             Authentication authentication = authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(userWithPassword.getEmail(), userWithPassword.getPassword())
@@ -42,7 +43,7 @@ public class AuthController {
         }
     }
     @PostMapping("/signup")
-    ResponseEntity registerUser(@RequestBody UserWithPassword userWithPassword){
+    ResponseEntity registerUser(@Valid @RequestBody UserWithPassword userWithPassword){
         String password = userWithPassword.getPassword();
         try {
             UserWithPassword userWithPasswordResult = userServiceAuth.save(userWithPassword);
